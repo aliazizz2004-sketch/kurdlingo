@@ -183,6 +183,15 @@ const Learn: React.FC = () => {
                                     if (index % 4 === 1) positionClass = 'right';
                                     if (index % 4 === 3) positionClass = 'left';
 
+                                    // Next node position for connector direction
+                                    const nextIndex = index + 1;
+                                    let nextPositionClass = '';
+                                    if (nextIndex < unit.lessons.length) {
+                                        if (nextIndex % 4 === 1) nextPositionClass = 'right';
+                                        else if (nextIndex % 4 === 3) nextPositionClass = 'left';
+                                        else nextPositionClass = 'center';
+                                    }
+
                                     const handleClick = (e: React.MouseEvent) => {
                                         if (isLocked) e.preventDefault();
                                     };
@@ -191,53 +200,102 @@ const Learn: React.FC = () => {
                                         ? '/neuromatch'
                                         : `/lesson/${lesson.id}`;
 
+                                    const isLastLesson = index === unit.lessons.length - 1;
+
                                     return (
-                                        <Link
-                                            to={isLocked ? '#' : lessonPath}
-                                            key={lesson.id}
-                                            className={`path-node ${positionClass} ${isCurrent ? 'current' : ''} ${isLocked ? 'locked' : ''} ${completed ? 'completed' : ''}`}
-                                            onClick={handleClick}
-                                            aria-disabled={isLocked}
-                                        >
-                                            <div
-                                                className="node-circle"
-                                                style={{
-                                                    '--node-bg': isCurrent || completed ? theme.gradient : '#e5e7eb',
-                                                    '--node-shadow': isCurrent || completed ? theme.shadow : '#d1d5db',
-                                                    '--node-text': isCurrent || completed ? '#ffffff' : '#9ca3af',
-                                                    '--node-accent': theme.color
-                                                } as React.CSSProperties}
+                                        <React.Fragment key={lesson.id}>
+                                            <Link
+                                                to={isLocked ? '#' : lessonPath}
+                                                className={`path-node ${positionClass} ${isCurrent ? 'current' : ''} ${isLocked ? 'locked' : ''} ${completed ? 'completed' : ''}`}
+                                                onClick={handleClick}
+                                                aria-disabled={isLocked}
                                             >
-                                                {isLocked ? (
-                                                    <Lock size={32} weight="fill" color="var(--node-text)" />
-                                                ) : (
-                                                    <Icon size={36} weight="fill" color="var(--node-text)" />
-                                                )}
+                                                <div
+                                                    className="node-circle"
+                                                    style={{
+                                                        '--node-bg': isCurrent || completed ? theme.gradient : '#e5e7eb',
+                                                        '--node-shadow': isCurrent || completed ? theme.shadow : '#d1d5db',
+                                                        '--node-text': isCurrent || completed ? '#ffffff' : '#9ca3af',
+                                                        '--node-accent': theme.color
+                                                    } as React.CSSProperties}
+                                                >
+                                                    {isLocked ? (
+                                                        <Lock size={32} weight="fill" color="var(--node-text)" />
+                                                    ) : (
+                                                        <Icon size={36} weight="fill" color="var(--node-text)" />
+                                                    )}
 
-                                                {/* START Bubble for current lesson */}
-                                                {isCurrent && (
-                                                    <div className="start-bubble" style={{ color: theme.shadow, borderColor: theme.shadow }}>
-                                                        {t('start') || 'START'}
-                                                    </div>
-                                                )}
+                                                    {/* START Bubble for current lesson */}
+                                                    {isCurrent && (
+                                                        <div className="start-bubble" style={{ color: theme.shadow, borderColor: theme.shadow }}>
+                                                            {t('start') || 'START'}
+                                                        </div>
+                                                    )}
 
-                                                {/* Crown sitting on top */}
-                                                {isCurrent && (
-                                                    <div className="crown-badge">
-                                                        <Crown size={42} weight="fill" color="#fbbf24" style={{ filter: 'drop-shadow(0 2px 0 #b45309)' }} />
-                                                    </div>
-                                                )}
+                                                    {/* Crown sitting on top */}
+                                                    {isCurrent && (
+                                                        <div className="crown-badge">
+                                                            <Crown size={42} weight="fill" color="#fbbf24" style={{ filter: 'drop-shadow(0 2px 0 #b45309)' }} />
+                                                        </div>
+                                                    )}
 
-                                                {/* Checkmark for completed */}
-                                                {completed && (
-                                                    <div className="completed-badge">
-                                                        <CheckCircle size={24} weight="fill" color={theme.color} />
-                                                    </div>
-                                                )}
-                                            </div>
+                                                    {/* Checkmark for completed */}
+                                                    {completed && (
+                                                        <div className="completed-badge">
+                                                            <CheckCircle size={24} weight="fill" color={theme.color} />
+                                                        </div>
+                                                    )}
+                                                </div>
 
-                                            <div className="node-tooltip">{lesson.title}</div>
-                                        </Link>
+                                                <div className="node-tooltip">{lesson.title}</div>
+                                            </Link>
+                                            {/* SVG Snake-curve connector to next node */}
+                                            {!isLastLesson && (() => {
+                                                // Detect RTL — nodes flip via CSS [dir="rtl"] rules
+                                                const isRTL = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
+                                                const flip = isRTL ? -1 : 1;
+
+                                                // Positions relative to center (0): right=+70, left=-70 (flipped in RTL)
+                                                const fromX = (positionClass === 'right' ? 70 : positionClass === 'left' ? -70 : 0) * flip;
+                                                const toPos = nextPositionClass || 'center';
+                                                const toX = (toPos === 'right' ? 70 : toPos === 'left' ? -70 : 0) * flip;
+
+                                                // SVG viewBox: center at x=100, so offsets are 100+pos
+                                                const x1 = 100 + fromX;
+                                                const x2 = 100 + toX;
+                                                const svgH = 60;
+                                                // Smooth S-curve using cubic bezier
+                                                const d = `M ${x1},0 C ${x1},${svgH * 0.55} ${x2},${svgH * 0.45} ${x2},${svgH}`;
+
+                                                return (
+                                                    <svg
+                                                        className={`path-snake ${completed ? 'path-snake--active' : ''}`}
+                                                        viewBox="0 0 200 60"
+                                                        preserveAspectRatio="none"
+                                                        style={{ '--snake-color': theme.color } as React.CSSProperties}
+                                                    >
+                                                        {/* Background track (always visible) */}
+                                                        <path
+                                                            d={d}
+                                                            fill="none"
+                                                            stroke="#d1d5db"
+                                                            strokeWidth="5"
+                                                            strokeLinecap="round"
+                                                        />
+                                                        {/* Active overlay (green when completed) */}
+                                                        {completed && (
+                                                            <path
+                                                                d={d}
+                                                                fill="none"
+                                                                stroke={theme.color}
+                                                                strokeWidth="5"
+                                                                strokeLinecap="round"
+                                                            />
+                                                        )}
+                                                    </svg>
+                                                );
+                                            })()}
+                                        </React.Fragment>
                                     );
                                 })}
 

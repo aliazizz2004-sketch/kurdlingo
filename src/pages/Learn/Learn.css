@@ -262,6 +262,23 @@
         0 6px 0 #c0c0c0;
 }
 
+/* ─────────────────────────────────────────────
+   SVG SNAKE PATH CONNECTORS (Duolingo-style)
+   ───────────────────────────────────────────── */
+.path-snake {
+    width: 200px;
+    height: 70px;
+    overflow: visible;
+    z-index: 1;
+    flex-shrink: 0;
+    margin: -20px 0;
+    display: block;
+}
+
+.path-snake path {
+    transition: stroke 0.4s ease;
+}
+
 /* SVG Connector Line */
 .path-connector {
     position: absolute;

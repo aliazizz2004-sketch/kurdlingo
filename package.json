@@ -14,11 +14,13 @@
     "@google/generative-ai": "^0.24.1",
     "@phosphor-icons/react": "^2.1.10",
     "framer-motion": "^12.23.24",
+    "gsap": "^3.14.2",
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.9.6"
+    "react-router-dom": "^7.9.6",
+    "vercel": "^50.28.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
