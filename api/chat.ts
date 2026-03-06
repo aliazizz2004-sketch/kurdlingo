@@ -46,30 +46,50 @@ export default async function handler(request: Request) {
         }
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({
-            model: "gemini-2.5-flash",
-            systemInstruction: systemPrompt
-        });
 
-        const chat = model.startChat({
-            history,
-            generationConfig: {
-                maxOutputTokens: 1000,
-            },
-        });
-        const result = await chat.sendMessage(message);
-        const responseText = result.response.text();
+        // Model fallback chain: primary -> secondary
+        const models = [
+            "gemini-3.1-flash-lite-preview",  // Primary
+            "gemini-2.5-flash-lite",           // Secondary fallback
+        ];
 
-        return new Response(JSON.stringify({
-            response: responseText,
-            success: true
-        }), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-        });
+        let lastError: any = null;
+
+        for (const modelName of models) {
+            try {
+                const model = genAI.getGenerativeModel({
+                    model: modelName,
+                    systemInstruction: systemPrompt
+                });
+
+                const chat = model.startChat({
+                    history,
+                    generationConfig: {
+                        maxOutputTokens: 1000,
+                    },
+                });
+                const result = await chat.sendMessage(message);
+                const responseText = result.response.text();
+
+                return new Response(JSON.stringify({
+                    response: responseText,
+                    success: true
+                }), {
+                    status: 200,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                });
+            } catch (modelError: any) {
+                console.warn(`Model ${modelName} failed:`, modelError.message);
+                lastError = modelError;
+                // Continue to next model in the fallback chain
+            }
+        }
+
+        // All models failed
+        throw lastError;
 
     } catch (error: any) {
         console.error('Gemini API Error:', error);
