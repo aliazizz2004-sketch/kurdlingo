@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@insforge/react';
 import {
     Bot, Flame, BookOpen, Gamepad2, Mic, BookText,
     GraduationCap, Landmark, Laptop, Smartphone, Globe,
@@ -14,6 +15,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function LandingPage() {
     const navigate = useNavigate();
+    const { user } = useUser();
+    
+    useEffect(() => {
+        if (user) {
+            navigate('/learn', { replace: true });
+        }
+    }, [user, navigate]);
+
     const [scrolled, setScrolled] = useState(false);
     const [darkMode, setDarkMode] = useState(() => {
         const saved = localStorage.getItem('lp-theme');
