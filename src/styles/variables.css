@@ -4,12 +4,12 @@
      Exact colors from Duolingo's design
      ============================================ */
 
-  /* Brand Colors - Duolingo's Feather Green */
-  --color-primary: #58cc02;
-  --color-primary-dark: #58a700;
-  --color-primary-light: #89e219;
-  --color-primary-50: rgba(88, 204, 2, 0.15);
-  --color-primary-surface: rgba(88, 204, 2, 0.1);
+  /* Brand Colors - Primary Orange */
+  --color-primary: #ff9600;
+  --color-primary-dark: #cc7800;
+  --color-primary-light: #ffb44d;
+  --color-primary-50: rgba(255, 150, 0, 0.15);
+  --color-primary-surface: rgba(255, 150, 0, 0.1);
 
   /* Achievements & Streaks */
   --color-gold: #ff9600;
@@ -43,7 +43,7 @@
   --color-divider: #e5e5e5;
 
   /* Semantic */
-  --color-success: #58cc02;
+  --color-success: #ff9600;
   --color-error: #ff4b4b;
   --color-warning: #ff9600;
   --color-info: #1cb0f6;
@@ -120,8 +120,8 @@
   --color-border: #334155;
   --color-divider: #475569;
   
-  --color-primary-50: rgba(34, 197, 94, 0.15);
-  --color-primary-surface: rgba(34, 197, 94, 0.1);
+  --color-primary-50: rgba(255, 150, 0, 0.15);
+  --color-primary-surface: rgba(255, 150, 0, 0.1);
   --color-info-bg: rgba(59, 130, 246, 0.12);
   --color-error-bg: rgba(239, 68, 68, 0.12);
   

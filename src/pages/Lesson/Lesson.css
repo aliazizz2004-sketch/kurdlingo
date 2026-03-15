@@ -12,7 +12,7 @@
 
 .lesson-header {
     background: #ffffff;
-    border-bottom: 3px solid #58cc02;
+    border-bottom: 3px solid #ff9600;
     padding: 16px 20px;
     display: flex;
     align-items: center;
@@ -65,11 +65,11 @@
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #7ce841 0%, #58cc02 50%, #46a302 100%);
+    background: linear-gradient(90deg, #ffb44d 0%, #ff9600 50%, #cc7800 100%);
     border-radius: 100px;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow:
-        0 0 15px rgba(88, 204, 2, 0.5),
+        0 0 15px rgba(255, 150, 0, 0.5),
         inset 0 2px 0 rgba(255, 255, 255, 0.4);
     position: relative;
 }
@@ -357,9 +357,9 @@
 }
 
 .image-card.selected {
-    background: linear-gradient(145deg, #e8fff0 0%, #d0f8e0 100%);
-    border-color: #58cc02;
-    box-shadow: 0 5px 0 #46a302;
+    background: linear-gradient(145deg, #fff8eb 0%, #ffedd5 100%);
+    border-color: #ff9600;
+    box-shadow: 0 5px 0 #cc7800;
 }
 
 .image-content {
@@ -420,9 +420,9 @@
 
 .sentence-area:not(:empty) {
     border-style: solid;
-    border-color: #58cc02;
-    background: #e8fff0;
-    box-shadow: inset 0 3px 8px rgba(88, 204, 2, 0.15);
+    border-color: #ff9600;
+    background: #fff8eb;
+    box-shadow: inset 0 3px 8px rgba(255, 150, 0, 0.15);
 }
 
 .source-text-bubble {
@@ -499,10 +499,10 @@
 }
 
 .word-chip.selected {
-    background: #58cc02;
+    background: #ff9600;
     color: white;
-    border-color: #46a302;
-    box-shadow: 0 4px 0 #3d9001;
+    border-color: #cc7800;
+    box-shadow: 0 4px 0 #995a00;
 }
 
 .word-chip.used {
@@ -604,11 +604,11 @@
 }
 
 .pair-card.matched {
-    background: #e8fff0;
-    border-color: #58cc02;
+    background: #fff8eb;
+    border-color: #ff9600;
     opacity: 0.7;
     cursor: not-allowed;
-    box-shadow: 0 3px 0 #46a302;
+    box-shadow: 0 3px 0 #cc7800;
     animation: matchPulse 0.4s ease;
 }
 
@@ -662,7 +662,7 @@
     font-weight: 800;
     color: var(--color-primary);
     animation: pulse 2s ease-in-out infinite;
-    background: linear-gradient(135deg, #f0fdf4 0%, transparent 100%);
+    background: linear-gradient(135deg, #fff8eb 0%, transparent 100%);
     border-radius: var(--radius-sm);
 }
 
@@ -735,24 +735,24 @@
     font-size: 17px;
     font-weight: 700;
     padding: 18px 40px;
-    background: #58cc02;
+    background: #ff9600;
     color: white;
     border: none;
     border-radius: 16px;
-    box-shadow: 0 5px 0 #46a302;
+    box-shadow: 0 5px 0 #cc7800;
     cursor: pointer;
     transition: all 0.1s;
 }
 
 .exercise-footer .btn:hover {
-    background: #5ed406;
+    background: #ffb44d;
     transform: translateY(-2px);
-    box-shadow: 0 7px 0 #46a302;
+    box-shadow: 0 7px 0 #cc7800;
 }
 
 .exercise-footer .btn:active {
     transform: translateY(3px);
-    box-shadow: 0 2px 0 #46a302;
+    box-shadow: 0 2px 0 #cc7800;
 }
 
 .exercise-footer .btn:disabled {
@@ -783,8 +783,8 @@
 }
 
 .feedback-sheet.correct {
-    background: linear-gradient(135deg, #d7ffb8 0%, #c0f890 100%);
-    border-top: 4px solid #58cc02;
+    background: linear-gradient(135deg, #fff3d0 0%, #ffe0a0 100%);
+    border-top: 4px solid #ff9600;
 }
 
 .feedback-sheet.incorrect {
@@ -846,7 +846,7 @@
    ============================================ */
 .lesson-completed {
     min-height: 100vh;
-    background: linear-gradient(135deg, #58cc02 0%, #46a302 50%, #3d9001 100%);
+    background: linear-gradient(135deg, #ff9600 0%, #cc7800 50%, #995a00 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1451,7 +1451,7 @@
 
 .match-card.matched {
     border-color: var(--color-success);
-    background: #dcfce7;
+    background: #fff3e0;
     pointer-events: none;
     animation: matchSuccess 0.4s ease;
 }
@@ -1660,7 +1660,7 @@
 }
 
 .dark-blue-mode .feedback-sheet.correct {
-    background: linear-gradient(135deg, #14532d 0%, #166534 100%) !important;
+    background: linear-gradient(135deg, #7c2d00 0%, #9a3900 100%) !important;
 }
 
 .dark-blue-mode .feedback-sheet.incorrect {
@@ -1758,8 +1758,8 @@
 }
 
 .dark-blue-mode .chat-feedback.correct {
-    background: linear-gradient(135deg, #14532d 0%, #166534 100%) !important;
-    border-color: #22c55e !important;
+    background: linear-gradient(135deg, #7c2d00 0%, #9a3900 100%) !important;
+    border-color: #ff9600 !important;
 }
 
 .dark-blue-mode .chat-feedback.incorrect {
@@ -1908,7 +1908,7 @@
 }
 
 .dark-blue-mode .feedback-sheet.correct {
-    background: linear-gradient(135deg, #14532d 0%, #166534 100%) !important;
+    background: linear-gradient(135deg, #7c2d00 0%, #9a3900 100%) !important;
 }
 
 .dark-blue-mode .feedback-sheet.incorrect {
@@ -2006,8 +2006,8 @@
 }
 
 .dark-blue-mode .chat-feedback.correct {
-    background: linear-gradient(135deg, #14532d 0%, #166534 100%) !important;
-    border-color: #22c55e !important;
+    background: linear-gradient(135deg, #7c2d00 0%, #9a3900 100%) !important;
+    border-color: #ff9600 !important;
 }
 
 .dark-blue-mode .chat-feedback.incorrect {
@@ -2130,7 +2130,7 @@
 }
 
 .chat-message.user .message-avatar {
-    background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
+    background: linear-gradient(135deg, #bbf7d0 0%, #ffb44d 100%);
 }
 
 .message-content {
@@ -2175,7 +2175,7 @@
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     color: white;
     border-bottom-right-radius: 4px;
-    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+    box-shadow: 0 2px 8px rgba(255, 150, 0, 0.3);
 }
 
 /* Typing indicator */
@@ -2245,7 +2245,7 @@
 .chat-input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    box-shadow: 0 0 0 3px rgba(255, 150, 0, 0.15);
 }
 
 .chat-input::placeholder {
@@ -2270,12 +2270,12 @@
 .chat-send-btn.active {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     color: white;
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+    box-shadow: 0 4px 12px rgba(255, 150, 0, 0.4);
 }
 
 .chat-send-btn.active:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.5);
+    box-shadow: 0 6px 16px rgba(255, 150, 0, 0.5);
 }
 
 .chat-send-btn:disabled {
@@ -2307,8 +2307,8 @@
 }
 
 .chat-feedback.correct {
-    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-    border: 1px solid #86efac;
+    background: linear-gradient(135deg, #fff3e0 0%, #bbf7d0 100%);
+    border: 1px solid #ffb44d;
 }
 
 .chat-feedback.incorrect {
@@ -2318,7 +2318,7 @@
 
 .dark-mode .chat-feedback.correct {
     background: linear-gradient(135deg, #14532d 0%, #166534 100%);
-    border-color: #22c55e;
+    border-color: #ff9600;
 }
 
 .dark-mode .chat-feedback.incorrect {
@@ -2735,23 +2735,23 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #58cc02 0%, #46a302 100%);
+    background: linear-gradient(145deg, #ff9600 0%, #cc7800 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 0 #3d9001, 0 12px 30px rgba(88, 204, 2, 0.3);
+    box-shadow: 0 8px 0 #995a00, 0 12px 30px rgba(88, 204, 2, 0.3);
     transition: all 0.2s ease;
     position: relative;
 }
 
 .pronunciation-mic-btn:hover .mic-circle {
     transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 12px 0 #3d9001, 0 18px 40px rgba(88, 204, 2, 0.4);
+    box-shadow: 0 12px 0 #995a00, 0 18px 40px rgba(88, 204, 2, 0.4);
 }
 
 .pronunciation-mic-btn:active .mic-circle {
     transform: translateY(4px) scale(0.98);
-    box-shadow: 0 3px 0 #3d9001;
+    box-shadow: 0 3px 0 #995a00;
 }
 
 .mic-circle.active {
@@ -2769,7 +2769,7 @@
 .mic-label {
     font-size: 1rem;
     font-weight: 700;
-    color: #58cc02;
+    color: #ff9600;
     letter-spacing: 0.02em;
 }
 
@@ -2928,8 +2928,8 @@
 }
 
 .pronunciation-result.correct {
-    background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%);
-    border: 2px solid #86efac;
+    background: linear-gradient(145deg, #f0fdf4 0%, #fff3e0 100%);
+    border: 2px solid #ffb44d;
 }
 
 .pronunciation-result.incorrect {
@@ -2953,9 +2953,9 @@
 }
 
 .result-badge.correct {
-    background: linear-gradient(145deg, #58cc02 0%, #46a302 100%);
+    background: linear-gradient(145deg, #ff9600 0%, #cc7800 100%);
     color: white;
-    box-shadow: 0 4px 0 #3d9001, 0 8px 20px rgba(88, 204, 2, 0.3);
+    box-shadow: 0 4px 0 #995a00, 0 8px 20px rgba(88, 204, 2, 0.3);
 }
 
 .result-badge.incorrect {
@@ -2993,7 +2993,7 @@
 }
 
 .pronunciation-result .expected-answer strong {
-    color: #58cc02;
+    color: #ff9600;
 }
 
 .pronunciation-result p {
@@ -3102,7 +3102,7 @@
 }
 
 .dark-blue-mode .mic-label {
-    color: #58cc02;
+    color: #ff9600;
 }
 
 .dark-blue-mode .listening-label {

@@ -174,6 +174,7 @@ const SpaceTypingGame = () => {
             if (inputRef.current) {
                 inputRef.current.focus();
                 if (isMobile) {
+                    inputRef.current.value = ' ';
                     inputRef.current.click();
                 }
             }
@@ -340,7 +341,7 @@ const SpaceTypingGame = () => {
             lastTime = time;
 
             const now = Date.now();
-            const floorY = window.innerHeight - 140;
+            const floorY = keyboardOpen ? viewportHeight - 80 : window.innerHeight - 140;
 
             setObjects(prev => {
                 const updated: FallingObject[] = [];
@@ -450,11 +451,18 @@ const SpaceTypingGame = () => {
     const handleMobileInput = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         const input = e.currentTarget;
         const val = input.value;
-        if (val.length > 0) {
-            const lastChar = val[val.length - 1];
-            processInput(lastChar);
-            input.value = '';
+        
+        // Extract what was actually typed (ignoring our leading dummy space if it exists)
+        const typed = val.replace(/^ /, '');
+        
+        if (typed.length > 0) {
+            for (let i = 0; i < typed.length; i++) {
+                processInput(typed[i].toLowerCase());
+            }
         }
+        
+        // Keep a dummy space to prevent aggressive auto-capitalize and autocorrect on mobile
+        input.value = ' ';
     }, [processInput]);
 
     // Track mobile keyboard visibility via visualViewport
@@ -621,7 +629,10 @@ const SpaceTypingGame = () => {
             onClick={() => {
                 if (inputRef.current) {
                     inputRef.current.focus();
-                    if (isMobile) inputRef.current.click();
+                    if (isMobile) {
+                        inputRef.current.value = ' ';
+                        inputRef.current.click();
+                    }
                 }
             }}
         >
@@ -717,7 +728,13 @@ const SpaceTypingGame = () => {
 
             {/* Mobile tap prompt */}
             {isMobile && gameState === 'playing' && !keyboardOpen && (
-                <div className="stg-mobile-tap-hint" onClick={() => { inputRef.current?.focus(); inputRef.current?.click(); }}>
+                <div className="stg-mobile-tap-hint" onClick={() => { 
+                    if (inputRef.current) {
+                        inputRef.current.value = ' ';
+                        inputRef.current.focus(); 
+                        inputRef.current.click(); 
+                    }
+                }}>
                     {isKu ? 'لێرە دابگرە بۆ تایپکردن' : 'Tap here to type'}
                 </div>
             )}
@@ -737,7 +754,12 @@ const SpaceTypingGame = () => {
                 onBlur={() => {
                     // Re-focus on mobile to keep keyboard open during gameplay
                     if (isMobile && gameState === 'playing') {
-                        setTimeout(() => inputRef.current?.focus(), 100);
+                        setTimeout(() => {
+                            if (inputRef.current) {
+                                inputRef.current.value = ' ';
+                                inputRef.current.focus();
+                            }
+                        }, 100);
                     }
                 }}
             />

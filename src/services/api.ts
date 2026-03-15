@@ -242,12 +242,29 @@ function pcmToWavBlob(base64Pcm: string, sampleRate: number = 24000, numChannels
     return new Blob([buffer], { type: 'audio/wav' });
 }
 
+let currentAudio: HTMLAudioElement | null = null;
+let currentResolve: (() => void) | null = null;
+
+export function stopBase64Audio() {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+    }
+    if (currentResolve) {
+        currentResolve();
+        currentResolve = null;
+    }
+}
+
 /**
  * Play audio from base64 string
  * Handles raw PCM from Gemini TTS by converting to WAV
  */
 export function playBase64Audio(base64Audio: string, mimeType: string = 'audio/mp3'): Promise<void> {
+    stopBase64Audio();
     return new Promise((resolve, reject) => {
+        currentResolve = resolve;
         try {
             let audioUrl: string;
 
@@ -267,8 +284,14 @@ export function playBase64Audio(base64Audio: string, mimeType: string = 'audio/m
             }
 
             const audio = new Audio(audioUrl);
+            currentAudio = audio;
+
             audio.onended = () => {
                 if (audioUrl.startsWith('blob:')) URL.revokeObjectURL(audioUrl);
+                if (currentAudio === audio) {
+                    currentAudio = null;
+                    currentResolve = null;
+                }
                 resolve();
             };
             audio.onerror = (e) => {
@@ -276,7 +299,14 @@ export function playBase64Audio(base64Audio: string, mimeType: string = 'audio/m
                 if (audioUrl.startsWith('blob:')) {
                     URL.revokeObjectURL(audioUrl);
                     const fallbackAudio = new Audio(`data:${mimeType};base64,${base64Audio}`);
-                    fallbackAudio.onended = () => resolve();
+                    currentAudio = fallbackAudio;
+                    fallbackAudio.onended = () => {
+                        if (currentAudio === fallbackAudio) {
+                            currentAudio = null;
+                            currentResolve = null;
+                        }
+                        resolve();
+                    };
                     fallbackAudio.onerror = (e2) => reject(e2);
                     fallbackAudio.play().catch(reject);
                 } else {

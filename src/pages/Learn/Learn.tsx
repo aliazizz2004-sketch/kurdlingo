@@ -26,7 +26,7 @@ import { Unit } from '../../types';
 
 // Unit color schemes
 const UNIT_THEMES = [
-    { gradient: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)', color: '#22c55e', shadow: '#15803d' },
+    { gradient: 'linear-gradient(135deg, #ff9600 0%, #cc7800 100%)', color: '#ff9600', shadow: '#cc7800' }, // Primary Orange Theme
     { gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)', color: '#3b82f6', shadow: '#1d4ed8' },
     { gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: '#ef4444', shadow: '#b91c1c' },
     { gradient: 'linear-gradient(135deg, #a855f7 0%, #9333ea 100%)', color: '#a855f7', shadow: '#7c3aed' },
@@ -326,7 +326,7 @@ const Learn: React.FC = () => {
                     style={{ cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }}
                     onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(88, 204, 2, 0.2)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 150, 0, 0.2)';
                     }}
                     onMouseLeave={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)';
@@ -343,7 +343,7 @@ const Learn: React.FC = () => {
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
-                            <Rocket size={28} weight="fill" color="#58cc02" />
+                            <Rocket size={28} weight="fill" color="#ff9600" />
                         </div>
                         <div>
                             <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>🚀 Space Typing</h3>

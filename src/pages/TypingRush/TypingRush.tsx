@@ -134,6 +134,7 @@ const TypingRush = () => {
         if (timerRef.current) clearInterval(timerRef.current);
         setTimeout(() => {
             if (inputRef.current) {
+                inputRef.current.value = ' ';
                 inputRef.current.focus();
                 if (isMobile) inputRef.current.click();
             }
@@ -221,11 +222,13 @@ const TypingRush = () => {
     const handleMobileInput = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         const input = e.currentTarget;
         const val = input.value;
-        if (val.length > 0) {
-            const lastChar = val[val.length - 1];
-            processChar(lastChar);
-            input.value = '';
+        const typed = val.replace(/^ /, '');
+        if (typed.length > 0) {
+            for (let i = 0; i < typed.length; i++) {
+                processChar(typed[i].toLowerCase());
+            }
         }
+        input.value = ' ';
     }, [processChar]);
 
     // Desktop keyboard handler
@@ -244,11 +247,11 @@ const TypingRush = () => {
         return () => window.removeEventListener('keydown', handler);
     }, [screen, isFinished, processChar]);
 
-    // Focus container on mount
     useEffect(() => {
         if (screen === 'playing') {
             containerRef.current?.focus();
             if (isMobile && inputRef.current) {
+                inputRef.current.value = ' ';
                 inputRef.current.focus();
             }
         }
@@ -407,6 +410,7 @@ const TypingRush = () => {
             style={keyboardOpen ? { height: `${viewportHeight}px` } : undefined}
             onClick={() => {
                 if (inputRef.current) {
+                    inputRef.current.value = ' ';
                     inputRef.current.focus();
                     if (isMobile) inputRef.current.click();
                 }
@@ -482,7 +486,13 @@ const TypingRush = () => {
 
             {/* Mobile tap prompt */}
             {isMobile && screen === 'playing' && !keyboardOpen && (
-                <div className="tr-mobile-tap-hint" onClick={() => { inputRef.current?.focus(); inputRef.current?.click(); }}>
+                <div className="tr-mobile-tap-hint" onClick={() => { 
+                    if (inputRef.current) {
+                        inputRef.current.value = ' ';
+                        inputRef.current.focus(); 
+                        inputRef.current.click(); 
+                    }
+                }}>
                     {isKu ? 'لێرە دابگرە بۆ تایپکردن' : 'Tap here to type'}
                 </div>
             )}
@@ -501,7 +511,12 @@ const TypingRush = () => {
                 onInput={handleMobileInput}
                 onBlur={() => {
                     if (isMobile && screen === 'playing' && !isFinished) {
-                        setTimeout(() => inputRef.current?.focus(), 100);
+                        setTimeout(() => {
+                            if (inputRef.current) {
+                                inputRef.current.value = ' ';
+                                inputRef.current.focus();
+                            }
+                        }, 100);
                     }
                 }}
             />

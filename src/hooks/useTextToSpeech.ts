@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
-import { requestGeminiVoice, playBase64Audio } from '../services/api';
+import { requestGeminiVoice, playBase64Audio, stopBase64Audio } from '../services/api';
+
+const audioCache = new Map<string, { audioContent: string, mimeType: string }>();
 
 /**
  * useTextToSpeech - Custom hook for Text-to-Speech
@@ -17,16 +19,28 @@ const useTextToSpeech = () => {
         voice?: { aiName: string, gender: string, tone: string }
     ) => {
         try {
-            // 1. Fetch audio from Gemini TTS
-            const result = await requestGeminiVoice(text, voice);
+            const cacheKey = `${text}_${voice?.aiName || ''}_${voice?.gender || ''}_${voice?.tone || ''}`;
+            
+            let audioData: { audioContent: string, mimeType: string } | null = null;
+            
+            if (audioCache.has(cacheKey)) {
+                audioData = audioCache.get(cacheKey)!;
+            } else {
+                // 1. Fetch audio from Gemini TTS
+                const result = await requestGeminiVoice(text, voice);
+                if (result.success && result.audioContent) {
+                    audioData = { audioContent: result.audioContent, mimeType: result.mimeType || 'audio/wav' };
+                    audioCache.set(cacheKey, audioData);
+                }
+            }
 
-            if (result.success && result.audioContent) {
+            if (audioData) {
                 // 2. Audio is ready - show the message NOW
                 onReady();
 
                 // 3. Play the audio
                 try {
-                    await playBase64Audio(result.audioContent, result.mimeType || 'audio/wav');
+                    await playBase64Audio(audioData.audioContent, audioData.mimeType);
                 } catch (playError) {
                     console.warn('Audio playback failed:', playError);
                 }
@@ -57,9 +71,22 @@ const useTextToSpeech = () => {
      */
     const speak = useCallback(async (text: string, onEnd?: () => void, voice?: { aiName: string, gender: string, tone: string }) => {
         try {
-            const result = await requestGeminiVoice(text, voice);
-            if (result.success && result.audioContent) {
-                await playBase64Audio(result.audioContent, result.mimeType || 'audio/wav');
+            const cacheKey = `${text}_${voice?.aiName || ''}_${voice?.gender || ''}_${voice?.tone || ''}`;
+            
+            let audioData: { audioContent: string, mimeType: string } | null = null;
+            
+            if (audioCache.has(cacheKey)) {
+                audioData = audioCache.get(cacheKey)!;
+            } else {
+                const result = await requestGeminiVoice(text, voice);
+                if (result.success && result.audioContent) {
+                    audioData = { audioContent: result.audioContent, mimeType: result.mimeType || 'audio/wav' };
+                    audioCache.set(cacheKey, audioData);
+                }
+            }
+
+            if (audioData) {
+                await playBase64Audio(audioData.audioContent, audioData.mimeType);
                 if (onEnd) onEnd();
                 return;
             }
@@ -82,6 +109,7 @@ const useTextToSpeech = () => {
     }, []);
 
     const stop = useCallback(() => {
+        stopBase64Audio();
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
         }

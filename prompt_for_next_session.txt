@@ -1,0 +1,3 @@
+We just installed the InsForge MCP server for my project using the CLI (`npx @insforge/install --client antigravity ...`). 
+
+I need you to verify the connection by calling InsForge MCP's `fetch-docs` tool to learn about InsForge instructions (specifically the `instructions` documentation type). Please do this now and tell me how we should proceed with setting up auth, profile, and scores using InsForge as my backend platform.

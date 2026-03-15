@@ -26,8 +26,8 @@
     transition: width var(--transition-normal), padding var(--transition-normal);
     inset-inline-start: 0;
 
-    /* Subtle green tint at bottom */
-    background: linear-gradient(180deg, #ffffff 0%, #ffffff 80%, #f0fff0 100%);
+    /* Subtle orange tint at bottom */
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 80%, #fff8f0 100%);
 }
 
 .sidebar.collapsed {
@@ -50,7 +50,7 @@
 }
 
 .logo-text {
-    color: #58cc02;
+    color: #ff9600;
     font-size: 26px;
     font-weight: 700;
     margin: 0;
@@ -97,11 +97,36 @@
     font-weight: 700;
 }
 
-.nav-icon {
-    width: 32px;
-    height: 32px;
-    stroke-width: 2px;
+/* App-Style Colorful Icons */
+.nav-icon-wrapper {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-shrink: 0;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-item:hover .nav-icon-wrapper,
+.bottom-nav-item:hover .nav-icon-wrapper {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Base Shadow Fixes for 3d effect */
+.nav-icon-wrapper.blue { background: linear-gradient(135deg, #1cb0f6 0%, #1899d6 100%); color: white; box-shadow: 0 4px 0 #127bab; }
+.nav-icon-wrapper.purple { background: linear-gradient(135deg, #ce82ff 0%, #a568cc 100%); color: white; box-shadow: 0 4px 0 #8548ad; }
+.nav-icon-wrapper.pink { background: linear-gradient(135deg, #ff8aff 0%, #cc6ecc 100%); color: white; box-shadow: 0 4px 0 #a358a3; }
+.nav-icon-wrapper.green { background: linear-gradient(135deg, #58cc02 0%, #46a302 100%); color: white; box-shadow: 0 4px 0 #388201; }
+.nav-icon-wrapper.yellow { background: linear-gradient(135deg, #ffc800 0%, #cca000 100%); color: white; box-shadow: 0 4px 0 #a38000; }
+.nav-icon-wrapper.red { background: linear-gradient(135deg, #ff4b4b 0%, #cc3c3c 100%); color: white; box-shadow: 0 4px 0 #a33030; }
+.nav-icon-wrapper.teal { background: linear-gradient(135deg, #00cd9c 0%, #00a47d 100%); color: white; box-shadow: 0 4px 0 #008364; }
+.nav-icon-wrapper.orange { background: linear-gradient(135deg, #ff9600 0%, #cc7800 100%); color: white; box-shadow: 0 4px 0 #a36000; }
+.nav-icon-wrapper.gray { background: linear-gradient(135deg, #e5e5e5 0%, #c4c4c4 100%); color: #666; box-shadow: 0 4px 0 #999999; }
+
+.nav-icon-inner, .nav-icon-mobile {
+    stroke-width: 2.5px;
 }
 
 /* Collapse Button */

@@ -12,6 +12,7 @@ import Leaderboard from './pages/Leaderboard/Leaderboard';
 import Quests from './pages/Quests/Quests';
 import Shop from './pages/Shop/Shop';
 import Profile from './pages/Profile/Profile';
+import Login from './pages/Login/Login';
 import RolePlayHub from './pages/RolePlayHub/RolePlayHub';
 import RolePlayChat from './pages/RolePlayChat/RolePlayChat';
 import SpaceTypingGame from './pages/SpaceTypingGame/SpaceTypingGame';
@@ -22,6 +23,7 @@ import IntermediateLearn from './pages/IntermediateLearn/IntermediateLearn';
 import Layout from './components/Layout/Layout';
 import PageTransition from './components/PageTransition';
 import ScrollToTop from './components/ScrollToTop';
+import ProfileSetupModal from './components/ProfileSetupModal';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -51,7 +53,7 @@ const AnimatedRoutes = () => {
         <Route path="/neuromatch" element={<PageTransition><NeuroMatch /></PageTransition>} />
         <Route path="/typing-rush" element={<PageTransition><TypingRush /></PageTransition>} />
         <Route path="/dictionary" element={<Layout><BookDictionary /></Layout>} />
-        <Route path="/login" element={<PageTransition><div className="container"><h1>Login (Coming Soon)</h1></div></PageTransition>} />
+        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
       </Routes>
     </AnimatePresence>
   );
@@ -61,6 +63,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <ScrollToTop />
+      <ProfileSetupModal />
       <AnimatedRoutes />
     </Router>
   );

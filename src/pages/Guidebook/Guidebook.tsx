@@ -54,11 +54,11 @@ const Guidebook = () => {
     // Define unit-specific color schemes
     const unitColors = {
         'unit-1': {
-            primary: '#58cc02',
-            primaryDark: '#23ac00',
-            gradient: 'linear-gradient(135deg, #58cc02 0%, #23ac00 100%)',
-            light: '#f0fdf4',
-            accent: '#dcfce7'
+            primary: '#ff9600',
+            primaryDark: '#cc7800',
+            gradient: 'linear-gradient(135deg, #ff9600 0%, #cc7800 100%)',
+            light: '#fff8eb',
+            accent: '#ffedd5'
         },
         'unit-2': {
             primary: '#1cb0f6',

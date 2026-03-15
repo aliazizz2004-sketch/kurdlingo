@@ -5,7 +5,7 @@ import { sendChatMessage } from '../../services/api';
 import useSpeechRecognition from '../../hooks/useSpeechRecognition';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
 import { useLanguage } from '../../context/LanguageContext';
-import { Mic, Send, ArrowLeft, Play } from 'lucide-react';
+import { Mic, Send, ArrowLeft, Play, Square } from 'lucide-react';
 import './RolePlayChat.css';
 
 interface Message {
@@ -233,13 +233,18 @@ const RolePlayChat: React.FC = () => {
                             </div>
                             <div className="bubble-meta">
                                 {msg.role === 'ai' && (
-                                    <button className="re-speak-btn" onClick={() => speak(msg.text, undefined, {
-                                        aiName: scenario.aiName,
-                                        gender: scenario.gender,
-                                        tone: scenario.tone
-                                    })}>
-                                        <Play size={12} fill="currentColor" />
-                                    </button>
+                                    <>
+                                        <button className="re-speak-btn" onClick={() => speak(msg.text, undefined, {
+                                            aiName: scenario.aiName,
+                                            gender: scenario.gender,
+                                            tone: scenario.tone
+                                        })}>
+                                            <Play size={12} fill="currentColor" />
+                                        </button>
+                                        <button className="re-speak-btn" onClick={stopSpeaking} style={{ marginLeft: '4px' }}>
+                                            <Square size={12} fill="currentColor" />
+                                        </button>
+                                    </>
                                 )}
                                 <span className="message-time">
                                     {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

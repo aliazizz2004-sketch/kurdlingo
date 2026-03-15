@@ -24,12 +24,12 @@
   --mockup-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
   --mockup-card-bg: rgba(255, 255, 255, 0.03);
   --mockup-card-border: rgba(255, 255, 255, 0.05);
-  --accent: #58cc02;
+  --accent: #ff9600;
   --accent-dark: #3aa100;
   --accent-light: #7ee83a;
   --accent-bg: rgba(88, 204, 2, 0.08);
   --accent-border: rgba(88, 204, 2, 0.15);
-  --glow-green: rgba(88, 204, 2, 0.07);
+  --glow-green: rgba(255, 150, 0, 0.07);
   --glow-blue: rgba(28, 176, 246, 0.05);
   --stats-bg: rgba(88, 204, 2, 0.02);
   --stats-border: rgba(88, 204, 2, 0.06);
@@ -60,12 +60,12 @@
   --mockup-card-border: rgba(0, 0, 0, 0.08);
   --accent: #3aa100;
   --accent-dark: #2d8000;
-  --accent-light: #58cc02;
+  --accent-light: #ffb44d;
   --accent-bg: rgba(88, 204, 2, 0.08);
   --accent-border: rgba(88, 204, 2, 0.25);
-  --glow-green: rgba(88, 204, 2, 0.04);
+  --glow-green: rgba(255, 150, 0, 0.04);
   --glow-blue: rgba(28, 176, 246, 0.03);
-  --stats-bg: rgba(88, 204, 2, 0.04);
+  --stats-bg: rgba(255, 150, 0, 0.04);
   --stats-border: rgba(88, 204, 2, 0.12);
   --star-color: #f59e0b;
   --review-name: #0f172a;
@@ -234,7 +234,7 @@
 .lp-nav__logo {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #58cc02 0%, #3aa100 100%);
+  background: linear-gradient(135deg, #ff9600 0%, #cc7800 100%);
   border-radius: 11px;
   display: flex;
   align-items: center;
@@ -387,7 +387,7 @@
 
 .lp-hero__title em {
   font-style: normal;
-  background: linear-gradient(135deg, #58cc02, #7ee83a);
+  background: linear-gradient(135deg, #ff9600, #ffb44d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -408,7 +408,7 @@
 }
 
 .lp-hero__primary {
-  background: linear-gradient(135deg, #58cc02 0%, #3aa100 100%);
+  background: linear-gradient(135deg, #ff9600 0%, #cc7800 100%);
   border: none;
   color: #fff;
   padding: 15px 36px;
@@ -536,7 +536,7 @@
 
 .lp-mockup__icon--green {
   background: rgba(88, 204, 2, 0.12);
-  color: #58cc02;
+  color: #ff9600;
 }
 
 .lp-mockup__icon--blue {
@@ -579,7 +579,7 @@
 .lp-mockup__fill {
   height: 100%;
   border-radius: 100px;
-  background: linear-gradient(90deg, #58cc02, #7ee83a);
+  background: linear-gradient(90deg, #ff9600, #ffb44d);
 }
 
 .lp-mockup__streak {
@@ -777,7 +777,7 @@
 
 /* Card accent */
 .lp-card[data-accent="green"] {
-  --ca: #58cc02;
+  --ca: #ff9600;
   --ca-bg: rgba(88, 204, 2, 0.08);
 }
 
@@ -1061,7 +1061,7 @@
 }
 
 .lp-review__avatar--green {
-  background: linear-gradient(135deg, #58cc02, #3aa100);
+  background: linear-gradient(135deg, #ff9600, #cc7800);
 }
 
 .lp-review__avatar--blue {
@@ -1123,7 +1123,7 @@
 }
 
 .lp-cta__button {
-  background: linear-gradient(135deg, #58cc02 0%, #3aa100 100%);
+  background: linear-gradient(135deg, #ff9600 0%, #cc7800 100%);
   border: none;
   color: #fff;
   padding: 17px 52px;
@@ -1166,7 +1166,7 @@
 .lp-footer__logo {
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, #58cc02, #3aa100);
+  background: linear-gradient(135deg, #ff9600, #cc7800);
   border-radius: 7px;
   display: flex;
   align-items: center;

@@ -141,7 +141,7 @@
 .form-group input[type="text"]:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #58cc02;
+  border-color: #ff9600;
   box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.2);
 }
 
@@ -179,14 +179,14 @@
 }
 
 .icon-option.selected {
-  border-color: #58cc02;
+  border-color: #ff9600;
   background: rgba(88, 204, 2, 0.2);
   box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.2);
 }
 
 .continue-btn {
   width: 100%;
-  background: linear-gradient(135deg, #58cc02 0%, #46a302 100%);
+  background: linear-gradient(135deg, #ff9600 0%, #cc7800 100%);
   border: none;
   color: #fff;
   padding: 18px 32px;
@@ -352,7 +352,7 @@
 }
 
 .image-upload-zone:hover {
-  border-color: #58cc02;
+  border-color: #ff9600;
   background: rgba(88, 204, 2, 0.1);
 }
 
@@ -465,7 +465,7 @@
   width: 30px;
   height: 30px;
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #58cc02;
+  border-top-color: #ff9600;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -492,7 +492,7 @@
 }
 
 .option-editor.correct {
-  border-color: #58cc02;
+  border-color: #ff9600;
   background: rgba(88, 204, 2, 0.1);
 }
 
@@ -529,13 +529,13 @@
 
 .correct-toggle:hover {
   background: rgba(88, 204, 2, 0.2);
-  border-color: #58cc02;
-  color: #58cc02;
+  border-color: #ff9600;
+  color: #ff9600;
 }
 
 .correct-toggle.active {
-  background: #58cc02;
-  border-color: #58cc02;
+  background: #ff9600;
+  border-color: #ff9600;
   color: #fff;
 }
 
@@ -572,7 +572,7 @@
 
 .option-text-input:focus {
   outline: none;
-  border-color: #58cc02;
+  border-color: #ff9600;
 }
 
 .add-option-btn {
@@ -588,8 +588,8 @@
 }
 
 .add-option-btn:hover {
-  border-color: #58cc02;
-  color: #58cc02;
+  border-color: #ff9600;
+  color: #ff9600;
   background: rgba(88, 204, 2, 0.1);
 }
 
@@ -783,7 +783,7 @@
 .order-chip {
   background: rgba(88, 204, 2, 0.2);
   border: 1px solid rgba(88, 204, 2, 0.4);
-  color: #58cc02;
+  color: #ff9600;
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.95rem;
@@ -793,7 +793,7 @@
 }
 
 .order-number {
-  background: #58cc02;
+  background: #ff9600;
   color: #fff;
   width: 22px;
   height: 22px;
@@ -813,7 +813,7 @@
 .order-controls button {
   background: rgba(88, 204, 2, 0.3);
   border: none;
-  color: #58cc02;
+  color: #ff9600;
   width: 22px;
   height: 22px;
   border-radius: 6px;
@@ -823,7 +823,7 @@
 }
 
 .order-controls button:hover {
-  background: #58cc02;
+  background: #ff9600;
   color: #fff;
 }
 
@@ -1079,7 +1079,7 @@
 
 .add-exercise-btn {
   flex: 2;
-  background: linear-gradient(135deg, #58cc02 0%, #46a302 100%);
+  background: linear-gradient(135deg, #ff9600 0%, #cc7800 100%);
   border: none;
   color: #fff;
   padding: 16px;
@@ -1182,7 +1182,7 @@
 
 .save-lesson-btn {
   width: 100%;
-  background: linear-gradient(135deg, #58cc02 0%, #46a302 100%);
+  background: linear-gradient(135deg, #ff9600 0%, #cc7800 100%);
   border: none;
   color: #fff;
   padding: 20px 32px;

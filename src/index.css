@@ -5,13 +5,13 @@
 
   /* --- BRAND PALETTE (Vibrant & Rich) --- */
 
-  /* Primary Green (Success/Action) */
-  --color-primary: #58cc02;
-  --color-primary-light: #58cc02;
+  /* Primary Orange (Brand Theme) */
+  --color-primary: #ff9600;
+  --color-primary-light: #ffb44d;
   /* Fallback */
-  --color-primary-dark: #46a302;
-  --color-primary-shadow: #46a302;
-  --grad-primary: linear-gradient(135deg, #58cc02 0%, #23ac00 100%);
+  --color-primary-dark: #cc7800;
+  --color-primary-shadow: #cc7800;
+  --grad-primary: linear-gradient(135deg, #ff9600 0%, #e68600 100%);
   /* Richer Gradient */
 
   /* Secondary Red (Error/Alert) */

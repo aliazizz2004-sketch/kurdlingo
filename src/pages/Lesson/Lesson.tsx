@@ -113,7 +113,7 @@ const Lesson = () => {
 
     const [lesson, setLesson] = useState(null);
     const [currentUnitId, setCurrentUnitId] = useState('unit-1');
-    const [unitColor, setUnitColor] = useState({ primary: '#58cc02', dark: '#46a302', light: '#dcfce7' }); // Default Green
+    const [unitColor, setUnitColor] = useState({ primary: '#ff9600', dark: '#cc7800', light: '#fff3e0' }); // Default Orange
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
     const [lives, setLives] = useState(5);
     const [progress, setProgress] = useState(0);
@@ -174,7 +174,7 @@ const Lesson = () => {
                 setUnitColor({ primary: '#3b82f6', dark: '#1e40af', light: '#1e293b' });
             } else {
                 const colors = [
-                    { primary: '#58cc02', dark: '#46a302', light: '#dcfce7' }, // Unit 1: Green
+                    { primary: '#ff9600', dark: '#cc7800', light: '#fff3e0' }, // Unit 1: Orange
                     { primary: '#3b82f6', dark: '#2563eb', light: '#dbeafe' }, // Unit 2: Blue
                     { primary: '#a855f7', dark: '#9333ea', light: '#f3e8ff' }, // Unit 3: Purple
                     { primary: '#ef4444', dark: '#dc2626', light: '#fee2e2' }  // Unit 4: Red

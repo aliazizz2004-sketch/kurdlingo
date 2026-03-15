@@ -1,353 +1,540 @@
-// @ts-nocheck
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useMotionValue, useTransform, useAnimation, PanInfo } from 'framer-motion';
-import {
-    ArrowLeft, ChevronLeft, ChevronRight, Volume2,
-    Hand, UtensilsCrossed, ShoppingCart, Car, Users,
-    Briefcase, Heart, Home, Smile, Clock
-} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+    MagnifyingGlass, ArrowLeft, BookmarkSimple, SpeakerHigh, 
+    Lightbulb, CaretRight, X, CheckCircle
+} from '@phosphor-icons/react';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
-import { bookDictionaryData, DictionaryCategory } from '../../data/bookDictionaryData';
+import { bookDictionaryData } from '../../data/bookDictionaryData';
 import './BookDictionary.css';
 
-// Icon mapping
-const iconMap: Record<string, React.ElementType> = {
-    Hand, UtensilsCrossed, ShoppingCart, Car, Users,
-    Briefcase, Heart, Home, Smile, Clock
-};
+interface MappedWord {
+  id: string;
+  word: string; // This is now English
+  pos: string;
+  phonetic: string;
+  freq: number;
+  freqLabel: string;
+  level: number;
+  levelLabel: string;
+  defs: Array<{ meaning: string; ex: string; trans: string }>;
+  synonyms: string[];
+  antonyms: string[];
+  mnemonic: string;
+}
 
-// Reduced entries to ensure they fit comfortably on the page without overflow
-const ENTRIES_PER_PAGE = 7;
+interface QuizQuestion {
+    id: string;
+    type: 'translate' | 'audio' | 'meaning' | 'fill-in-blank';
+    questionText: string;
+    options: string[];
+    correctAnswer: string;
+    audioText?: string;
+    sentenceParts?: { before: string; after: string; fallback: string };
+}
 
 const BookDictionary: React.FC = () => {
     const navigate = useNavigate();
     const { speak } = useTextToSpeech();
 
-    const [activeCategory, setActiveCategory] = useState<DictionaryCategory>(bookDictionaryData[0]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [speakingId, setSpeakingId] = useState<string | null>(null);
-    const [isFlipping, setIsFlipping] = useState(false);
+    const [view, setView] = useState<'list' | 'detail' | 'quiz'>('list');
+    const [selectedWord, setSelectedWord] = useState<MappedWord | null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [savedWords, setSavedWords] = useState<Set<string>>(new Set());
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-    // Derived state
-    const totalPages = Math.ceil(activeCategory.entries.length / ENTRIES_PER_PAGE);
+    // Audio State
+    const [isPlaying, setIsPlaying] = useState(false);
 
-    // Sound Handling
-    const handleSpeak = useCallback((text: string, id: string) => {
-        setSpeakingId(id);
-        speak(text, () => setSpeakingId(null));
-    }, [speak]);
+    // Dynamic Data Mapping (Ensuring it's learning English now)
+    const allWords: MappedWord[] = useMemo(() => {
+        return bookDictionaryData.flatMap(cat => 
+            cat.entries.map((entry, idx) => ({
+                id: entry.id || `${cat.id}-${idx}`,
+                word: entry.english, // Make the English word the main focus
+                pos: 'Phrase',
+                phonetic: entry.pronunciation || '/.../', // E.g. phonetic notation if available, otherwise fallback
+                freq: Math.floor(Math.random() * 80) + 10,
+                freqLabel: cat.name.english + ' Core',
+                level: Math.floor(Math.random() * 5) + 1,
+                levelLabel: `Level A1 — ${cat.name.english}`,
+                defs: [{ 
+                    meaning: entry.kurdish, // Meaning in Kurdish
+                    ex: entry.example?.english || entry.english, // Example in English
+                    trans: entry.example?.kurdish || entry.kurdish // Example translation in Kurdish
+                }],
+                synonyms: [], 
+                antonyms: [],
+                mnemonic: `A common phrase to use when talking about ${cat.name.english.toLowerCase()}.`
+            }))
+        );
+    }, []);
 
-    // Page Change Logic
-    const handlePageChange = useCallback((newPage: number) => {
-        if (newPage >= 0 && newPage < totalPages) {
-            setCurrentPage(newPage);
+    const filteredWords = useMemo(() => {
+        if (!searchTerm.trim()) return allWords.slice(0, 15); // Show recent 15 when empty
+        const lowerSearched = searchTerm.toLowerCase();
+        return allWords.filter(w => 
+            w.word.toLowerCase().includes(lowerSearched) || 
+            w.defs[0].meaning.toLowerCase().includes(lowerSearched)
+        );
+    }, [searchTerm, allWords]);
+
+    // Helpers
+    const showToast = (msg: string) => {
+        setToastMessage(msg);
+        setTimeout(() => setToastMessage(null), 2500);
+    };
+
+    const toggleBookmark = (id: string) => {
+        setSavedWords(prev => {
+            const next = new Set(prev);
+            if (next.has(id)) {
+                next.delete(id);
+                showToast("Removed from saved words");
+            } else {
+                next.add(id);
+                showToast("Added to saved words");
+            }
+            return next;
+        });
+    };
+
+    const handlePlayAudio = (text: string) => {
+        setIsPlaying(true);
+        speak(text, () => setIsPlaying(false));
+    };
+
+    const navigateToWord = (wordStr: string) => {
+        const found = allWords.find(w => w.word === wordStr || w.defs[0].meaning === wordStr);
+        if (found) {
+            setSelectedWord(found);
+            setView('detail');
         }
-    }, [totalPages]);
+    };
 
-    // Render a Single Page Face (Front or Back content)
-    const renderPageContent = (pageIndex: number, side: 'left' | 'right') => {
-        if (pageIndex < 0 || pageIndex >= totalPages) return <div className="empty-page" />;
-
-        const startIndex = pageIndex * ENTRIES_PER_PAGE;
-        const entries = activeCategory.entries.slice(startIndex, startIndex + ENTRIES_PER_PAGE);
-        const CategoryIcon = iconMap[activeCategory.icon] || Hand;
-        const isLeft = side === 'left';
-
-        return (
-            <div className={`book-page page-${side} ${isLeft ? 'static-left' : 'static-right'}`}>
-                {/* Book Header */}
-                <div className="page-header">
-                    <div className="header-title-row">
-                        <CategoryIcon size={22} style={{ color: activeCategory.color }} />
-                        <h3>{isLeft ? activeCategory.name.english : activeCategory.name.kurdish}</h3>
-                    </div>
-                    <div className="page-number-box">
-                        <span className="page-number">{isLeft ? `P. ${pageIndex + 1}` : `${pageIndex + 1}`}</span>
-                    </div>
+    // Components
+    const renderSidebar = () => (
+        <div className={`modern-dict-sidebar ${view !== 'list' ? 'mobile-hidden' : ''}`}>
+            <header className="dict-header">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+                    <button className="icon-btn" onClick={() => navigate(-1)} style={{ marginLeft: '-8px' }}>
+                        <ArrowLeft size={24} weight="bold" />
+                    </button>
+                    <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>Dictionary</h2>
                 </div>
+                
+                <div className="search-bar-wrapper">
+                    <MagnifyingGlass size={20} className="search-icon" weight="bold" />
+                    <input 
+                        type="text" 
+                        className="search-input" 
+                        placeholder="Search English or Kurdish..." 
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
+                    {searchTerm && (
+                        <button className="clear-icon" onClick={() => setSearchTerm('')}>
+                            <X size={20} weight="bold" />
+                        </button>
+                    )}
+                </div>
+            </header>
 
-                {/* Content List */}
-                <div className="entries-list">
-                    {entries.map((entry, index) => (
-                        <div key={entry.id} className={`entry-item ${isLeft ? 'ltr' : 'rtl'}`}>
-                            {/* Number Badge */}
-                            <span className="entry-number" style={{ background: activeCategory.color + '20', color: activeCategory.color }}>
-                                {startIndex + index + 1}
-                            </span>
-
-                            {/* Text Content */}
-                            <div className="entry-content">
-                                {isLeft ? (
-                                    <span className="entry-text english">{entry.english}</span>
-                                ) : (
-                                    <div className="kurdish-group">
-                                        <span className="entry-text kurdish">{entry.kurdish}</span>
-                                        {entry.pronunciation && (
-                                            <span className="entry-pronunciation">{entry.pronunciation}</span>
-                                        )}
-                                    </div>
-                                )}
+            <div className="list-scroll-area">
+                <div className="list-section-label">
+                    {searchTerm ? 'Results' : 'Recent'}
+                </div>
+                <div className="word-list">
+                    {filteredWords.map(w => (
+                        <div 
+                            key={w.id} 
+                            className={`word-row ${selectedWord?.id === w.id ? 'selected' : ''}`} 
+                            onClick={() => { setSelectedWord(w); setView('detail'); }}
+                        >
+                            <div className="row-content">
+                                <div className="row-head">
+                                    <span className="row-word serif-font">{w.word}</span>
+                                    <span className="row-meta">{w.pos} • {w.phonetic}</span>
+                                </div>
+                                <span className="row-preview">{w.defs[0].meaning}</span>
                             </div>
-
-                            {/* Speaker Button - ONLY FOR ENGLISH (LEFT PAGE) */}
-                            {isLeft ? (
-                                <button
-                                    className={`speak-button ${speakingId === entry.id ? 'speaking' : ''}`}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleSpeak(entry.english, entry.id);
-                                    }}
-                                    style={{ color: activeCategory.color }}
-                                >
-                                    <Volume2 size={18} />
-                                </button>
-                            ) : (
-                                /* Placeholder to maintain layout balance */
-                                <div style={{ width: 32 }} />
-                            )}
+                            <div className="row-right">
+                                <div className="difficulty-dots">
+                                    {[1,2,3,4,5].map(dot => (
+                                        <div key={dot} className={`dot ${dot <= w.level ? 'filled' : ''}`} />
+                                    ))}
+                                </div>
+                                <CaretRight size={20} className="row-arrow" weight="bold" />
+                            </div>
                         </div>
                     ))}
+                    {filteredWords.length === 0 && (
+                        <div style={{ padding: '40px 20px', textAlign: 'center', color: '#6B7280' }}>
+                            No words found for "{searchTerm}"
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    const renderDetail = () => {
+        if (!selectedWord) {
+            return (
+                <div className="desktop-placeholder">
+                    <MagnifyingGlass size={64} weight="light" color="#D1D5DB" />
+                    <p>Select a word to see its details</p>
+                </div>
+            );
+        }
+
+        return (
+            <div className="detail-screen">
+                <header className="detail-header">
+                    <button className="icon-btn detail-back-btn" onClick={() => setView('list')}>
+                        <ArrowLeft size={24} weight="bold" />
+                    </button>
+                    <button 
+                        className={`icon-btn ${savedWords.has(selectedWord.id) ? 'active' : ''}`} 
+                        onClick={() => toggleBookmark(selectedWord.id)}
+                    >
+                        <BookmarkSimple size={24} weight={savedWords.has(selectedWord.id) ? "fill" : "bold"} />
+                    </button>
+                </header>
+
+                <div className="list-scroll-area">
+                    <div className="hero-block">
+                        <span className="pos-badge">{selectedWord.pos}</span>
+                        <h1 className="headword serif-font">{selectedWord.word}</h1>
+                        <p className="phonetic">{selectedWord.phonetic}</p>
+                        
+                        <button className="listen-btn" onClick={() => handlePlayAudio(selectedWord.word)}>
+                            <SpeakerHigh size={20} weight="fill" />
+                            Listen
+                            <div className={`waveform ${isPlaying ? 'playing' : ''}`}>
+                                <div className="bar"></div>
+                                <div className="bar"></div>
+                                <div className="bar"></div>
+                                <div className="bar"></div>
+                            </div>
+                        </button>
+                        
+                        <span className="freq-label">{selectedWord.freqLabel}</span>
+                    </div>
+
+                    <div className="detail-section">
+                        <div className="def-card">
+                            {selectedWord.defs.map((def, idx) => (
+                                <div key={idx} className="def-item">
+                                    <div className="def-meaning">
+                                        <span className="def-num">{idx + 1}.</span>
+                                        <span className="def-text">{def.meaning}</span>
+                                    </div>
+                                    <div className="def-ex">
+                                        <p className="ex-text">{def.ex}</p>
+                                        <p className="ex-trans">{def.trans}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {(selectedWord.synonyms.length > 0 || selectedWord.antonyms.length > 0) && (
+                        <div className="detail-section">
+                            <div className="syn-card">
+                                {selectedWord.synonyms.length > 0 && (
+                                    <>
+                                        <div className="section-title">Synonyms</div>
+                                        <div className="pill-group" style={{ marginBottom: 16 }}>
+                                            {selectedWord.synonyms.map(syn => (
+                                                <button key={syn} className="pill-chip" onClick={() => navigateToWord(syn)}>
+                                                    {syn}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                                {selectedWord.antonyms.length > 0 && (
+                                    <>
+                                        <div className="section-title">Antonyms</div>
+                                        <div className="pill-group">
+                                            {selectedWord.antonyms.map(ant => (
+                                                <button key={ant} className="pill-chip antonym" onClick={() => navigateToWord(ant)}>
+                                                    ↔ {ant}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="detail-section">
+                        <div className="tip-card">
+                            <div className="tip-icon">
+                                <Lightbulb size={24} weight="fill" />
+                            </div>
+                            <div className="tip-content">
+                                <div className="section-title">Memory Tip</div>
+                                <p className="tip-text">{selectedWord.mnemonic}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="detail-section">
+                        <div className="diff-card">
+                            <span className="diff-label">{selectedWord.levelLabel}</span>
+                            <div className="difficulty-dots">
+                                {[1,2,3,4,5].map(dot => (
+                                    <div key={dot} className={`dot ${dot <= selectedWord.level ? 'filled' : ''}`} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Footer Decor */}
-                <div className="page-footer-decor" style={{ background: activeCategory.color }} />
+                <div className="bottom-bar">
+                    <button className="btn-primary" onClick={() => setView('quiz')}>
+                        Practice this word
+                    </button>
+                    <button className="btn-outline" onClick={() => {
+                        toggleBookmark(selectedWord.id);
+                        if (!savedWords.has(selectedWord.id)) showToast("Added to deck!");
+                    }}>
+                        + Add to deck
+                    </button>
+                </div>
             </div>
         );
     };
 
     return (
-        <div className="book-dictionary">
-            {/* Header */}
-            <header className="book-header">
-                <button className="back-button" onClick={() => navigate(-1)}>
-                    <ArrowLeft size={20} />
-                    <span>گەڕانەوە</span>
-                </button>
-                <div className="book-title">
-                    <h1>📖 فەرهەنگی ڕۆژانە</h1>
-                    <p>Daily Phrase Dictionary</p>
+        <div className="modern-dict-wrapper">
+            {renderSidebar()}
+            
+            <div className={`modern-dict-main ${view === 'list' ? 'mobile-hidden' : ''}`}>
+                {view === 'quiz' && selectedWord ? (
+                    <QuizScreen word={selectedWord} allWords={allWords} onBack={() => setView('detail')} speak={speak} />
+                ) : (
+                    renderDetail()
+                )}
+
+                <AnimatePresence>
+                    {toastMessage && (
+                        <motion.div 
+                            initial={{ opacity: 0, y: 50, x: '-50%' }}
+                            animate={{ opacity: 1, y: 0, x: '-50%' }}
+                            exit={{ opacity: 0, y: 20, x: '-50%' }}
+                            className="dict-toast"
+                        >
+                            {toastMessage}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        </div>
+    );
+};
+
+
+// -----------------------------------------------------------------------------
+// QUIZ SCREEN COMPONENT
+// -----------------------------------------------------------------------------
+const QuizScreen = ({ word, allWords, onBack, speak }: { word: MappedWord, allWords: MappedWord[], onBack: () => void, speak: (text: string, onEnd?: () => void) => void }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+    const [score, setScore] = useState(0);
+    const [isFinished, setIsFinished] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    // Generate questions once on mount
+    const questions: QuizQuestion[] = useMemo(() => {
+        const getWrongOptions = (correct: string, type: 'kurdish' | 'english') => {
+            const others = allWords.filter(w => (type === 'kurdish' ? w.defs[0].meaning : w.word) !== correct);
+            const shuffled = others.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 3).map(w => type === 'kurdish' ? w.defs[0].meaning : w.word);
+        };
+
+        // Audio Question: What do you hear?
+        const q1: QuizQuestion = {
+            id: 'q1',
+            type: 'audio',
+            questionText: 'What do you hear?',
+            correctAnswer: word.defs[0].meaning,
+            audioText: word.word, 
+            options: [word.defs[0].meaning, ...getWrongOptions(word.defs[0].meaning, 'kurdish')].sort(() => 0.5 - Math.random())
+        };
+
+        // Usage / Fill in blank
+        const rawSentence = word.defs[0].ex;
+        const regex = new RegExp(`(${word.word})`, 'i');
+        const parts = rawSentence.split(regex);
+        let before = "", after = "", fallback = "";
+        if (parts.length >= 3) {
+            before = parts[0];
+            after = parts.slice(2).join("");
+        } else {
+            fallback = rawSentence; // word not perfectly matched
+        }
+
+        const q2: QuizQuestion = {
+            id: 'q2',
+            type: 'fill-in-blank',
+            questionText: 'Complete the sentence:',
+            correctAnswer: word.word,
+            sentenceParts: { before, after, fallback },
+            options: [word.word, ...getWrongOptions(word.word, 'english')].sort(() => 0.5 - Math.random())
+        };
+
+        // Translation
+        const q3: QuizQuestion = {
+            id: 'q3',
+            type: 'translate',
+            questionText: `How do you say "${word.defs[0].meaning}"?`,
+            correctAnswer: word.word,
+            options: [word.word, ...getWrongOptions(word.word, 'english')].sort(() => 0.5 - Math.random())
+        };
+        
+        return [q1, q2, q3];
+    }, [word, allWords]);
+
+    const currentQ = questions[currentIndex];
+
+    const handleOptionSelect = (option: string) => {
+        if (selectedOption) return; // Prevent double clicking
+        setSelectedOption(option);
+        if (option === currentQ.correctAnswer) {
+            setScore(s => s + 1);
+        }
+    };
+
+    const handleNext = () => {
+        if (currentIndex < questions.length - 1) {
+            setCurrentIndex(i => i + 1);
+            setSelectedOption(null);
+        } else {
+            setIsFinished(true);
+        }
+    };
+
+    if (isFinished) {
+        return (
+            <div className="quiz-screen">
+                <div className="quiz-final">
+                    <div className="final-icon">
+                        <CheckCircle size={48} weight="fill" />
+                    </div>
+                    <h2 className="final-title">Good job!</h2>
+                    <p className="final-score">You scored {score} / {questions.length}</p>
+                    
+                    <div className="final-actions">
+                        <button className="btn-primary" onClick={() => {
+                            setCurrentIndex(0);
+                            setScore(0);
+                            setSelectedOption(null);
+                            setIsFinished(false);
+                        }}>Try again</button>
+                        <button className="btn-outline" onClick={onBack}>Back to word</button>
+                    </div>
                 </div>
-                <div style={{ width: 120 }} />
+            </div>
+        );
+    }
+
+    return (
+        <div className="quiz-screen">
+            <header className="quiz-header">
+                <button className="icon-btn" onClick={onBack} style={{ marginLeft: '-8px' }}>
+                    <X size={24} weight="bold" />
+                </button>
+                <div className="quiz-progress">
+                    {currentIndex + 1} / {questions.length}
+                </div>
+                <div style={{ width: 40 }}></div> {/* placeholder for balance */}
             </header>
 
-            {/* Category Tabs */}
-            <div className="category-tabs-container">
-                <div className="category-tabs">
-                    {bookDictionaryData.map((category) => {
-                        const Icon = iconMap[category.icon] || Hand;
+            <div className="quiz-content">
+                <h2 className="quiz-question">
+                    {currentQ.questionText}
+                </h2>
+
+                {currentQ.type === 'audio' && (
+                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
+                        <button 
+                            className="listen-btn" 
+                            style={{ margin: 0, padding: '16px 32px', fontSize: '1.2rem' }}
+                            onClick={() => {
+                                setIsPlaying(true);
+                                speak(currentQ.audioText || '', () => setIsPlaying(false));
+                            }}
+                        >
+                            <SpeakerHigh size={28} weight={isPlaying ? "fill" : "bold"} />
+                            <div className={`waveform ${isPlaying ? 'playing' : ''}`}>
+                                <div className="bar"></div>
+                                <div className="bar"></div>
+                                <div className="bar"></div>
+                                <div className="bar"></div>
+                            </div>
+                        </button>
+                    </div>
+                )}
+
+                {currentQ.type === 'fill-in-blank' && currentQ.sentenceParts && (
+                    <div style={{ textAlign: 'center', marginBottom: '32px', fontSize: '1.4rem', lineHeight: 1.6 }}>
+                        {currentQ.sentenceParts.fallback ? (
+                            <>
+                                {currentQ.sentenceParts.fallback}
+                                <br/>
+                                <span style={{ color: 'var(--primary-dark)', fontWeight: 'bold' }}>(______)</span>
+                            </>
+                        ) : (
+                            <>
+                                <span>{currentQ.sentenceParts.before}</span>
+                                <span style={{ display: 'inline-block', borderBottom: '3px solid var(--text-muted)', width: '80px', margin: '0 8px' }}>
+                                    {selectedOption && selectedOption === currentQ.correctAnswer && (
+                                        <span style={{ color: 'var(--primary-dark)', fontWeight: 'bold' }}>{selectedOption}</span>
+                                    )}
+                                </span>
+                                <span>{currentQ.sentenceParts.after}</span>
+                            </>
+                        )}
+                    </div>
+                )}
+
+                <div className="quiz-options">
+                    {currentQ.options.map((opt, i) => {
+                        let statusClass = '';
+                        if (selectedOption) {
+                            if (opt === currentQ.correctAnswer) statusClass = 'correct';
+                            else if (opt === selectedOption) statusClass = 'incorrect';
+                        }
+                        
                         return (
-                            <button
-                                key={category.id}
-                                className={`category-tab ${activeCategory.id === category.id ? 'active' : ''}`}
-                                onClick={() => {
-                                    setActiveCategory(category);
-                                    setCurrentPage(0);
-                                }}
-                                style={{ '--tab-gradient': category.gradient } as React.CSSProperties}
+                            <button 
+                                key={i} 
+                                className={`quiz-option ${statusClass}`}
+                                onClick={() => handleOptionSelect(opt)}
+                                disabled={selectedOption !== null}
                             >
-                                <Icon size={18} />
-                                <span>{category.name.kurdish}</span>
+                                {opt}
                             </button>
                         );
                     })}
                 </div>
             </div>
 
-            {/* Navigation Controls */}
-            <div className="book-navigation">
-                <button
-                    className="nav-btn prev"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 0}
+            <div className="quiz-footer">
+                <button 
+                    className="btn-primary" 
+                    style={{ width: '100%', opacity: selectedOption ? 1 : 0.5, maxWidth: '600px', margin: '0 auto' }}
+                    disabled={!selectedOption}
+                    onClick={handleNext}
                 >
-                    <ChevronLeft size={20} />
-                    <span>پێشوو</span>
-                </button>
-
-                <div className="page-status">
-                    <span className="current">{currentPage + 1}</span>
-                    <span className="divider">/</span>
-                    <span className="total">{totalPages}</span>
-                </div>
-
-                <button
-                    className="nav-btn next"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages - 1}
-                >
-                    <span>دواتر</span>
-                    <ChevronRight size={20} />
+                    {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
                 </button>
             </div>
-
-            {/* THE BOOK STAGE */}
-            <div className="book-container">
-                <div className="book-wrapper">
-                    <div className="book-spine" />
-
-                    <div className="book-pages">
-                        {/* BASE LAYER */}
-                        <div className="book-pages-layer base-layer" style={{ zIndex: 0 }}>
-                            <div className="page-placeholder left">
-                                {renderPageContent(currentPage > 0 ? currentPage - 1 : currentPage, 'left')}
-                            </div>
-                            <div className="page-placeholder right">
-                                {renderPageContent(currentPage < totalPages - 1 ? currentPage + 1 : currentPage, 'right')}
-                            </div>
-                        </div>
-
-                        {/* PREV FLIPPER */}
-                        {currentPage > 0 && (
-                            <FlippingSheet
-                                side="left"
-                                frontContent={renderPageContent(currentPage, 'left')}
-                                backContent={renderPageContent(currentPage - 1, 'right')}
-                                onFlipComplete={() => handlePageChange(currentPage - 1)}
-                                onFlipStart={() => setIsFlipping(true)}
-                                onFlipCancel={() => setIsFlipping(false)}
-                            />
-                        )}
-
-                        {/* NEXT FLIPPER */}
-                        {currentPage < totalPages - 1 && (
-                            <FlippingSheet
-                                side="right"
-                                frontContent={renderPageContent(currentPage, 'right')}
-                                backContent={renderPageContent(currentPage + 1, 'left')}
-                                onFlipComplete={() => handlePageChange(currentPage + 1)}
-                                onFlipStart={() => setIsFlipping(true)}
-                                onFlipCancel={() => setIsFlipping(false)}
-                            />
-                        )}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// =========================================================
-// FLIPPING SHEET COMPONENT (Optimized Physics)
-// =========================================================
-interface FlippingSheetProps {
-    side: 'left' | 'right';
-    frontContent: React.ReactNode;
-    backContent: React.ReactNode;
-    onFlipComplete: () => void;
-    onFlipStart?: () => void;
-    onFlipCancel?: () => void;
-}
-
-const FlippingSheet: React.FC<FlippingSheetProps> = ({ side, frontContent, backContent, onFlipComplete, onFlipStart, onFlipCancel }) => {
-    const isRight = side === 'right';
-    const x = useMotionValue(0);
-    const controls = useAnimation();
-    const [isDragging, setIsDragging] = useState(false);
-
-    // MAPPING
-    const rotation = useTransform(
-        x,
-        isRight ? [0, -300] : [0, 300],
-        isRight ? [0, -178] : [0, 178]
-    );
-
-    // SHADOWS
-    const shadowOpacity = useTransform(rotation, isRight ? [0, -90, -180] : [0, 90, 180], [0, 0.4, 0]);
-    const highlightOpacity = useTransform(rotation, isRight ? [0, -90, -180] : [0, 90, 180], [0, 0.2, 0]);
-
-    const handleDragEnd = (event: any, info: PanInfo) => {
-        setIsDragging(false);
-        const threshold = 80;
-        const velocity = info.velocity.x;
-        const offset = info.offset.x;
-
-        let shouldFlip = false;
-        if (isRight) {
-            if (offset < -threshold || velocity < -300) shouldFlip = true;
-        } else {
-            if (offset > threshold || velocity > 300) shouldFlip = true;
-        }
-
-        if (shouldFlip) {
-            controls.start({
-                x: isRight ? -600 : 600,
-                transition: { duration: 0.4, ease: "easeInOut" }
-            })
-                .then(() => {
-                    onFlipComplete();
-                    x.set(0);
-                });
-        } else {
-            controls.start({
-                x: 0,
-                transition: { type: "spring", stiffness: 300, damping: 25 }
-            })
-                .then(() => onFlipCancel?.());
-        }
-    };
-
-    const dragHandleStyle: React.CSSProperties = {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        width: '20%',
-        [isRight ? 'right' : 'left']: 0,
-        zIndex: 500,
-        cursor: isDragging ? 'grabbing' : 'grab',
-        pointerEvents: 'auto',
-        x
-    };
-
-    const dragConstraints = isRight ? { left: -600, right: 0 } : { left: 0, right: 600 };
-
-    return (
-        <div
-            className={`book-pages-layer flipping-layer ${side}`}
-            style={{
-                zIndex: isDragging ? 200 : 50,
-                perspective: '2000px',
-                pointerEvents: 'none'
-            }}
-        >
-            <motion.div
-                className="visual-page-container"
-                style={{
-                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                    transformStyle: 'preserve-3d', transformOrigin: isRight ? 'left center' : 'right center',
-                    rotateY: rotation, boxShadow: isDragging ? '0 10px 30px rgba(0,0,0,0.2)' : 'none'
-                }}
-            >
-                <div className="face front" style={{
-                    background: '#fcfaf7',
-                    backfaceVisibility: 'hidden', position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'auto'
-                }}>
-                    {frontContent}
-                    <motion.div style={{ position: 'absolute', top: 0, bottom: 0, width: '15%', right: isRight ? 'auto' : 0, left: isRight ? 0 : 'auto', background: `linear-gradient(${isRight ? 'to right' : 'to left'}, rgba(0,0,0,0.15), transparent)`, opacity: 1, pointerEvents: 'none' }} />
-                    <motion.div style={{ position: 'absolute', top: 0, bottom: 0, width: '30%', right: isRight ? 'auto' : 0, left: isRight ? 0 : 'auto', background: `linear-gradient(${isRight ? 'to right' : 'to left'}, rgba(0,0,0,0.3), transparent)`, opacity: shadowOpacity, pointerEvents: 'none' }} />
-                    <motion.div style={{ position: 'absolute', inset: 0, background: `linear-gradient(${isRight ? '90deg' : '-90deg'}, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)`, opacity: highlightOpacity, pointerEvents: 'none' }} />
-
-                    <div className={`corner-hint corner-${side}`} />
-                </div>
-
-                <div className="face back" style={{
-                    background: '#fcfaf7',
-                    backfaceVisibility: 'hidden', position: 'absolute', inset: 0, overflow: 'hidden', transform: 'rotateY(180deg)'
-                }}>
-                    {backContent}
-                    <motion.div style={{ position: 'absolute', top: 0, bottom: 0, width: '15%', right: isRight ? 0 : 'auto', left: isRight ? 'auto' : 0, background: `linear-gradient(${isRight ? 'to left' : 'to right'}, rgba(0,0,0,0.15), transparent)`, opacity: 1, pointerEvents: 'none' }} />
-                    <motion.div style={{ position: 'absolute', top: 0, bottom: 0, width: '30%', right: isRight ? 0 : 'auto', left: isRight ? 'auto' : 0, background: `linear-gradient(${isRight ? 'to left' : 'to right'}, rgba(0,0,0,0.3), transparent)`, opacity: shadowOpacity, pointerEvents: 'none' }} />
-                </div>
-            </motion.div>
-
-            <motion.div
-                className="drag-handle"
-                style={dragHandleStyle}
-                drag="x" dragConstraints={dragConstraints} dragElastic={0.1}
-                onDragStart={() => { setIsDragging(true); onFlipStart?.(); }}
-                onDragEnd={handleDragEnd} animate={controls}
-                whileHover={{ scale: 1.0, opacity: 1 }}
-            />
         </div>
     );
 };

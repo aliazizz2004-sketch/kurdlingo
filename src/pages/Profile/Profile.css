@@ -1,208 +1,417 @@
 /* ============================================
-   PROFILE PAGE - Clean Native Design
+   PROFILE PAGE - Beast Level Design
    ============================================ */
 
 .profile-page {
-    padding: var(--spacing-lg);
-    max-width: 680px;
+    max-width: 800px;
     margin: 0 auto;
     padding-bottom: 100px;
+    animation: fadeIn 0.4s ease;
 }
 
-.profile-header {
+.profile-loading {
     display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-}
-
-.profile-avatar {
-    width: 80px;
-    height: 80px;
-    background: var(--color-gray-100);
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    flex-shrink: 0;
-}
-
-.profile-info h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--color-text);
-}
-
-.profile-joined {
-    color: var(--color-text-secondary);
-    font-size: 0.875rem;
-    margin-top: var(--spacing-xs);
-}
-
-.profile-stats-row {
-    display: flex;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
-}
-
-.stat-badge {
-    display: flex;
     align-items: center;
-    gap: 4px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    color: var(--color-text);
-    background: var(--color-gray-100);
-    padding: 4px 10px;
-    border-radius: var(--radius-full);
+    min-height: 50vh;
 }
 
-.section-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    margin-top: var(--spacing-xl);
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #e5e5e5;
+    border-bottom-color: #ff9600;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-sm);
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.stat-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
+/* Auth Cards */
+.signed-out-card {
+    background: #ffffff;
+    border: 3px solid #e5e5e5;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 0 #d0d0d0;
+    margin-top: 40px;
+}
+
+.auth-buttons {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: var(--spacing-sm);
-    transition: background-color 0.1s ease;
+    gap: 16px;
+    margin-top: 24px;
 }
 
-.stat-card:hover {
-    background: var(--color-gray-50);
-}
-
-.stat-value {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
-}
-
-.stat-label {
-    color: var(--color-text-secondary);
-    font-size: 0.8125rem;
-}
-
-/* Admin Controls */
-.admin-controls-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-sm);
+.auth-separator {
+    color: #afafaf;
+    font-weight: 700;
 }
 
 /* ============================================
-   FONT SELECTOR - Clean Native Design
+   HERO / HEADER
    ============================================ */
+.profile-hero {
+    background: #ffffff;
+    border-radius: 0 0 24px 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 0 #e5e5e5;
+    border: 3px solid #e5e5e5;
+    border-top: none;
+    margin-bottom: 32px;
+}
 
+.profile-cover {
+    height: 140px;
+    background: linear-gradient(135deg, #ff9600 0%, #ff6a00 100%);
+    position: relative;
+}
+
+.profile-cover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 100%);
+}
+
+.profile-header-content {
+    padding: 0 32px 32px 32px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.profile-avatar-wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid #ffffff;
+    background: #f7f7f7;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-top: -70px;
+    align-self: flex-start;
+}
+
+.profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #fff8eb;
+}
+
+.profile-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-identity {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 12px;
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: 800;
+    color: #4b4b4b;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+}
+
+.profile-email {
+    font-size: 16px;
+    color: #afafaf;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.profile-badges {
+    display: flex;
+    gap: 12px;
+}
+
+.stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff8eb;
+    border: 2px solid #ffe0a0;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #e58700;
+}
+
+.edit-profile-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ff9600;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #cc7800;
+    transition: all 0.15s ease;
+    align-self: center;
+    margin-top: 12px;
+    white-space: nowrap;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.edit-profile-action:hover {
+    background: #ffb44d;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #cc7800;
+}
+
+.edit-profile-action:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 #cc7800;
+}
+
+/* ============================================
+   CONTENT SECTIONS & BENTO STATS
+   ============================================ */
+.profile-content {
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #4b4b4b;
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.bento-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.bento-card {
+    background: #ffffff;
+    border: 3px solid #e5e5e5;
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    box-shadow: 0 4px 0 #d0d0d0;
+    transition: all 0.2s ease;
+}
+
+.bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 #d0d0d0;
+}
+
+.bento-card.streak { border-color: #ffd8a0; }
+.bento-card.streak:hover { border-color: #ffb44d; box-shadow: 0 8px 0 #ff9600; }
+.bento-card.xp { border-color: #ffe87a; }
+.bento-card.xp:hover { border-color: #ffc800; box-shadow: 0 8px 0 #e6b400; }
+.bento-card.lessons { border-color: #a0eaff; }
+.bento-card.lessons:hover { border-color: #1cb0f6; box-shadow: 0 8px 0 #1899d6; }
+
+.bento-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: #f7f7f7;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bento-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #4b4b4b;
+    margin: 0;
+}
+
+.bento-label {
+    font-size: 15px;
+    color: #afafaf;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* ============================================
+   FONT SELECTOR
+   ============================================ */
 .font-selector-container {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
+    background: #ffffff;
+    border: 3px solid #e5e5e5;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 0 #d0d0d0;
 }
 
 .font-selector-description {
-    color: var(--color-text-secondary);
-    font-size: 0.875rem;
-    margin-bottom: var(--spacing-md);
+    color: #afafaf;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
 }
 
 .font-preview {
-    background: var(--color-gray-50);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
+    background: #f7f7f7;
+    border: 2px solid #e5e5e5;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
     text-align: center;
-    font-size: 1.25rem;
-    color: var(--color-text);
+    font-size: 22px;
+    color: #4b4b4b;
     direction: rtl;
     line-height: 1.6;
 }
 
 .font-selector {
     width: 100%;
-    padding: 12px 14px;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #4b4b4b;
+    background: #ffffff;
+    border: 3px solid #e5e5e5;
+    border-radius: 16px;
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23afafaf' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 40px;
-    transition: border-color 0.1s ease;
+    background-position: right 16px center;
+    padding-right: 48px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 0 #e5e5e5;
 }
 
-.font-selector:hover {
-    border-color: var(--color-primary);
-}
-
-.font-selector:focus {
+.font-selector:hover, .font-selector:focus {
+    border-color: #1cb0f6;
     outline: none;
-    border-color: var(--color-primary);
+    box-shadow: 0 2px 0 #1899d6;
 }
 
-/* RTL Support */
 [dir="rtl"] .font-selector {
-    background-position: left 12px center;
-    padding-right: 14px;
-    padding-left: 40px;
+    background-position: left 16px center;
+    padding-right: 16px;
+    padding-left: 48px;
 }
 
-/* Responsive */
+/* ============================================
+   ADMIN CONTROLS & SIGN OUT
+   ============================================ */
+.admin-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.sign-out-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.sign-out-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff4b4b;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    background: #fff0f0;
+    border: 2px solid #ff4b4b;
+    transition: all 0.15s;
+    box-shadow: 0 4px 0 #ea2b2b;
+}
+
+.sign-out-trigger:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #ea2b2b;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
 @media (max-width: 768px) {
     .profile-page {
-        padding: var(--spacing-md);
-        padding-bottom: 100px;
+        padding: 0;
     }
 
-    .profile-header {
+    .profile-header-content {
         flex-direction: column;
+        align-items: center;
         text-align: center;
-        gap: var(--spacing-md);
+        padding: 0 20px 24px 20px;
     }
 
-    .profile-avatar {
-        width: 72px;
-        height: 72px;
-        font-size: 1.75rem;
+    .profile-avatar-wrapper {
+        align-self: center;
     }
 
-    .profile-info h1 {
-        font-size: 1.375rem;
+    .profile-identity {
+        width: 100%;
     }
 
-    .profile-stats-row {
+    .profile-badges {
         justify-content: center;
     }
 
-    .stats-grid {
+    .edit-profile-action {
+        width: 100%;
+        margin-top: 16px;
+        justify-content: center;
+    }
+
+    .bento-stats-grid {
         grid-template-columns: 1fr;
     }
 
     .admin-controls-grid {
         grid-template-columns: 1fr;
+    }
+
+    .profile-content {
+        padding: 0 20px;
     }
 }

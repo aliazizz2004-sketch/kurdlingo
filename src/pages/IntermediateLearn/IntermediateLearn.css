@@ -544,7 +544,7 @@
 
 .int-start-bubble {
     position: absolute;
-    top: -55px;
+    top: -70px; /* Moved higher to not clash with the crown */
     left: 50%;
     transform: translateX(-50%);
     background: #1e293b;

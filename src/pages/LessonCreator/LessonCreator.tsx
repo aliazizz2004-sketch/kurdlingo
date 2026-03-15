@@ -9,7 +9,7 @@ const gameTypes = [
     icon: '🎯',
     name: 'Multiple Choice',
     description: 'Classic quiz with 4 options',
-    color: '#58cc02',
+    color: '#ff9600',
     preview: '❓ → A B C D'
   },
   {

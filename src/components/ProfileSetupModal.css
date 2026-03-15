@@ -1,0 +1,189 @@
+.profile-setup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'Vazirmatn', var(--font-display, sans-serif);
+}
+
+.profile-setup-modal {
+    background: var(--color-surface);
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-xl);
+    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-setup-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-brand-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.profile-setup-header h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-text-main);
+    margin: 0 0 0.5rem;
+}
+
+.profile-setup-header p {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.profile-setup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+    padding-right: 8px; /* For scrollbar space */
+}
+
+/* Custom Scrollbar for form */
+.profile-setup-form::-webkit-scrollbar {
+    width: 6px;
+}
+.profile-setup-form::-webkit-scrollbar-track {
+    background: transparent;
+}
+.profile-setup-form::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 20px;
+}
+
+.profile-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.profile-form-group label {
+    font-weight: 700;
+    color: var(--color-text-main);
+    font-size: 0.95rem;
+}
+
+.profile-form-group input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-background);
+    color: var(--color-text-main);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color var(--transition-fast);
+}
+
+.profile-form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.avatar-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.avatar-choice {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    padding: 0.5rem;
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.avatar-choice:hover {
+    border-color: var(--color-primary-light);
+    transform: translateY(-2px);
+}
+
+.avatar-choice.selected {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+}
+
+.avatar-choice img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 999px;
+    background-color: white;
+    padding: 0.25rem;
+}
+
+.avatar-check {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    background: white;
+    border-radius: 50%;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 800;
+    font-size: 1.125rem;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color var(--transition-fast);
+}
+
+.profile-submit-btn:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+}
+
+.profile-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lexicon Learn - Dictionary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#fdfbf7",
+                        "background-dark": "#221610",
+                        "paper": "#f9f6f0",
+                        "ink": "#2d2926"
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .paper-texture {
+            background-color: #fdfbf7;
+            background-image: radial-gradient(#e5e7eb 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">book_5</span>
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-black leading-tight tracking-tight uppercase">Lexicon</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-primary font-bold text-sm border-b-2 border-primary pb-1" href="#">Dictionary</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium" href="#">Flashcards</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium" href="#">Grammar</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium" href="#">Community</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end items-center gap-6">
+<label class="relative flex w-full max-w-md">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+<span class="material-symbols-outlined text-xl">search</span>
+</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-sm transition-all" placeholder="Search for a word..." type="text" value="ephemeral"/>
+</label>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-primary/10 hover:text-primary transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-primary/10 hover:text-primary transition-all">
+<span class="material-symbols-outlined">person</span>
+</button>
+<div class="size-10 rounded-full border-2 border-primary/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALbRRcQfiYqCPE5kixqbbqDZIU9Bnrj9xFP1yG9jM6NXT3-j5zx2K5e3I6bXJue4l8dl-WOwXcrxiUL1eq_lJrS2VsaOjWqA_UWjeo4BCzH-EJZySNHLg2_012qFVsJBGjhdEa59Ptfeev_qFKyxkRF7JCaD4lEV6yAatphQdYJEjdfNPr5yhFCQeEjLUKrzG9P_RrKQIckqPs4x5Thg3_oteufeN2Y7aLHtR6d9bF2-rkB9Qkxbu_8INpg27bxRKcTNpDqF9PcZtT"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-6 py-8 flex flex-col lg:flex-row gap-8">
+<!-- Sidebar -->
+<aside class="w-full lg:w-72 flex flex-col gap-6 order-2 lg:order-1">
+<!-- Study Tools -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Study Tools</h3>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="text-sm">Recent Searches</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+<span class="text-sm">Bookmarks</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">folder</span>
+<span class="text-sm">Word Categories</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">format_quote</span>
+<span class="text-sm">Idioms</span>
+</a>
+</nav>
+</div>
+<!-- Word of the Day -->
+<div class="bg-primary rounded-xl p-5 text-white shadow-lg shadow-primary/20">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span class="text-[10px] font-bold uppercase tracking-widest opacity-80">Word of the Day</span>
+</div>
+<h4 class="font-serif text-2xl font-bold mb-1">Mellifluous</h4>
+<p class="text-xs italic opacity-90 mb-3">/məˈlɪfluəs/</p>
+<p class="text-sm leading-relaxed mb-4">Sweet or musical; pleasant to hear.</p>
+<button class="w-full py-2 bg-white/20 hover:bg-white/30 transition-colors rounded-lg text-xs font-bold backdrop-blur-sm">View Details</button>
+</div>
+<!-- Recent Searches List -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">History</h3>
+<ul class="flex flex-col gap-3">
+<li class="flex justify-between items-center group cursor-pointer">
+<span class="text-sm text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">Serendipity</span>
+<span class="text-[10px] text-slate-400">2h ago</span>
+</li>
+<li class="flex justify-between items-center group cursor-pointer">
+<span class="text-sm text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">Petrichor</span>
+<span class="text-[10px] text-slate-400">5h ago</span>
+</li>
+<li class="flex justify-between items-center group cursor-pointer border-t border-slate-50 dark:border-slate-800 pt-3">
+<span class="text-sm font-medium text-primary">Clear all</span>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Main Content (Dictionary Page) -->
+<article class="flex-1 order-1 lg:order-2">
+<div class="paper-texture min-h-[800px] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl overflow-hidden flex flex-col">
+<!-- Page Header (Paper Style) -->
+<div class="p-8 lg:p-12 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<nav class="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">
+<a class="hover:text-primary" href="#">English</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary">E - Words</span>
+</nav>
+<h1 class="font-serif text-6xl lg:text-7xl font-bold text-slate-900 dark:text-slate-100 mb-2">ephemeral</h1>
+<div class="flex items-center gap-4">
+<span class="font-serif text-xl italic text-slate-500 dark:text-slate-400">/ɪˈfɛmərəl/</span>
+<button class="flex items-center gap-1 px-3 py-1 rounded-full bg-slate-200/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 hover:bg-primary/20 hover:text-primary transition-all text-sm font-bold">
+<span class="material-symbols-outlined text-[18px]">volume_up</span>
+                                Listen
+                            </button>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">style</span>
+                            Save to Flashcards
+                        </button>
+<button class="flex items-center justify-center size-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-400 hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined">bookmark_add</span>
+</button>
+</div>
+</div>
+<!-- Page Body -->
+<div class="p-8 lg:p-12 flex flex-col gap-10">
+<!-- Part of Speech & Definition Section -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<span class="text-xs font-black uppercase tracking-[0.2em] bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-3 py-1 rounded">adjective</span>
+<div class="h-px flex-1 bg-slate-200 dark:border-slate-800"></div>
+</div>
+<div class="space-y-10">
+<!-- Definition 1 -->
+<div class="flex gap-6">
+<span class="font-serif text-3xl font-bold text-primary opacity-30">1</span>
+<div class="flex-1">
+<p class="font-serif text-2xl text-slate-800 dark:text-slate-200 leading-snug mb-4">
+                                        Lasting for a very short time.
+                                    </p>
+<div class="pl-4 border-l-4 border-primary/20 italic text-slate-600 dark:text-slate-400 text-lg font-serif">
+                                        "The ephemeral joys of childhood are often the ones we miss the most."
+                                    </div>
+</div>
+</div>
+<!-- Definition 2 -->
+<div class="flex gap-6">
+<span class="font-serif text-3xl font-bold text-primary opacity-30">2</span>
+<div class="flex-1">
+<p class="font-serif text-2xl text-slate-800 dark:text-slate-200 leading-snug mb-4">
+                                        (of plants) Having a very short life cycle, typically completing its life in a single season.
+                                    </p>
+<div class="pl-4 border-l-4 border-primary/20 italic text-slate-600 dark:text-slate-400 text-lg font-serif">
+                                        "The desert floor was briefly covered with ephemeral blooms after the rare rainfall."
+                                    </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Synonyms Section -->
+<section class="bg-white/50 dark:bg-slate-950/20 p-6 rounded-xl border border-primary/10">
+<h4 class="text-xs font-bold text-primary uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">link</span>
+                            Synonyms &amp; Antonyms
+                        </h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-2">Synonyms</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-700 dark:text-slate-300">transitory</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-700 dark:text-slate-300">fleeting</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-700 dark:text-slate-300">momentary</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-700 dark:text-slate-300">evanescent</span>
+</div>
+</div>
+<div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-2">Antonyms</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-700 dark:text-slate-300">permanent</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-700 dark:text-slate-300">eternal</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-700 dark:text-slate-300">everlasting</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Etymology Section -->
+<section>
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">history_edu</span>
+                            Etymology
+                        </h4>
+<p class="font-serif text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                            Late 16th century: from Greek <span class="font-bold">ephēmeros</span> ‘lasting only a day’, from <span class="font-bold">epi-</span> ‘upon’ + <span class="font-bold">hēmera</span> ‘day’.
+                        </p>
+</section>
+<!-- Multimedia/Visual Context -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+<div class="aspect-square rounded-xl overflow-hidden grayscale contrast-125 opacity-70 group hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+<img class="w-full h-full object-cover" data-alt="Fleeting bubbles in sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMKtw-jFKIAOemFf9MztS6hlHZ0rqTQ5yHRVWELaPnUiaegeuhc8NahFEqK1Yv3tG3PqeQr3xUtzz2cqv6TLTEOlLb8CU7ioEK6CHiLX6tIAm6JAt8SRK4GWMZK6q7mP2A4NqldbcWtvUK5EUoDPSxJvbvrvEsTD_TTbukrhuUsEur2EPuTtROe6N-x4uEMqitPslT4vSqQ-aLOS8LoKNAENwvQVz7nYmqKf3_RLElZh-Z8-qfMXTRzohiDbjeIGfpuMejam9pS1Ld"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden grayscale contrast-125 opacity-70 group hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+<img class="w-full h-full object-cover" data-alt="Withered flower in field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp96bsLyeKW_n_DdcO3_77fdymCsFM1wbctctRFx7cIZfcitD5_1Gb2NL0hsWox_GzQ5EN5EJ8XMikYE7dghgXEnGodFsH6V7hc0LYoN-0xmzlImf9FRE0RF1yJDqoX0NZzdtBXb0NX0dP98MpcFJ2k-5MY-fax3iBHGa9RMWHj8ygnNMQgvLvt0YvY8cXDcuhXHwSKkTyUESabv8Xrel-lHo-vmTZNoiRAamk0Fm-YEuxYPYlQRYCt4dUy-jJDsqdBK7f02fFANL7"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden grayscale contrast-125 opacity-70 group hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+<img class="w-full h-full object-cover" data-alt="Dandelion clock dispersing in wind" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8UnsNxNDrDCtMGyhY5dRy-3NTYBCo9vo5xNsKcBTqQfz9zELlixbVRvQZabDRF5CpcmvRre8nFZHkw_P-wgP7u6Oan-2hcDCBVaQ14aMAM2xxUpdpHRyKJojMmyC0DQxqYkUUxm-Yyk9_ztlEwzaq4oAF7XiHMkbKVMgBfnvj3ui0SvOLwn1IiPpoemeJa8qXWa4yG_id5XUD4Dnp3_0EScvgNFRuTR4YQ-GYnTqQrgEu3xDYm13PDqyxlSCoCJeBZMin_fxKG1zh"/>
+</div>
+</div>
+</div>
+<!-- Page Footer -->
+<div class="mt-auto p-8 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs text-slate-400 font-bold uppercase tracking-widest">
+<span>Page 412</span>
+<div class="flex gap-4">
+<a class="hover:text-primary flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+                            Previous: Envoy
+                        </a>
+<a class="hover:text-primary flex items-center gap-1" href="#">
+                            Next: Epic
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</article>
+</main>
+<!-- Global Footer -->
+<footer class="max-w-[1440px] mx-auto px-6 py-12 border-t border-slate-200 dark:border-slate-800 mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3 text-slate-400 grayscale">
+<span class="material-symbols-outlined text-3xl">book_5</span>
+<h2 class="text-lg font-black tracking-tight uppercase">Lexicon</h2>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-500">
+                © 2024 Lexicon Learn. Built for the modern polyglot.
+            </p>
+<div class="flex gap-6">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">help</span></a>
+</div>
+</div>
+</footer>
+</body></html>

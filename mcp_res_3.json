@@ -1,0 +1,13 @@
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "MCP error -32602: Input validation error: Invalid arguments for tool fetch-docs: [\n  {\n    \"expected\": \"'instructions' | 'auth-sdk' | 'db-sdk' | 'storage-sdk' | 'functions-sdk' | 'ai-integration-sdk' | 'auth-components-react' | 'auth-components-nextjs' | 'real-time' | 'deployment'\",\n    \"received\": \"undefined\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"docType\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+      }
+    ],
+    "isError": true
+  },
+  "jsonrpc": "2.0",
+  "id": 3
+}

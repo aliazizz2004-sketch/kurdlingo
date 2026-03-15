@@ -17,6 +17,9 @@
     background: #030712;
     user-select: none;
     -webkit-user-select: none;
+    touch-action: manipulation;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* ===== STARFIELD ===== */
@@ -80,8 +83,10 @@
     color: transparent;
     caret-color: transparent;
     z-index: 200;
-    font-size: 16px;
-    /* prevents iOS zoom */
+    font-size: 16px; /* prevents iOS zoom */
+    /* Disable autocomplete/suggest features that mess with mobile */
+    -webkit-text-security: none;
+    text-transform: none;
 }
 
 /* ========================================
@@ -165,7 +170,7 @@
     font-weight: 900;
     letter-spacing: -1.5px;
     margin: 0 0 0.3rem;
-    background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+    background: linear-gradient(135deg, #ff9600, #ffc800, #ffeda6);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -265,9 +270,9 @@
 .stg-level-node.current {
     width: 90px;
     height: 90px;
-    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    background: linear-gradient(135deg, #ff9600, #ffc800);
     border: none;
-    box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.2), 0 0 40px rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 0 8px rgba(255, 150, 0, 0.2), 0 0 40px rgba(255, 150, 0, 0.4);
     color: white;
     animation: stg-pulse-ring 2s infinite;
     z-index: 10;
@@ -275,20 +280,20 @@
 
 .stg-level-node.current:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 0 12px rgba(56, 189, 248, 0.25), 0 0 50px rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 0 12px rgba(255, 150, 0, 0.25), 0 0 50px rgba(255, 150, 0, 0.5);
 }
 
 @keyframes stg-pulse-ring {
     0% {
-        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4), 0 0 40px rgba(56, 189, 248, 0.4);
+        box-shadow: 0 0 0 0 rgba(255, 150, 0, 0.4), 0 0 40px rgba(255, 150, 0, 0.4);
     }
 
     70% {
-        box-shadow: 0 0 0 15px rgba(56, 189, 248, 0), 0 0 40px rgba(56, 189, 248, 0.4);
+        box-shadow: 0 0 0 15px rgba(255, 150, 0, 0), 0 0 40px rgba(255, 150, 0, 0.4);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0), 0 0 40px rgba(56, 189, 248, 0.4);
+        box-shadow: 0 0 0 0 rgba(255, 150, 0, 0), 0 0 40px rgba(255, 150, 0, 0.4);
     }
 }
 
@@ -370,7 +375,7 @@
     }
 
     30% {
-        background: rgba(34, 197, 94, 0.06);
+        background: rgba(255, 150, 0, 0.06);
     }
 
     100% {
@@ -447,10 +452,10 @@
 
 .stg-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    background: linear-gradient(90deg, #ffc800, #ff9600);
     border-radius: 3px;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 8px rgba(255, 150, 0, 0.4);
 }
 
 .stg-hud-stats {
@@ -501,12 +506,12 @@
     left: 14px;
     z-index: 90;
     padding: 4px 12px;
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.12);
+    background: rgba(255, 150, 0, 0.08);
+    border: 1px solid rgba(255, 150, 0, 0.12);
     border-radius: 12px;
     font-weight: 700;
     font-size: 0.72rem;
-    color: rgba(56, 189, 248, 0.7);
+    color: rgba(255, 150, 0, 0.7);
     font-family: 'JetBrains Mono', monospace;
 }
 
@@ -564,13 +569,13 @@
 }
 
 .stg-obj-label.active {
-    border-color: rgba(56, 189, 248, 0.5);
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2), 0 4px 16px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 150, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 150, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 .stg-typed {
-    color: #4ade80;
-    text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+    color: #ff9600;
+    text-shadow: 0 0 8px rgba(255, 150, 0, 0.4);
 }
 
 .stg-untyped {
@@ -656,11 +661,11 @@
     z-index: 25;
     pointer-events: none;
     background: #ffffff;
-    /* Intense glowing core with layered shadows for visibility */
+    /* Intense glowing orange core with layered shadows for visibility */
     box-shadow:
         0 0 5px 2px #ffffff,
-        0 0 10px 4px #00ffff,
-        0 0 20px 8px #3b82f6;
+        0 0 10px 4px #ffc800,
+        0 0 20px 8px #ff9600;
     animation: stg-projectile 0.3s linear forwards;
     will-change: transform, opacity;
 }
@@ -802,7 +807,7 @@
 }
 
 .stg-results-title.victory {
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    background: linear-gradient(135deg, #ff9600, #ffc800);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -831,7 +836,7 @@
 }
 
 .stg-rstat svg {
-    color: #38bdf8;
+    color: #ff9600;
 }
 
 .stg-rstat-val {
@@ -885,14 +890,14 @@
 }
 
 .stg-btn-primary {
-    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    background: linear-gradient(135deg, #ff9600, #cc7800);
     color: white;
-    box-shadow: 0 4px 0 #1e40af;
+    box-shadow: 0 4px 0 #995a00;
 }
 
 .stg-btn-primary:active {
     transform: translateY(4px);
-    box-shadow: 0 0 0 #1e40af;
+    box-shadow: 0 0 0 #995a00;
 }
 
 .stg-btn-secondary {
@@ -1117,8 +1122,22 @@
 }
 
 .stg-keyboard-open .stg-obj-asset {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+}
+
+/* Hide non-essential overlays when keyboard is up */
+.stg-keyboard-open .stg-streak,
+.stg-keyboard-open .stg-wpm {
+    display: none;
+}
+
+.stg-keyboard-open .stg-obj-trans {
+    display: none;
+}
+
+.stg-keyboard-open .stg-score-pop {
+    font-size: 0.8rem;
 }
 
 /* Mobile tap hint */

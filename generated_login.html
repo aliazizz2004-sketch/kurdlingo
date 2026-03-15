@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LingoBright - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center font-display">
+<div class="flex w-full max-w-[1200px] min-h-[700px] bg-white dark:bg-slate-900 shadow-2xl overflow-hidden rounded-xl m-4">
+<!-- Left Side: Illustration & Branding -->
+<div class="hidden lg:flex flex-col justify-center items-center w-1/2 bg-primary/10 dark:bg-primary/5 p-12 relative overflow-hidden">
+<div class="absolute top-8 left-8 flex items-center gap-2">
+<div class="bg-primary p-2 rounded-lg">
+<span class="material-symbols-outlined text-white">translate</span>
+</div>
+<h1 class="text-2xl font-black text-primary tracking-tight">LingoBright</h1>
+</div>
+<div class="relative z-10 text-center">
+<div class="w-full max-w-md mx-auto mb-8 aspect-square rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center p-8">
+<img alt="Happy diverse group of people learning together" class="w-full h-full object-cover rounded-full border-8 border-white dark:border-slate-800 shadow-lg" data-alt="Group of diverse people studying with gadgets" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0T0uwpPSqsfPog1Ow8YJvyrZ5iqr8LJm3GgNCS49epCl_7xq0obNQO1PNV9XduSPjDeuvw3GY2y_GeEf5iQP8L8k0pT1UEf3yf8HExI6OzMJxq8zfSGw7ZIWxa2baEFPQ3SCUcccnhmW5d5yCyHYJiEM4Ags8mrWkSUPrtyRGratb5kYw7wNedD5B-DwQgAwDEVJB60OSSwh-8Pp1gzTZ6BoitMGLhH-IxRG7wJHup99Cwu96xFwUgB_hIvIEfhrWZudzPod0H18y"/>
+</div>
+<h2 class="text-4xl font-black text-slate-900 dark:text-slate-100 leading-tight mb-4">
+                    The world's most <br/> fun way to learn.
+                </h2>
+<p class="text-lg text-slate-600 dark:text-slate-400">
+                    Master over 30 languages through bite-sized <br/> lessons and gamified challenges.
+                </p>
+</div>
+<!-- Background accents -->
+<div class="absolute -bottom-20 -left-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+<div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Right Side: Login Form -->
+<div class="w-full lg:w-1/2 flex flex-col justify-center p-8 md:p-16 lg:p-24 bg-white dark:bg-slate-900">
+<div class="max-w-md w-full mx-auto">
+<div class="lg:hidden flex items-center gap-2 mb-8">
+<div class="bg-primary p-2 rounded-lg">
+<span class="material-symbols-outlined text-white">translate</span>
+</div>
+<h1 class="text-xl font-black text-primary tracking-tight">LingoBright</h1>
+</div>
+<div class="mb-10">
+<h3 class="text-3xl font-black text-slate-900 dark:text-slate-100 mb-2">Welcome back!</h3>
+<p class="text-slate-500 dark:text-slate-400 font-medium">Log in to continue your streak.</p>
+</div>
+<form class="space-y-6">
+<div>
+<label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Username or Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">person</span>
+<input class="w-full pl-12 pr-4 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-0 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 font-medium transition-colors" placeholder="Enter your email" type="text"/>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Password</label>
+<a class="text-sm font-bold text-primary hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
+<input class="w-full pl-12 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-0 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 font-medium transition-colors" placeholder="Enter your password" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-black py-4 rounded-xl shadow-lg shadow-primary/25 transition-all active:scale-95 text-lg" type="submit">
+                        LOG IN
+                    </button>
+</form>
+<div class="relative my-10 text-center">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t-2 border-slate-100 dark:border-slate-800"></div>
+</div>
+<span class="relative px-4 bg-white dark:bg-slate-900 text-slate-400 font-bold text-sm uppercase tracking-widest">or login with</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-3 py-3 px-4 border-2 border-slate-100 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-bold text-slate-700 dark:text-slate-300">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                        Google
+                    </button>
+<button class="flex items-center justify-center gap-3 py-3 px-4 border-2 border-slate-100 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-bold text-slate-700 dark:text-slate-300">
+<svg class="w-5 h-5" fill="#1877F2" viewbox="0 0 24 24">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+</svg>
+                        Facebook
+                    </button>
+</div>
+<div class="mt-12 text-center">
+<p class="text-slate-500 dark:text-slate-400 font-bold">
+                        Don't have an account? 
+                        <a class="text-primary hover:underline ml-1" href="#">CREATE ONE NOW</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</body></html>

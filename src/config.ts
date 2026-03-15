@@ -1,14 +1,2 @@
-/**
- * Application Configuration
- * 
- * SECURITY NOTE: API keys are now handled securely through server-side
- * Vercel Edge Functions. The GOOGLE_AI_API_KEY environment variable
- * should be set in your Vercel Dashboard > Project Settings > Environment Variables.
- * 
- * This approach ensures the API key is NEVER exposed to client-side code.
- */
-export const CONFIG = {
-    // App settings (non-sensitive)
-    APP_NAME: 'KurdLingo',
-    VERSION: '1.0.0',
-};
+export const INSFORGE_BASE_URL = 'https://k5xke53t.us-east.insforge.app';
+export const INSFORGE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3OC0xMjM0LTU2NzgtOTBhYi1jZGVmMTIzNDU2NzgiLCJlbWFpbCI6ImFub25AaW5zZm9yZ2UuY29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MzA0NjR9.R93wKXUycglkjkyYQstVJjlZEffNbkEXS1VDP1LOPng';
