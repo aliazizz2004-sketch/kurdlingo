@@ -71,18 +71,18 @@
 /* ===== HIDDEN INPUT — must stay in viewport for mobile keyboard ===== */
 .stg-hidden-input {
     position: fixed;
-    bottom: 0;
+    top: 50px; /* changed from bottom: 0 to prevent keyboard scrolling the view off screen */
     left: 50%;
     transform: translateX(-50%);
     width: 1px;
     height: 1px;
-    opacity: 0;
+    opacity: 0.01;
     border: none;
     outline: none;
     background: transparent;
     color: transparent;
     caret-color: transparent;
-    z-index: 200;
+    z-index: -1;
     font-size: 16px; /* prevents iOS zoom */
     /* Disable autocomplete/suggest features that mess with mobile */
     -webkit-text-security: none;
