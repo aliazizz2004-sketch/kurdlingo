@@ -1,68 +1,150 @@
-# KurdLingo 🇮🇶
+<div align="center">
 
-**The free, open-source Kurdish language learning platform.**
+# 🟠 KurdLingo
 
-[![Live App](https://img.shields.io/badge/Live%20App-kurdlingo.vercel.app-blue?style=flat-square)](https://kurdlingo.vercel.app)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Built with TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+### The Modern Kurdish Language Learning Platform
 
-> Learn Kurdish. Completely free. AI-powered lessons, real conversations, and gamified progress — all in 5 minutes a day.
+[![Live App](https://img.shields.io/badge/▶_Live_App-kurdlingo.vercel.app-FF9600?style=for-the-badge&logo=vercel&logoColor=white)](https://kurdlingo.vercel.app)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
+
+**Learn Kurdish Sorani — completely free.** AI-powered lessons, real conversations,<br/>gamified progress, and interactive mini-games — all in 5 minutes a day.
 
 ---
 
-## ✨ Features
+</div>
 
-- **AI-Powered Lessons** — Adaptive sessions that adjust to your level automatically
-- **AI Conversation Roleplay** — Practice real dialogues with AI scenarios, not just flashcards
-- **Vocabulary Games** — Space Typing, NeuroMatch, Typing Rush — build vocabulary fast
-- **Gamified Progress** — Streaks, XP, leaderboards, and a guidebook for every lesson
-- **50+ Interactive Lessons** — Structured curriculum for real Kurdish fluency
-- **Free Forever** — No credit card, no paywalls, no catch
+<br/>
 
-## 📊 Stats
+## ⚡ Overview
 
-| Metric | Value |
-|--------|-------|
-| Interactive Lessons | 50+ |
-| Active Learners | 1,200+ |
-| Satisfaction | 98% |
+KurdLingo is a full-featured, gamified language learning web app built for **Kurdish Sorani** learners worldwide. Inspired by the best in language-tech (Duolingo, Memrise), it combines adaptive AI with structured lessons, interactive games, and a vibrant community leaderboard — all wrapped in a premium, mobile-first interface.
 
-## 🚀 Getting Started
+> 🎯 **Mission:** Make Kurdish language education accessible, engaging, and free for everyone.
 
-```bash
-# Clone the repo
-git clone https://github.com/Abdulla090/kurdlingoo.git
-cd kurdlingoo
+<br/>
 
-# Install dependencies
-npm install
+## ✨ Key Features
 
-# Copy environment variables
-cp .env.example .env
+| Feature | Description |
+|---------|-------------|
+| 🧠 **AI-Powered Lessons** | Adaptive sessions that adjust difficulty to your level in real-time |
+| 💬 **AI Roleplay Chat** | Practice real Kurdish conversations with AI-driven scenario dialogues |
+| 🚀 **Space Typing Game** | Defend your spaceship by typing falling Kurdish words before they crash |
+| ⚡ **Typing Rush** | Speed-type full Kurdish passages with WPM tracking and accuracy scoring |
+| 🧩 **NeuroMatch** | Memory card-matching game to reinforce vocabulary retention |
+| 📖 **Interactive Guidebook** | Comprehensive grammar and culture guides for every lesson unit |
+| 📚 **Kurdish Dictionary** | Built-in searchable dictionary with translations and examples |
+| 🏆 **Leaderboard** | Compete with other learners globally on XP and streaks |
+| 🎯 **Daily Quests** | Complete daily challenges to earn bonus XP and maintain streaks |
+| 🛒 **Shop** | Spend earned gems on power-ups, streak freezes, and cosmetics |
+| 👤 **User Profiles** | Track progress, stats, and customize your avatar |
+| 🔐 **Authentication** | Secure sign-up/login with email and OAuth providers |
 
-# Start the dev server
-npm run dev
-```
+<br/>
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React + TypeScript + Vite
-- **Deployment:** Vercel
-- **AI:** Integrated AI conversation & lesson engine
+```
+Frontend        React 19 · TypeScript 5 · Vite · React Router
+Styling         CSS3 · Tailwind CSS 3.4 · Custom Design System
+Backend         InsForge BaaS (Auth, Database, Storage, Functions)
+AI Engine       Integrated AI for lessons, roleplay, and transcription
+Icons           Lucide React · DiceBear Avatars
+Deployment      Vercel (Frontend) · InsForge (Backend)
+```
 
-## 🌐 Live App
+<br/>
 
-👉 [kurdlingo.vercel.app](https://kurdlingo.vercel.app)
+## 🚀 Quick Start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Abdulla090/kurdlingoo.git
+cd kurdlingoo
+
+# 2. Install dependencies
+npm install
+
+# 3. Set up environment variables
+cp .env.example .env
+# Fill in your InsForge credentials in .env
+
+# 4. Start development server
+npm run dev
+```
+
+The app will be running at `http://localhost:5000`
+
+<br/>
+
+## 📁 Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── Layout/          # Sidebar, BottomNav, responsive layout
+│   ├── Button/          # Custom button component
+│   └── ProfileSetupModal/
+├── pages/               # Route-based page components
+│   ├── LandingPage/     # Marketing landing page
+│   ├── Learn/           # Main learning path with unit progression
+│   ├── Lesson/          # Interactive lesson engine
+│   ├── SpaceTypingGame/ # Space-themed typing defense game
+│   ├── TypingRush/      # Speed typing passage game
+│   ├── NeuroMatch/      # Memory card matching game
+│   ├── RolePlayHub/     # AI conversation scenarios hub
+│   ├── RolePlayChat/    # Real-time AI roleplay chat
+│   ├── Guidebook/       # Grammar & culture guides
+│   ├── BookDictionary/  # Searchable Kurdish dictionary
+│   ├── Leaderboard/     # Global XP leaderboard
+│   ├── Quests/          # Daily quest system
+│   ├── Shop/            # In-app gem shop
+│   └── Profile/         # User profile & settings
+├── context/             # React Context providers (Language, Auth)
+├── data/                # Static data, word banks, lesson content
+├── services/            # API service layer
+└── styles/              # Global styles and CSS variables
+```
+
+<br/>
+
+## 📊 Stats
+
+<div align="center">
+
+| Metric | Value |
+|:------:|:-----:|
+| 📝 Interactive Lessons | **50+** |
+| 🎮 Mini-Games | **3** |
+| 👥 Active Learners | **1,200+** |
+| ⭐ Satisfaction Rate | **98%** |
+| 🌍 Languages Supported | **Kurdish Sorani · English** |
+
+</div>
+
+<br/>
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to open issues, submit pull requests, or suggest new features.
+Contributions, issues, and feature requests are welcome!
 
-1. Fork the repo
-2. Create your branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m 'feat: add my feature'`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Open a Pull Request
+```bash
+# 1. Fork the repository
+# 2. Create your feature branch
+git checkout -b feature/amazing-feature
+
+# 3. Commit your changes
+git commit -m 'feat: add amazing feature'
+
+# 4. Push to the branch
+git push origin feature/amazing-feature
+
+# 5. Open a Pull Request
+```
+
+<br/>
 
 ## 📄 License
 
@@ -70,4 +152,10 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">Made with ❤️ for the Kurdish community</p>
+<div align="center">
+
+**Made with 🧡 for the Kurdish community**
+
+[Live App](https://kurdlingo.vercel.app) · [Report Bug](https://github.com/Abdulla090/kurdlingoo/issues) · [Request Feature](https://github.com/Abdulla090/kurdlingoo/issues)
+
+</div>
