@@ -122,7 +122,7 @@ export default function LandingPage() {
                         <button className="lp-btn lp-btn--ghost" onClick={() => navigate('/login')}>
                             چوونەژوورەوە
                         </button>
-                        <button className="lp-btn lp-btn--solid" onClick={() => navigate('/learn')}>
+                        <button className="lp-btn lp-btn--solid" onClick={() => navigate('/login')}>
                             دەستپێبکە
                         </button>
                     </div>
@@ -151,12 +151,9 @@ export default function LandingPage() {
                                 لەگەڵ کوردلینگۆ بە ڕێگای وانەی ئینتەراکتیڤ، ڕۆڵگێڕان لەگەڵ زیرەکی دەستکرد و یاری — زمانی ئینگلیزی و زمانەکانی تر فێر بە بەکەیفترین شێوە.
                             </p>
                             <div className="lp-hero__ctas">
-                                <button className="lp-hero__primary" onClick={() => navigate('/learn')}>
+                                <button className="lp-hero__primary" onClick={() => navigate('/login')}>
                                     <ArrowLeft size={18} />
                                     دەستپێکردنی خۆڕایی
-                                </button>
-                                <button className="lp-hero__secondary" onClick={() => navigate('/login')}>
-                                    هەژمارم هەیە
                                 </button>
                             </div>
                             <div className="lp-hero__metrics">
@@ -482,7 +479,7 @@ export default function LandingPage() {
                         <p className="lp-cta__desc">
                             ئێستا بە خۆڕایی دەستپێبکە و ببە بە یەکێک لە هەزاران فێرخوازی کوردلینگۆ
                         </p>
-                        <button className="lp-cta__button" onClick={() => navigate('/learn')}>
+                        <button className="lp-cta__button" onClick={() => navigate('/login')}>
                             <ArrowLeft size={18} />
                             دەستپێبکە — خۆڕاییە
                         </button>

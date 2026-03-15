@@ -41,7 +41,7 @@
   --grad-gold: linear-gradient(135deg, #ffc800 0%, #e5a500 100%);
 
   /* --- NEUTRALS & SURFACES --- */
-  --color-background: #d0d0d0;
+  --color-background: #f4f1ea;
   --color-surface: #ffffff;
   /* Visible gray background, white cards */
   --color-surface-dim: #e5e5e5;

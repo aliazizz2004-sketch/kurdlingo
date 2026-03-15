@@ -1,5 +1,18 @@
 import { NavLink } from 'react-router-dom';
-import { Home, BookOpen, Trophy, Target, Store, User, MessageCircle, Book, MoreHorizontal, ChevronLeft, ChevronRight, LogIn } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import {
+    Home01Icon,
+    Book02Icon,
+    MessageMultiple02Icon,
+    Book04Icon,
+    Award01Icon,
+    Target02Icon,
+    ShoppingBag01Icon,
+    UserCircle02Icon,
+    MoreHorizontalIcon,
+    ArrowLeft01Icon,
+    Login01Icon,
+} from '@hugeicons/core-free-icons';
 import { useLanguage } from '../../context/LanguageContext';
 import { SignedIn, SignedOut, UserButton, SignInButton } from '@insforge/react';
 import './Layout.css';
@@ -13,14 +26,14 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
     const { t } = useLanguage();
 
     const navItems = [
-        { icon: Home, label: t('learn'), path: '/learn', color: 'blue' },
-        { icon: BookOpen, label: t('guidebook'), path: '/guidebook-hub', color: 'purple' },
-        { icon: MessageCircle, label: t('roleplay') || 'Role-Play', path: '/roleplay', color: 'pink' },
-        { icon: Book, label: t('dictionary'), path: '/dictionary', color: 'green' },
-        { icon: Trophy, label: t('leaderboards'), path: '/leaderboard', color: 'yellow' },
-        { icon: Target, label: t('quests'), path: '/quests', color: 'red' },
-        { icon: Store, label: t('shop'), path: '/shop', color: 'teal' },
-        { icon: User, label: t('profile'), path: '/profile', color: 'orange' },
+        { icon: Home01Icon, label: t('learn'), path: '/learn' },
+        { icon: Book02Icon, label: t('guidebook'), path: '/guidebook-hub' },
+        { icon: MessageMultiple02Icon, label: t('roleplay') || 'Role-Play', path: '/roleplay' },
+        { icon: Book04Icon, label: t('dictionary'), path: '/dictionary' },
+        { icon: Award01Icon, label: t('leaderboards'), path: '/leaderboard' },
+        { icon: Target02Icon, label: t('quests'), path: '/quests' },
+        { icon: ShoppingBag01Icon, label: t('shop'), path: '/shop' },
+        { icon: UserCircle02Icon, label: t('profile'), path: '/profile' },
     ];
 
     return (
@@ -37,42 +50,56 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
                         className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
                         title={isCollapsed ? item.label : ''}
                     >
-                        <div className={`nav-icon-wrapper ${item.color}`}>
-                            <item.icon size={22} className="nav-icon-inner" />
-                        </div>
-                        {!isCollapsed && <span className="nav-label">{item.label}</span>}
+                        {({ isActive }) => (
+                            <>
+                                <div className="nav-icon-hi">
+                                    <HugeiconsIcon
+                                        icon={item.icon}
+                                        size={22}
+                                        color={isActive ? '#e07600' : '#6b7280'}
+                                        strokeWidth={isActive ? 2 : 1.75}
+                                    />
+                                </div>
+                                {!isCollapsed && <span className="nav-label-hi">{item.label}</span>}
+                            </>
+                        )}
                     </NavLink>
                 ))}
-                
+
                 <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '8px', paddingBottom: '16px' }}>
                     <SignedIn>
                         <div className="nav-item" style={{ cursor: 'default' }}>
                             <UserButton />
-                            {!isCollapsed && <span className="nav-label" style={{ marginLeft: 8 }}>Account</span>}
+                            {!isCollapsed && <span className="nav-label-hi" style={{ marginLeft: 8 }}>Account</span>}
                         </div>
                     </SignedIn>
                     <SignedOut>
                         <div className="nav-item">
-                            <div className="nav-icon-wrapper gray">
-                                <LogIn size={22} className="nav-icon-inner" />
+                            <div className="nav-icon-hi">
+                                <HugeiconsIcon icon={Login01Icon} size={22} color="#6b7280" strokeWidth={1.75} />
                             </div>
                             {!isCollapsed && (
-                                <span className="nav-label"><SignInButton /></span>
+                                <span className="nav-label-hi"><SignInButton /></span>
                             )}
                         </div>
                     </SignedOut>
-                    <button className="nav-item more-btn">
-                        <div className="nav-icon-wrapper gray">
-                            <MoreHorizontal size={22} className="nav-icon-inner" />
+                    <button
+                        className="nav-item more-btn"
+                        onClick={toggleSidebar}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}
+                    >
+                        <div className="nav-icon-hi">
+                            <HugeiconsIcon
+                                icon={isCollapsed ? ArrowLeft01Icon : MoreHorizontalIcon}
+                                size={22}
+                                color="#6b7280"
+                                strokeWidth={1.75}
+                            />
                         </div>
-                        {!isCollapsed && <span className="nav-label">{t('more')}</span>}
+                        {!isCollapsed && <span className="nav-label-hi">{t('more')}</span>}
                     </button>
                 </div>
             </nav>
-
-            <button className="collapse-btn" onClick={toggleSidebar}>
-                {isCollapsed ? <ChevronRight size={24} /> : <ChevronLeft size={24} />}
-            </button>
         </aside>
     );
 };

@@ -7,7 +7,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: #c8c8c8;
+    background: var(--color-background);
 }
 
 .lesson-header {

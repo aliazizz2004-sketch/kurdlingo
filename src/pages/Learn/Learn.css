@@ -78,7 +78,7 @@
     position: relative;
 
     /* VISIBLE GRAY - not white */
-    background: #d0d0d0;
+    background: var(--color-background);
     color: #3c3c3c;
 }
 

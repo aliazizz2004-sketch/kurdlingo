@@ -52,7 +52,7 @@ html {
 
 body {
     font-family: var(--font-family-base);
-    background: #d0d0d0;
+    background: var(--color-background);
     color: #3c3c3c;
     line-height: 1.6;
     font-size: 16px;
