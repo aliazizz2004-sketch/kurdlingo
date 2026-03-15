@@ -16,36 +16,39 @@ const useTextToSpeech = () => {
         text: string,
         onReady: () => void,
         onEnd?: () => void,
-        voice?: { aiName: string, gender: string, tone: string }
+        voice?: { aiName: string, gender: string, tone: string },
+        forceNative: boolean = false
     ) => {
         try {
-            const cacheKey = `${text}_${voice?.aiName || ''}_${voice?.gender || ''}_${voice?.tone || ''}`;
-            
-            let audioData: { audioContent: string, mimeType: string } | null = null;
-            
-            if (audioCache.has(cacheKey)) {
-                audioData = audioCache.get(cacheKey)!;
-            } else {
-                // 1. Fetch audio from Gemini TTS
-                const result = await requestGeminiVoice(text, voice);
-                if (result.success && result.audioContent) {
-                    audioData = { audioContent: result.audioContent, mimeType: result.mimeType || 'audio/wav' };
-                    audioCache.set(cacheKey, audioData);
+            if (!forceNative) {
+                const cacheKey = `${text}_${voice?.aiName || ''}_${voice?.gender || ''}_${voice?.tone || ''}`;
+                
+                let audioData: { audioContent: string, mimeType: string } | null = null;
+                
+                if (audioCache.has(cacheKey)) {
+                    audioData = audioCache.get(cacheKey)!;
+                } else {
+                    // 1. Fetch audio from Gemini TTS
+                    const result = await requestGeminiVoice(text, voice);
+                    if (result.success && result.audioContent) {
+                        audioData = { audioContent: result.audioContent, mimeType: result.mimeType || 'audio/wav' };
+                        audioCache.set(cacheKey, audioData);
+                    }
                 }
-            }
 
-            if (audioData) {
-                // 2. Audio is ready - show the message NOW
-                onReady();
+                if (audioData) {
+                    // 2. Audio is ready - show the message NOW
+                    onReady();
 
-                // 3. Play the audio
-                try {
-                    await playBase64Audio(audioData.audioContent, audioData.mimeType);
-                } catch (playError) {
-                    console.warn('Audio playback failed:', playError);
+                    // 3. Play the audio
+                    try {
+                        await playBase64Audio(audioData.audioContent, audioData.mimeType);
+                    } catch (playError) {
+                        console.warn('Audio playback failed:', playError);
+                    }
+                    if (onEnd) onEnd();
+                    return;
                 }
-                if (onEnd) onEnd();
-                return;
             }
         } catch (error) {
             console.warn('Gemini TTS failed:', error);
@@ -69,26 +72,28 @@ const useTextToSpeech = () => {
     /**
      * speak - Simple speak that shows message immediately (for re-play button, etc.)
      */
-    const speak = useCallback(async (text: string, onEnd?: () => void, voice?: { aiName: string, gender: string, tone: string }) => {
+    const speak = useCallback(async (text: string, onEnd?: () => void, voice?: { aiName: string, gender: string, tone: string }, forceNative: boolean = false) => {
         try {
-            const cacheKey = `${text}_${voice?.aiName || ''}_${voice?.gender || ''}_${voice?.tone || ''}`;
-            
-            let audioData: { audioContent: string, mimeType: string } | null = null;
-            
-            if (audioCache.has(cacheKey)) {
-                audioData = audioCache.get(cacheKey)!;
-            } else {
-                const result = await requestGeminiVoice(text, voice);
-                if (result.success && result.audioContent) {
-                    audioData = { audioContent: result.audioContent, mimeType: result.mimeType || 'audio/wav' };
-                    audioCache.set(cacheKey, audioData);
+            if (!forceNative) {
+                const cacheKey = `${text}_${voice?.aiName || ''}_${voice?.gender || ''}_${voice?.tone || ''}`;
+                
+                let audioData: { audioContent: string, mimeType: string } | null = null;
+                
+                if (audioCache.has(cacheKey)) {
+                    audioData = audioCache.get(cacheKey)!;
+                } else {
+                    const result = await requestGeminiVoice(text, voice);
+                    if (result.success && result.audioContent) {
+                        audioData = { audioContent: result.audioContent, mimeType: result.mimeType || 'audio/wav' };
+                        audioCache.set(cacheKey, audioData);
+                    }
                 }
-            }
 
-            if (audioData) {
-                await playBase64Audio(audioData.audioContent, audioData.mimeType);
-                if (onEnd) onEnd();
-                return;
+                if (audioData) {
+                    await playBase64Audio(audioData.audioContent, audioData.mimeType);
+                    if (onEnd) onEnd();
+                    return;
+                }
             }
         } catch (error) {
             console.warn('Gemini TTS failed:', error);

@@ -20,6 +20,13 @@ interface TTSResponse {
     error?: string;
 }
 
+interface EvalResponse {
+    rating?: number;
+    correction?: string;
+    success: boolean;
+    error?: string;
+}
+
 interface GeminiVoiceResponse {
     audioContent: string;
     mimeType: string;
@@ -78,6 +85,37 @@ export async function sendChatMessage(
             response: '',
             success: false,
             error: error.message || 'Failed to generate response'
+        };
+    }
+}
+
+/**
+ * Evaluate the user's message using the secure API proxy
+ */
+export async function evalChatMessage(message: string): Promise<EvalResponse> {
+    try {
+        const response = await fetch('/api/eval-message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || 'Eval request failed');
+        }
+        
+        return {
+            rating: data.rating,
+            correction: data.correction,
+            success: true
+        };
+    } catch (error: any) {
+        console.error('Eval API Error:', error);
+        return {
+            success: false,
+            error: error.message || 'Failed to evaluate response'
         };
     }
 }

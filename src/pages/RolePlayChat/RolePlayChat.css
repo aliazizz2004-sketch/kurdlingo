@@ -199,6 +199,56 @@
     display: block;
 }
 
+/* AI Evaluation Card */
+.message-eval-card {
+    margin-top: 10px;
+    background: #fff;
+    color: #3c3c3c;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 13px;
+    border: 2px solid #e5e5e5;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.eval-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 800;
+    color: #ff9600;
+    margin-bottom: 4px;
+}
+
+.eval-star {
+    margin-top: -2px;
+}
+
+.eval-correction {
+    font-weight: 500;
+    line-height: 1.4;
+    color: #777;
+}
+
+.eval-loading {
+    display: flex;
+    gap: 4px;
+    padding: 4px 0;
+    justify-content: center;
+}
+
+.eval-loading span {
+    width: 6px;
+    height: 6px;
+    background: #afafaf;
+    border-radius: 50%;
+    animation: typing 1s infinite alternate;
+}
+.eval-loading span:nth-child(2) { animation-delay: 0.2s; }
+.eval-loading span:nth-child(3) { animation-delay: 0.4s; }
+
+
 .bubble-meta {
     display: flex;
     align-items: center;

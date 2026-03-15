@@ -23,7 +23,7 @@ export interface RolePlayScenario {
     image: string;
 }
 
-const COMMON_RULES = "DO NOT repeat yourself or the user. Always keep the conversation moving by asking a new question or bringing up a new related topic. Be natural and use conversational fillers occasionally. If the user is stuck, give a gentle hint.";
+const COMMON_RULES = "CRITICAL RULE: NEVER answer with long paragraphs. Your responses MUST be extremely short (2 or 3 sentences maximum). DO NOT repeat yourself or the user. Always be intensely curious, keep the conversation moving, and ALWAYS end your response by asking a new question or opening up a new related topic. Be natural and use conversational fillers occasionally. If the user is stuck, give a gentle hint.";
 
 export const rolePlayScenarios: RolePlayScenario[] = [
     {

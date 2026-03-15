@@ -1,19 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { rolePlayScenarios } from '../../data/rolePlayScenarios';
-import { sendChatMessage } from '../../services/api';
+import { sendChatMessage, evalChatMessage } from '../../services/api';
 import useSpeechRecognition from '../../hooks/useSpeechRecognition';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
 import { useLanguage } from '../../context/LanguageContext';
-import { Mic, Send, ArrowLeft, Play, Square } from 'lucide-react';
+import { Mic, Send, ArrowLeft, Play, Square, Star } from 'lucide-react';
 import './RolePlayChat.css';
 
 interface Message {
+    id?: string;
     role: 'ai' | 'user';
     text: string;
     timestamp: Date;
     image?: string;
     avatar?: string;
+    rating?: number;
+    correction?: string;
+    isEvaluating?: boolean;
 }
 
 interface ChatHistoryItem {
@@ -58,6 +62,7 @@ const RolePlayChat: React.FC = () => {
             () => {
                 // onReady: audio is fetched, show the message now
                 const initialAI: Message = {
+                    id: `msg-initial`,
                     role: 'ai' as const,
                     text: scenario.initialMessage,
                     timestamp: new Date(),
@@ -133,7 +138,8 @@ const RolePlayChat: React.FC = () => {
     const handleSendMessage = async (text: string) => {
         if (!text.trim() || !scenario) return;
 
-        const userMsg: Message = { role: 'user', text, timestamp: new Date() };
+        const msgId = `msg-${Date.now()}`;
+        const userMsg: Message = { id: msgId, role: 'user', text, timestamp: new Date(), isEvaluating: true };
         setMessages(prev => [...prev, userMsg]);
         setIsTyping(true);
         setInputText(''); // Clear input
@@ -143,6 +149,19 @@ const RolePlayChat: React.FC = () => {
             role: 'user',
             parts: [{ text }]
         }];
+
+        // Evaluate user's grammar
+        evalChatMessage(text).then(evalResult => {
+            if (evalResult.success && (evalResult.rating || evalResult.correction)) {
+                setMessages(prev => prev.map(m => 
+                    m.id === msgId 
+                        ? { ...m, isEvaluating: false, rating: evalResult.rating, correction: evalResult.correction }
+                        : m
+                ));
+            } else {
+                setMessages(prev => prev.map(m => m.id === msgId ? { ...m, isEvaluating: false } : m));
+            }
+        });
 
         try {
             // Use secure API - no API key exposed!
@@ -164,6 +183,7 @@ const RolePlayChat: React.FC = () => {
                     () => {
                         // onReady: audio is fetched, show the message now
                         const aiMsg: Message = {
+                            id: `msg-${Date.now()}-ai`,
                             role: 'ai',
                             text: result.response,
                             timestamp: new Date(),
@@ -231,6 +251,25 @@ const RolePlayChat: React.FC = () => {
                                     </div>
                                 )}
                             </div>
+                            {msg.role === 'user' && (msg.rating || msg.correction || msg.isEvaluating) && (
+                                <div className="message-eval-card">
+                                    {msg.isEvaluating ? (
+                                        <div className="eval-loading">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="eval-rating">
+                                                <Star className="eval-star" size={14} fill="currentColor" />
+                                                <span>{msg.rating}/10</span>
+                                            </div>
+                                            {msg.correction && (
+                                                <div className="eval-correction">{msg.correction}</div>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                            )}
                             <div className="bubble-meta">
                                 {msg.role === 'ai' && (
                                     <>

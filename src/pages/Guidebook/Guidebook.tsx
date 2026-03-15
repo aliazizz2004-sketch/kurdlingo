@@ -112,7 +112,7 @@ const Guidebook = () => {
             case 'sentence-structure':
                 return (
                     <div className="visual-block sentence-structure">
-                        <div className="sentence-row english" onClick={() => speak(visual.data.english.map(p => p.word).join(' '))}>
+                        <div className="sentence-row english" onClick={() => speak(visual.data.english.map(p => p.word).join(' '), undefined, undefined, true)}>
                             {visual.data.english.map((part, i) => (
                                 <div key={i} className="word-block" style={{ borderColor: part.color }}>
                                     <span className="label" style={{ color: part.color }}>{part.label}</span>
@@ -136,7 +136,7 @@ const Guidebook = () => {
                 return (
                     <div className="visual-block pronoun-grid">
                         {visual.data.map((item, i) => (
-                            <div key={i} className="pronoun-card clickable" onClick={() => speak(item.english)}>
+                            <div key={i} className="pronoun-card clickable" onClick={() => speak(item.english, undefined, undefined, true)}>
                                 <div className="p-english">{item.english} <Volume2 size={12} className="card-voice-hint" /></div>
                                 <div className="p-kurdish">{item.kurdish}</div>
                                 <div className="p-icon">{item.icon}</div>
@@ -150,7 +150,7 @@ const Guidebook = () => {
                         <div className="timeline-line"></div>
                         <div className="timeline-points">
                             {visual.data.map((point, i) => (
-                                <div key={i} className="t-point clickable" onClick={() => speak(point.label)}>
+                                <div key={i} className="t-point clickable" onClick={() => speak(point.label, undefined, undefined, true)}>
                                     <div className="t-dot"></div>
                                     <div className="t-label">{point.label}</div>
                                     <div className="t-sub">{point.sub}</div>
@@ -164,7 +164,7 @@ const Guidebook = () => {
                 return (
                     <div className="visual-block comparison-visual">
                         {visual.data.map((item, i) => (
-                            <div key={i} className="comp-item clickable" onClick={() => speak(item.english)}>
+                            <div key={i} className="comp-item clickable" onClick={() => speak(item.english, undefined, undefined, true)}>
                                 <div
                                     className="comp-circle"
                                     style={{
@@ -192,7 +192,7 @@ const Guidebook = () => {
                             <span>Verb Form</span>
                         </div>
                         {visual.data.map((row, i) => (
-                            <div key={i} className="conj-row clickable" onClick={() => speak(`${row.subject} ${row.verb}`)}>
+                            <div key={i} className="conj-row clickable" onClick={() => speak(`${row.subject} ${row.verb}`, undefined, undefined, true)}>
                                 <div className="conj-subject">
                                     <span className="eng">{row.subject}</span>
                                     <span className="kur">{row.subKurdish}</span>
@@ -208,7 +208,7 @@ const Guidebook = () => {
                         {visual.data.map((msg, i) => (
                             <div key={i}
                                 className={`chat-bubble ${msg.speaker === 'A' ? 'left' : 'right'} clickable`}
-                                onClick={() => speak(msg.english)}
+                                onClick={() => speak(msg.english, undefined, undefined, true)}
                             >
                                 <div className="chat-avatar">{msg.avatar}</div>
                                 <div className="chat-content">
@@ -252,7 +252,7 @@ const Guidebook = () => {
                     {section.items && (
                         <div className="items-grid">
                             {section.items.map((item, i) => (
-                                <div key={i} className="info-item clickable" onClick={() => speak(item.term)}>
+                                <div key={i} className="info-item clickable" onClick={() => speak(item.term, undefined, undefined, true)}>
                                     <span className="term">{item.term} <Volume2 size={12} /></span>
                                     <span className="definition">{item.definition}</span>
                                 </div>
@@ -277,7 +277,7 @@ const Guidebook = () => {
                                         </ul>
                                     )}
                                     {sub.example && (
-                                        <div className="example-box clickable" onClick={() => speak(sub.example.english)}>
+                                        <div className="example-box clickable" onClick={() => speak(sub.example.english, undefined, undefined, true)}>
                                             <div className="target-text" dir="ltr">
                                                 {sub.example.english}
                                                 <Volume2 size={16} className="example-voice" />
@@ -369,7 +369,7 @@ const Guidebook = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.05 }}
                                     className="phrase-card clickable"
-                                    onClick={() => speak(phrase.english)}
+                                    onClick={() => speak(phrase.english, undefined, undefined, true)}
                                 >
                                     <div className="phrase-main">
                                         <span className="target-lang" dir="ltr">
