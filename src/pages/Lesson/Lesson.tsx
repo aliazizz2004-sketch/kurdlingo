@@ -615,6 +615,32 @@ const SentenceBuilder = ({ exercise, onAnswer }) => {
     const checkAnswer = () => {
         const sentence = selectedIndices.map(i => shuffledWords[i]);
         const isCorrect = JSON.stringify(sentence) === JSON.stringify(exercise.correctSentence);
+        
+        // Speak the correct sentence aloud via TTS when checking
+        const correctText = exercise.correctSentence.join(' ');
+        if (correctText && /[a-zA-Z]/.test(correctText)) {
+            // Use Gemini TTS first, fallback to Web Speech API
+            (async () => {
+                try {
+                    const { requestGeminiVoice, playBase64Audio } = await import('../../services/api');
+                    const result = await requestGeminiVoice(correctText);
+                    if (result.success && result.audioContent) {
+                        await playBase64Audio(result.audioContent, result.mimeType || 'audio/wav');
+                        return;
+                    }
+                } catch (e) {
+                    // fallback
+                }
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(correctText);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.9;
+                    window.speechSynthesis.speak(utterance);
+                }
+            })();
+        }
+        
         onAnswer(isCorrect);
     };
 
@@ -1109,46 +1135,185 @@ const StoryCompletion = ({ exercise, onAnswer }) => {
     );
 };
 
-// Roleplay Chat Exercise Component - AI-powered chat simulation
+// Roleplay Chat Exercise Component - Voice-only AI-powered conversation
 const RoleplayChat = ({ exercise, onAnswer }) => {
     const { t } = useLanguage();
     const [messages, setMessages] = useState(() => {
-        // Initialize with AI messages from the exercise
-        return exercise.chatMessages?.filter(m => m.sender === 'ai') || [];
+        // Only show the initial AI greeting, not the "confirm:" response
+        return (exercise.chatMessages || []).filter(m => m.sender === 'ai' && !m.text.startsWith('confirm:'));
     });
-    const [userInput, setUserInput] = useState('');
     const [isChecking, setIsChecking] = useState(false);
     const [feedback, setFeedback] = useState<{ correct: boolean; message: string; correctAnswer?: string } | null>(null);
     const [hasAnswered, setHasAnswered] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
 
+    // Voice recording state
+    const [isRecording, setIsRecording] = useState(false);
+    const [isTranscribing, setIsTranscribing] = useState(false);
+    const [spokenText, setSpokenText] = useState('');
+    const [isSpeakingAI, setIsSpeakingAI] = useState(false);
+    const [voiceError, setVoiceError] = useState<string | null>(null);
+    const recognitionRef = useRef<any>(null);
+
+    // Use refs for state that closures need to read
+    const hasAnsweredRef = useRef(false);
+    const isCheckingRef = useRef(false);
+    useEffect(() => { hasAnsweredRef.current = hasAnswered; }, [hasAnswered]);
+    useEffect(() => { isCheckingRef.current = isChecking; }, [isChecking]);
+
+    // Speak AI messages on mount/exercise change
     useEffect(() => {
-        // Reset state when exercise changes
-        setMessages(exercise.chatMessages?.filter(m => m.sender === 'ai') || []);
-        setUserInput('');
+        setMessages((exercise.chatMessages || []).filter(m => m.sender === 'ai' && !m.text.startsWith('confirm:')));
+        setSpokenText('');
         setFeedback(null);
         setHasAnswered(false);
         setIsChecking(false);
+        setIsRecording(false);
+        setIsTranscribing(false);
+        setVoiceError(null);
+        hasAnsweredRef.current = false;
+        isCheckingRef.current = false;
+
+        // Speak the first AI greeting message aloud
+        const aiGreeting = (exercise.chatMessages || []).find(m => m.sender === 'ai' && !m.text.startsWith('confirm:'));
+        if (aiGreeting) {
+            setIsSpeakingAI(true);
+            speakText(aiGreeting.text).finally(() => setIsSpeakingAI(false));
+        }
     }, [exercise.id, exercise.question]);
 
     useEffect(() => {
-        // Scroll to bottom when messages change
         if (chatEndRef.current) {
             chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [messages, isChecking]);
+    }, [messages, isChecking, isTranscribing]);
 
-    const checkAnswer = async () => {
-        if (!userInput.trim() || hasAnswered || isChecking) return;
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (recognitionRef.current) {
+                try { recognitionRef.current.abort(); } catch (e) { }
+            }
+            window.speechSynthesis?.cancel();
+        };
+    }, []);
+
+    // TTS helper - speak text using Gemini or fallback
+    const speakText = async (text: string) => {
+        try {
+            const { requestGeminiVoice, playBase64Audio } = await import('../../services/api');
+            const result = await requestGeminiVoice(text);
+            if (result.success && result.audioContent) {
+                await playBase64Audio(result.audioContent, result.mimeType || 'audio/wav');
+                return;
+            }
+        } catch (e) {
+            console.warn('Gemini TTS failed, using fallback:', e);
+        }
+        // Fallback: Web Speech API
+        if ('speechSynthesis' in window) {
+            return new Promise<void>((resolve) => {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                utterance.onend = () => resolve();
+                utterance.onerror = () => resolve();
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+    };
+
+    // Toggle voice recording (click to start, click again to stop)
+    const toggleRecording = () => {
+        if (isCheckingRef.current || hasAnsweredRef.current || isTranscribing) return;
+
+        if (isRecording) {
+            // Stop recording
+            setIsRecording(false);
+            if (recognitionRef.current) {
+                try { recognitionRef.current.stop(); } catch (e) { }
+            }
+            return;
+        }
+
+        // Start recording
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            setVoiceError(t('unsupportedBrowser') || 'Speech recognition is not available in this browser.');
+            return;
+        }
+
+        setVoiceError(null);
+
+        if (recognitionRef.current) {
+            try { recognitionRef.current.abort(); } catch (e) { }
+        }
+
+        const recognition = new SpeechRecognition();
+        recognitionRef.current = recognition;
+        recognition.lang = exercise.speechLang || 'ku-IQ';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = () => {
+            setIsRecording(true);
+            setSpokenText('');
+        };
+
+        recognition.onresult = (event: any) => {
+            const result = event.results[0][0].transcript;
+            setSpokenText(result);
+            setIsRecording(false);
+            setIsTranscribing(false);
+            submitAnswer(result);
+        };
+
+        recognition.onerror = (event: any) => {
+            console.error('Speech recognition error:', event.error);
+            setIsRecording(false);
+            setIsTranscribing(false);
+            if (event.error !== 'no-speech' && event.error !== 'aborted') {
+                setVoiceError(t('couldNotHear') || 'Could not hear you. Please try again.');
+            }
+        };
+
+        recognition.onend = () => {
+            setIsRecording(false);
+            setIsTranscribing(false);
+        };
+
+        try {
+            recognition.start();
+        } catch (err) {
+            console.error('Recognition start error:', err);
+            setIsRecording(false);
+            setVoiceError(t('voiceError') || 'Voice processing failed. Please try again.');
+        }
+    };
+
+    // Replay the last AI message
+    const replayAIMessage = () => {
+        if (isSpeakingAI) return;
+        const aiMessages = messages.filter(m => m.sender === 'ai');
+        if (aiMessages.length > 0) {
+            const lastAiMsg = aiMessages[aiMessages.length - 1].text;
+            setIsSpeakingAI(true);
+            speakText(lastAiMsg).finally(() => setIsSpeakingAI(false));
+        }
+    };
+
+    const submitAnswer = async (userInput: string) => {
+        if (!userInput.trim() || hasAnsweredRef.current || isCheckingRef.current) return;
 
         setIsChecking(true);
+        isCheckingRef.current = true;
 
-        // Add user message to chat
         const userMessage = { sender: 'user' as const, text: userInput, avatar: '👤', name: t('you') || 'You' };
         setMessages(prev => [...prev, userMessage]);
 
         try {
-            // Build conversation history for context
             const historyText = messages.map(m => `${m.name || m.sender}: ${m.text}`).join('\n');
 
             const prompt = `
@@ -1161,7 +1326,7 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
             
             The user (You) just said: "${userInput}"
 
-            Is this a valid, intelligible, and appropriate response in English for this context?
+            Is this a valid, intelligible, and appropriate response for this context?
             Return ONLY a valid JSON object:
             {
                 "isCorrect": boolean,
@@ -1178,29 +1343,35 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
                 evaluation = JSON.parse(cleanJson);
             } catch (e) {
                 console.error("AI JSON Parse Error", e);
-                // Fallback: assume correct if it's long enough, else false
                 evaluation.isCorrect = userInput.length > 3;
                 evaluation.feedback = evaluation.isCorrect ? "Good effort!" : "Please try to say more.";
             }
 
             setHasAnswered(true);
+            hasAnsweredRef.current = true;
 
             if (evaluation.isCorrect) {
                 setFeedback({
                     correct: true,
-                    message: evaluation.feedback || t('greatResponse') || 'Great response! 🎉'
+                    message: evaluation.feedback || t('greatResponse') || 'Great response!'
                 });
 
-                // Add AI response if provided
-                if (evaluation.aiResponse) {
+                // Show the confirm message from exercise data, or fallback to AI response
+                const confirmMsg = (exercise.chatMessages || []).find(m => m.sender === 'ai' && m.text.startsWith('confirm:'));
+                const responseText = confirmMsg 
+                    ? confirmMsg.text.replace('confirm:', '').trim() 
+                    : evaluation.aiResponse;
+                
+                if (responseText) {
                     const aiMessage = {
                         sender: 'ai' as const,
-                        text: evaluation.aiResponse,
+                        text: responseText,
                         avatar: exercise.chatMessages?.[0]?.avatar || '🤖',
                         name: exercise.chatMessages?.[0]?.name || 'AI'
                     };
                     setTimeout(() => {
                         setMessages(prev => [...prev, aiMessage]);
+                        speakText(responseText);
                     }, 600);
                 }
             } else {
@@ -1213,22 +1384,16 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
 
         } catch (error) {
             console.error("AI Roleplay Error", error);
-            // Fallback to local check if API fails
             const localCheck = exercise.acceptableResponses?.some(r => r.toLowerCase().includes(userInput.toLowerCase()));
             setHasAnswered(true);
+            hasAnsweredRef.current = true;
             setFeedback({
                 correct: localCheck || false,
                 message: localCheck ? "Good job!" : "Could not verify with AI, but good effort.",
             });
         } finally {
             setIsChecking(false);
-        }
-    };
-
-    const handleKeyPress = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            checkAnswer();
+            isCheckingRef.current = false;
         }
     };
 
@@ -1260,6 +1425,9 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
                                 {msg.name && <span className="message-name">{msg.name}</span>}
                                 <div className="message-bubble">
                                     {msg.text}
+                                    {msg.sender === 'user' && (
+                                        <span className="voice-badge" title="Spoken answer">🎤</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -1288,6 +1456,11 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
                         </div>
                         <div className="feedback-text">
                             <p>{feedback.message}</p>
+                            {spokenText && (
+                                <p className="spoken-transcript">
+                                    <strong>{t('youSaid') || 'You said'}:</strong> "{spokenText}"
+                                </p>
+                            )}
                             {!feedback.correct && feedback.correctAnswer && (
                                 <p className="correct-answer">
                                     <strong>{t('correctAnswer') || 'Correct answer'}:</strong> {feedback.correctAnswer}
@@ -1297,25 +1470,58 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
                     </div>
                 )}
 
-                {/* Input area */}
+                {/* Voice input area */}
                 {!hasAnswered ? (
-                    <div className="chat-input-area">
-                        <textarea
-                            className="chat-input"
-                            value={userInput}
-                            onChange={(e) => setUserInput(e.target.value)}
-                            onKeyDown={handleKeyPress}
-                            placeholder={t('typeYourResponse') || 'Type your response here...'}
-                            rows={2}
-                            disabled={isChecking}
-                        />
+                    <div className="voice-input-area">
+                        {/* Replay button */}
                         <button
-                            className={`chat-send-btn ${userInput.trim() && !isChecking ? 'active' : ''}`}
-                            onClick={checkAnswer}
-                            disabled={!userInput.trim() || isChecking}
+                            className={`voice-replay-btn ${isSpeakingAI ? 'playing' : ''}`}
+                            onClick={replayAIMessage}
+                            disabled={isSpeakingAI}
+                            title="Replay AI message"
+                            type="button"
                         >
-                            {isChecking ? <Loader2 className="animate-spin" size={20} /> : <MessageCircle size={20} />}
+                            <Volume2 size={20} />
                         </button>
+
+                        {/* Main mic button */}
+                        <div className="voice-mic-wrapper">
+                            {isTranscribing || isChecking ? (
+                                <div className="voice-processing">
+                                    <Loader2 className="animate-spin" size={28} />
+                                    <span>{isTranscribing ? (t('transcribing') || 'Processing voice...') : (t('checking') || 'Checking...')}</span>
+                                </div>
+                            ) : (
+                                <button
+                                    className={`voice-mic-btn ${isRecording ? 'recording' : ''}`}
+                                    onClick={toggleRecording}
+                                    type="button"
+                                    disabled={isChecking || isTranscribing}
+                                >
+                                    <div className={`voice-mic-circle ${isRecording ? 'active' : ''}`}>
+                                        <span className="voice-mic-emoji">🎤</span>
+                                    </div>
+                                    {isRecording && (
+                                        <div className="voice-pulse-rings">
+                                            <span className="pulse-ring ring-1"></span>
+                                            <span className="pulse-ring ring-2"></span>
+                                            <span className="pulse-ring ring-3"></span>
+                                        </div>
+                                    )}
+                                </button>
+                            )}
+                            <span className="voice-mic-label">
+                                {isRecording
+                                    ? (t('tapToStop') || 'Tap to stop')
+                                    : (t('tapToSpeak') || 'Tap to speak')}
+                            </span>
+                            {voiceError && (
+                                <span className="voice-error-msg">{voiceError}</span>
+                            )}
+                        </div>
+
+                        {/* Spacer for symmetry */}
+                        <div style={{ width: 44 }} />
                     </div>
                 ) : (
                     <div className="exercise-footer" style={{ position: 'sticky', bottom: 0 }}>

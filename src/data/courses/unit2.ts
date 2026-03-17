@@ -259,13 +259,13 @@ export const unit2: Unit = {
                         { kurdish: 'باپیر', english: 'Grandfather' },
                         { kurdish: 'داپیر', english: 'Grandmother' },
                         { kurdish: 'مام', english: 'Uncle' },
-                        { kurdish: 'پور', english: 'Son' }
+                        { kurdish: 'کوڕ', english: 'Son' }
                     ]
                 },
                 {
                     type: 'sentence-builder',
-                    question: "بە ئینگلیزی بنووسە: 'خوشکی ئەو'",
-                    sourceText: 'خوشکی ئەو',
+                    question: "بە ئینگلیزی بنووسە: 'خوشکی ئەو (نێر)'",
+                    sourceText: 'خوشکی ئەو (نێر)',
                     correctSentence: ['His', 'sister'],
                     options: ['His', 'sister', 'brother', 'My', 'Her']
                 },
@@ -346,7 +346,7 @@ export const unit2: Unit = {
                         'سڵاو کراس دەوێم'
                     ],
                     keywordsRequired: ['کراس'],
-                    hints: ['کراس', 'دەوێت', 'سڵاو']
+                    hints: ['shirt', 'want', 'hello']
                 },
                 {
                     type: 'conversation',
@@ -484,7 +484,7 @@ export const unit2: Unit = {
                         'ڕێک بڕۆ و چەپ بچۆ'
                     ],
                     keywordsRequired: ['ڕێک', 'چەپ'],
-                    hints: ['بڕۆ', 'ڕێک', 'چەپ', 'ڕاست']
+                    hints: ['go', 'straight', 'left', 'right']
                 },
                 {
                     type: 'conversation',
@@ -558,7 +558,7 @@ export const unit2: Unit = {
                         'هەوا گەرمە'
                     ],
                     keywordsRequired: ['گەرم', 'خۆرەتاو'],
-                    hints: ['خۆرەتاو', 'گەرم', 'ئەمڕۆ']
+                    hints: ['sunny', 'hot', 'today']
                 },
                 {
                     type: 'multiple-choice',

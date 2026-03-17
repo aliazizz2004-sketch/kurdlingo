@@ -2497,6 +2497,275 @@
 }
 
 /* ============================================
+   VOICE INPUT UI - Roleplay Chat
+   ============================================ */
+
+/* Voice Input Area */
+.voice-input-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 16px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+}
+
+/* Replay button */
+.voice-replay-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    background: var(--color-background);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.voice-replay-btn:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: scale(1.05);
+}
+
+.voice-replay-btn.playing {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    animation: replayPulse 1s ease-in-out infinite;
+}
+
+.voice-replay-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@keyframes replayPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Mic wrapper */
+.voice-mic-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+/* Mic button */
+.voice-mic-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: none;
+}
+
+.voice-mic-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(255, 150, 0, 0.35);
+    transition: all 0.2s ease;
+    z-index: 2;
+    position: relative;
+}
+
+.voice-mic-btn:hover .voice-mic-circle:not(.active) {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 150, 0, 0.45);
+}
+
+.voice-mic-circle.active {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.5);
+    animation: micBreathe 1.2s ease-in-out infinite;
+}
+
+.voice-mic-emoji {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+@keyframes micBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* Pulse rings */
+.voice-pulse-rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid rgba(239, 68, 68, 0.4);
+    animation: voicePulseRing 2s ease-out infinite;
+}
+
+.pulse-ring.ring-1 {
+    width: 90px;
+    height: 90px;
+    animation-delay: 0s;
+}
+
+.pulse-ring.ring-2 {
+    width: 110px;
+    height: 110px;
+    animation-delay: 0.4s;
+}
+
+.pulse-ring.ring-3 {
+    width: 130px;
+    height: 130px;
+    animation-delay: 0.8s;
+}
+
+@keyframes voicePulseRing {
+    0% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.3);
+    }
+}
+
+/* Mic label */
+.voice-mic-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-align: center;
+    min-height: 1.2em;
+}
+
+.voice-mic-btn.recording + .voice-mic-label,
+.voice-mic-wrapper:has(.voice-mic-btn.recording) .voice-mic-label {
+    color: #ef4444;
+}
+
+/* Processing state */
+.voice-processing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-primary);
+    padding: 16px 0;
+}
+
+.voice-processing span {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Voice badge on user messages */
+.voice-badge {
+    margin-left: 6px;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* Spoken transcript in feedback */
+.spoken-transcript {
+    margin-top: 6px !important;
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+/* Dark mode voice input overrides */
+.dark-mode .voice-input-area {
+    background: var(--color-surface);
+    border-top-color: var(--color-border);
+}
+
+.dark-mode .voice-replay-btn {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text-light);
+}
+
+.dark-blue-mode .voice-input-area {
+    background: #0c1426;
+    border-top-color: #1e3a5f;
+}
+
+.dark-blue-mode .voice-replay-btn {
+    background: #0f172a;
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+.dark-blue-mode .voice-mic-label {
+    color: #94a3b8;
+}
+
+.dark-blue-mode .voice-processing {
+    color: #60a5fa;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .voice-mic-btn {
+        width: 70px;
+        height: 70px;
+    }
+
+    .voice-mic-circle {
+        width: 62px;
+        height: 62px;
+    }
+
+    .voice-mic-emoji {
+        font-size: 1.6rem;
+    }
+
+    .pulse-ring.ring-1 {
+        width: 78px;
+        height: 78px;
+    }
+
+    .pulse-ring.ring-2 {
+        width: 96px;
+        height: 96px;
+    }
+
+    .pulse-ring.ring-3 {
+        width: 114px;
+        height: 114px;
+    }
+}
+
+/* ============================================
    DARK MODE OVERRIDES (Appended)
    ============================================ */
 

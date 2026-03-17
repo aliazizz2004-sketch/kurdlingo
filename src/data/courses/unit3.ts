@@ -203,7 +203,7 @@ export const unit3: Unit = {
                         'بریانی و سەڵاتە دەوێم'
                     ],
                     keywordsRequired: ['دەوێت'],
-                    hints: ['کەباب', 'بریانی', 'دۆلمە', 'دەوێت']
+                    hints: ['kebab', 'biryani', 'dolma', 'want']
                 },
                 {
                     type: 'conversation',
@@ -518,7 +518,7 @@ export const unit3: Unit = {
                         'من پرۆگرامەرم و چوار ساڵ ئەزموونم هەیە'
                     ],
                     keywordsRequired: ['ئەزموون'],
-                    hints: ['پیشەکەم', 'ئەزموون', 'ساڵ']
+                    hints: ['my profession', 'experience', 'year']
                 },
                 {
                     type: 'conversation',
@@ -671,7 +671,7 @@ export const unit3: Unit = {
                         'سڵاو بەڵێ حجزم کردووە'
                     ],
                     keywordsRequired: ['حجز', 'بەڵێ'],
-                    hints: ['حجز', 'ناوم', 'بەڵێ']
+                    hints: ['reservation', 'my name', 'yes']
                 },
                 {
                     type: 'conversation',
