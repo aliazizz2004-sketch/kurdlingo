@@ -69,20 +69,87 @@
     padding-bottom: 120px; /* Space for sticky bottom bar */
 }
 
-/* Mobile overrides */
+/* Mobile overrides — full single-column experience */
 @media (max-width: 768px) {
+    .modern-dict-wrapper {
+        flex-direction: column;
+        min-height: 100svh;
+        overflow-x: hidden;
+    }
+
+    /* Sidebar becomes full page on mobile */
     .modern-dict-sidebar {
         width: 100%;
+        flex-shrink: 0;
         border-right: none;
+        border-bottom: none;
         height: auto;
+        min-height: 100svh;
         position: relative;
+        overflow: hidden;
     }
+
+    /* Detail panel also full page */
     .modern-dict-main {
         width: 100%;
+        min-height: 100svh;
         height: auto;
+        padding-bottom: 80px;
     }
+
+    /* Hide whichever panel isn't active */
     .mobile-hidden {
         display: none !important;
+    }
+
+    /* Make sure list scroll area fills the screen on mobile */
+    .list-scroll-area {
+        max-height: calc(100svh - 180px);
+        overflow-y: auto;
+    }
+
+    /* Word rows — give more breathing room on mobile */
+    .word-row {
+        padding: 14px 16px;
+    }
+
+    .row-word {
+        font-size: 1.05rem;
+    }
+
+    .row-preview {
+        font-size: 0.85rem;
+    }
+
+    /* Category pills — horizontal scroll */
+    .category-pills-row {
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 12px !important;
+    }
+
+    /* Detail view header */
+    .detail-header {
+        padding: 12px 16px;
+    }
+
+    .headword {
+        font-size: 1.8rem;
+    }
+
+    /* Bottom nav / action bar */
+    .quiz-footer {
+        padding: 16px;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 380px) {
+    .headword {
+        font-size: 1.5rem;
+    }
+
+    .word-row {
+        padding: 12px 14px;
     }
 }
 

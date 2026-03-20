@@ -1,0 +1,76 @@
+{
+  "unit": "unit-1",
+  "generated": "2026-03-20T01:59:55.064Z",
+  "sections": [
+    {
+      "id": "intro",
+      "file": "/audio/guidebook/unit-1/intro.wav",
+      "available": true
+    },
+    {
+      "id": "grammar-sentence-structure",
+      "file": "/audio/guidebook/unit-1/grammar-sentence-structure.wav",
+      "available": true
+    },
+    {
+      "id": "grammar-pronouns",
+      "file": "/audio/guidebook/unit-1/grammar-pronouns.wav",
+      "available": false
+    },
+    {
+      "id": "grammar-tobe",
+      "file": "/audio/guidebook/unit-1/grammar-tobe.wav",
+      "available": false
+    },
+    {
+      "id": "pronunciation-th",
+      "file": "/audio/guidebook/unit-1/pronunciation-th.wav",
+      "available": false
+    },
+    {
+      "id": "pronunciation-w-r",
+      "file": "/audio/guidebook/unit-1/pronunciation-w-r.wav",
+      "available": false
+    },
+    {
+      "id": "culture-greetings",
+      "file": "/audio/guidebook/unit-1/culture-greetings.wav",
+      "available": false
+    },
+    {
+      "id": "vocabulary-basics",
+      "file": "/audio/guidebook/unit-1/vocabulary-basics.wav",
+      "available": false
+    },
+    {
+      "id": "numbers-1-10",
+      "file": "/audio/guidebook/unit-1/numbers-1-10.wav",
+      "available": false
+    },
+    {
+      "id": "greetings-dialogue",
+      "file": "/audio/guidebook/unit-1/greetings-dialogue.wav",
+      "available": false
+    },
+    {
+      "id": "formality-levels",
+      "file": "/audio/guidebook/unit-1/formality-levels.wav",
+      "available": false
+    },
+    {
+      "id": "colors",
+      "file": "/audio/guidebook/unit-1/colors.wav",
+      "available": false
+    },
+    {
+      "id": "common-verbs",
+      "file": "/audio/guidebook/unit-1/common-verbs.wav",
+      "available": false
+    },
+    {
+      "id": "key-phrases",
+      "file": "/audio/guidebook/unit-1/key-phrases.wav",
+      "available": false
+    }
+  ]
+}
