@@ -14,10 +14,9 @@ import {
     ArrowLeft01Icon,
     Login01Icon,
 } from '@hugeicons/core-free-icons';
-import { supabase } from '../../lib/supabase';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { SignedIn, SignedOut, useUser } from '../../context/AuthContext';
+import { SignedIn, SignedOut } from '../../context/AuthContext';
 import './Layout.css';
 
 interface SidebarProps {

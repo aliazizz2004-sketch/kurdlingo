@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useUser } from '../context/AuthContext';
 import { Translate, CheckCircle } from '@phosphor-icons/react';
-import { X, Camera, Check } from 'lucide-react';
 import './ProfileSetupModal.css';
 
 const AVAILABLE_AVATARS = [
