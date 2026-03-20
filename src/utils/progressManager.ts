@@ -40,7 +40,13 @@ export const getUserProgress = (): UserProgress => {
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
-            return JSON.parse(stored);
+            const parsed = JSON.parse(stored);
+            return {
+                ...defaultProgress,
+                ...parsed,
+                units: parsed.units || {},
+                lessonsCompleted: parsed.lessonsCompleted || {}
+            };
         }
     } catch (error) {
         console.error('Error reading progress from localStorage:', error);
@@ -64,6 +70,7 @@ export const saveUserProgress = (progress: UserProgress): void => {
  */
 export const isLessonCompleted = (lessonId: string): boolean => {
     const progress = getUserProgress();
+    if (!progress || !progress.lessonsCompleted) return false;
     return !!progress.lessonsCompleted[lessonId];
 };
 
