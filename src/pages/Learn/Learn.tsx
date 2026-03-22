@@ -41,7 +41,18 @@ const Learn: React.FC = () => {
     const [units, setUnits] = React.useState<Unit[]>([]);
     const activeNodeRef = React.useRef<HTMLAnchorElement>(null);
 
-    // Auto-scroll to active lesson node
+    // Find the last completed lesson to focus on
+    const lastCompletedId = React.useMemo(() => {
+        let lastId: string | null = null;
+        for (const unit of units) {
+            for (const lesson of unit.lessons) {
+                if (isLessonCompleted(lesson.id)) lastId = lesson.id;
+            }
+        }
+        return lastId;
+    }, [units]);
+
+    // Auto-scroll to lesson node
     React.useEffect(() => {
         if (activeNodeRef.current) {
             setTimeout(() => {
@@ -213,7 +224,7 @@ const Learn: React.FC = () => {
                                     return (
                                         <React.Fragment key={lesson.id}>
                                             <Link
-                                                ref={isCurrent ? activeNodeRef : null}
+                                                ref={(lastCompletedId ? lesson.id === lastCompletedId : isCurrent) ? activeNodeRef : null}
                                                 to={isLocked ? '#' : lessonPath}
                                                 className={`path-node ${positionClass} ${isCurrent ? 'current' : ''} ${isLocked ? 'locked' : ''} ${completed ? 'completed' : ''}`}
                                                 onClick={handleClick}

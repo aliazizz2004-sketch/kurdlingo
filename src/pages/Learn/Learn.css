@@ -456,20 +456,29 @@
 }
 
 .path-node.locked .node-circle {
-    background: var(--color-surface-dim);
-    /* Force gray */
-    color: var(--color-border-hover);
-    box-shadow:
-        inset 0 2px 0 rgba(255, 255, 255, 0.5),
-        0 4px 0 var(--color-border-hover);
-    transform: translateY(4px);
-    /* Permanently half-pressed */
+    background: #e2e8f0 !important;
+    color: #94a3b8 !important;
+    box-shadow: 
+        inset 0 4px 2px rgba(255, 255, 255, 0.8), 
+        inset 0 -4px 2px rgba(0, 0, 0, 0.05), 
+        0 8px 0 #cbd5e1, 
+        0 12px 10px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(0);
     filter: none;
 }
 
+body.dark-mode .path-node.locked .node-circle {
+    background: #334155 !important;
+    color: #475569 !important;
+    box-shadow: 
+        inset 0 4px 2px rgba(255, 255, 255, 0.05), 
+        inset 0 -4px 2px rgba(0, 0, 0, 0.2), 
+        0 8px 0 #1e293b, 
+        0 12px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
 .path-node.locked:active .node-circle {
-    transform: translateY(4px);
-    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5), 0 4px 0 var(--color-border-hover);
+    transform: translateY(0);
 }
 
 /* Current Lesson Pulse Ring */

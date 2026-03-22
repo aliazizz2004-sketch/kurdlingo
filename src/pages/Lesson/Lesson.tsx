@@ -177,8 +177,8 @@ const Lesson = () => {
                 const colors = [
                     { primary: '#ff9600', dark: '#cc7800', light: '#262319' }, // Unit 1: Orange
                     { primary: '#3b82f6', dark: '#2563eb', light: '#1e2f3b' }, // Unit 2: Blue
-                    { primary: '#a855f7', dark: '#9333ea', light: '#271933' }, // Unit 3: Purple
-                    { primary: '#ef4444', dark: '#dc2626', light: '#3d1a1a' }  // Unit 4: Red
+                    { primary: '#ef4444', dark: '#dc2626', light: '#3d1a1a' }, // Unit 3: Red
+                    { primary: '#a855f7', dark: '#9333ea', light: '#271933' }  // Unit 4: Purple
                 ];
                 setUnitColor(colors[foundUnitIndex % colors.length]);
             }
