@@ -41,30 +41,30 @@
   --grad-gold: linear-gradient(135deg, #ffc800 0%, #e5a500 100%);
 
   /* --- NEUTRALS & SURFACES --- */
-  --color-background: #f4f1ea;
-  --color-surface: #ffffff;
-  /* Visible gray background, white cards */
-  --color-surface-dim: #e5e5e5;
+  --color-background: #131f24;
+  --color-surface: #202f36;
+  /* Visible gray background, white cards -> Darker panels */
+  --color-surface-dim: #18282e;
   /* Locked/Disabled states */
-  --color-border: #e5e5e5;
-  --color-border-hover: #d1d5db;
+  --color-border: #37464f;
+  --color-border-hover: #4b5e68;
 
   /* --- TYPOGRAPHY --- */
-  --color-text-main: #3c3c3c;
-  --color-text-secondary: #777777;
-  --color-text-light: #afafaf;
-  --color-text-inverse: #ffffff;
+  --color-text-main: #ffffff;
+  --color-text-secondary: #afafaf;
+  --color-text-light: #777777;
+  --color-text-inverse: #131f24;
 
   /* --- ELEVATION & SHADOWS (Premium 3D) --- */
-  --shadow-sm: 0 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 0 #e5e5e5;
+  --shadow-sm: 0 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 0 #111b1f;
   /* "Hard" shadow for buttons */
-  --shadow-lg: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
   /* Soft float shadow */
 
-  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
   /* For cards */
-  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 
   /* --- GLASSMORPHISM --- */
   --glass-bg: rgba(255, 255, 255, 0.7);

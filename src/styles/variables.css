@@ -27,20 +27,20 @@
   --color-error-bg: rgba(255, 75, 75, 0.15);
 
   /* Duolingo's Exact Gray Scale */
-  --color-text: #4b4b4b;
-  --color-text-secondary: #777777;
-  --color-text-tertiary: #afafaf;
-  --color-text-light: #afafaf;
+  --color-text: #ffffff;
+  --color-text-secondary: #afafaf;
+  --color-text-tertiary: #777777;
+  --color-text-light: #777777;
   
   /* Backgrounds */
-  --color-background: #f7f7f7;
-  --color-surface: #ffffff;
-  --color-surface-variant: #f7f7f7;
-  --color-surface-elevated: #ffffff;
+  --color-background: #131f24;
+  --color-surface: #202f36;
+  --color-surface-variant: #18282e;
+  --color-surface-elevated: #202f36;
   
-  /* Borders - Duolingo uses #e5e5e5 consistently */
-  --color-border: #e5e5e5;
-  --color-divider: #e5e5e5;
+  /* Borders - Duolingo uses #37464f consistently in dark mode */
+  --color-border: #37464f;
+  --color-divider: #37464f;
 
   /* Semantic */
   --color-success: #ff9600;
@@ -107,18 +107,18 @@
 
 /* Dark Mode - Premium Dark Theme */
 .dark-mode {
-  --color-text: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-text-tertiary: #64748b;
-  --color-text-light: #94a3b8;
+  --color-text: #ffffff;
+  --color-text-secondary: #afafaf;
+  --color-text-tertiary: #777777;
+  --color-text-light: #777777;
   
-  --color-background: #0f172a;
-  --color-surface: #1e293b;
-  --color-surface-variant: #334155;
-  --color-surface-elevated: #1e293b;
+  --color-background: #131f24;
+  --color-surface: #202f36;
+  --color-surface-variant: #18282e;
+  --color-surface-elevated: #202f36;
   
-  --color-border: #334155;
-  --color-divider: #475569;
+  --color-border: #37464f;
+  --color-divider: #37464f;
   
   --color-primary-50: rgba(255, 150, 0, 0.15);
   --color-primary-surface: rgba(255, 150, 0, 0.1);

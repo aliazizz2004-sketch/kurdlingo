@@ -12,8 +12,8 @@
 .chat-header {
     height: 56px;
     min-height: 56px;
-    background: #fff;
-    border-bottom: 2px solid #e5e5e5;
+    background: var(--color-surface);
+    border-bottom: 2px solid var(--color-surface-variant);
     padding: 0 12px;
     display: flex;
     align-items: center;
@@ -25,7 +25,7 @@
 .back-btn {
     background: none;
     border: none;
-    color: #3c3c3c;
+    color: var(--color-text);
     cursor: pointer;
     padding: 6px;
     border-radius: 50%;
@@ -33,7 +33,7 @@
 }
 
 .back-btn:hover {
-    background: #f0f0f0;
+    background: var(--color-surface-dim);
 }
 
 .scenario-info {
@@ -56,14 +56,14 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #e5e5e5;
+    border: 2px solid var(--color-border);
 }
 
 .scenario-icon-overlay {
     position: absolute;
     bottom: -2px;
     right: -2px;
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 50%;
     width: 16px;
     height: 16px;
@@ -83,7 +83,7 @@
     font-size: 14px;
     font-weight: 700;
     margin: 0;
-    color: #3c3c3c;
+    color: var(--color-text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -114,7 +114,7 @@
 }
 
 .difficulty-indicator.intermediate {
-    background: #fff8e8;
+    background: #2d2214;
     color: #ff9600;
 }
 
@@ -155,10 +155,10 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #e5e5e5;
+    border: 2px solid var(--color-border);
     flex-shrink: 0;
     margin-top: auto;
-    background: #fff;
+    background: var(--color-surface);
 }
 
 .message-bubble {
@@ -171,9 +171,9 @@
 }
 
 .message-bubble.ai {
-    background: #fff;
-    border: 2px solid #e5e5e5;
-    color: #3c3c3c;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
     border-bottom-left-radius: 4px;
 }
 
@@ -189,7 +189,7 @@
     margin-top: 12px;
     border-radius: 12px;
     overflow: hidden;
-    border: 2px solid #f0f0f0;
+    border: 2px solid var(--color-border);
     max-width: 200px;
 }
 
@@ -202,12 +202,12 @@
 /* AI Evaluation Card */
 .message-eval-card {
     margin-top: 10px;
-    background: #fff;
-    color: #3c3c3c;
+    background: var(--color-surface);
+    color: var(--color-text);
     border-radius: 12px;
     padding: 10px;
     font-size: 13px;
-    border: 2px solid #e5e5e5;
+    border: 2px solid var(--color-border);
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     text-align: left;
 }
@@ -267,7 +267,7 @@
 }
 
 .re-speak-btn {
-    background: #f0f0f0;
+    background: var(--color-surface-dim);
     border: none;
     width: 20px;
     height: 20px;
@@ -316,8 +316,8 @@
 
 /* Footer - At Bottom, auto-sized */
 .chat-footer {
-    background: #fff;
-    border-top: 2px solid #e5e5e5;
+    background: var(--color-surface);
+    border-top: 2px solid var(--color-surface-variant);
     padding: 8px 12px;
     padding-bottom: calc(8px + env(safe-area-inset-bottom));
     display: flex;
@@ -353,8 +353,8 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #fff;
-    border: 3px solid #e5e5e5;
+    background: var(--color-surface);
+    border: 3px solid var(--color-surface-variant);
     color: #777;
     display: flex;
     align-items: center;
@@ -367,7 +367,7 @@
 
 .mic-button:hover {
     background: #f7f7f7;
-    border-color: #d0d0d0;
+    border-color: var(--color-border);
     transform: scale(1.05);
 }
 
@@ -402,7 +402,7 @@
 /* Fallback Input - Now Expanding Textarea */
 .text-input-fallback {
     flex: 1;
-    background: #f0f0f0;
+    background: var(--color-surface-dim);
     border-radius: 22px;
     display: flex;
     align-items: flex-end;
@@ -414,7 +414,7 @@
 }
 
 .text-input-fallback:focus-within {
-    background: #fff;
+    background: var(--color-surface);
     border-color: #1cb0f6;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }

@@ -840,6 +840,85 @@ export const unit2: Unit = {
                         { text: 'Pants', image: '👖', correct: false },
                         { text: 'Shoes', image: '👞', correct: false }
                     ]
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Good Morning' correctly",
+                    targetWord: 'Good Morning',
+                    targetTranslation: 'بەیانی باش'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Thank you' correctly",
+                    targetWord: 'Thank you',
+                    targetTranslation: 'سوپاس'
+                }
+            ]
+        },
+        {
+            id: 'unit2-lesson11',
+            title: 'Pronunciation Practice',
+            icon: '🗣️',
+            exercises: [
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Morning' correctly",
+                    targetWord: 'Morning',
+                    targetTranslation: 'بەیانی'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Evening' correctly",
+                    targetWord: 'Evening',
+                    targetTranslation: 'ئێوارە'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Father' correctly",
+                    targetWord: 'Father',
+                    targetTranslation: 'باوک'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Mother' correctly",
+                    targetWord: 'Mother',
+                    targetTranslation: 'دایک'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Expensive' correctly",
+                    targetWord: 'Expensive',
+                    targetTranslation: 'گران'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Straight' correctly",
+                    targetWord: 'Straight',
+                    targetTranslation: 'ڕێک'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Sunny' correctly",
+                    targetWord: 'Sunny',
+                    targetTranslation: 'خۆرەتاو'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Wake up' correctly",
+                    targetWord: 'Wake up',
+                    targetTranslation: 'لەخەو هەڵسان'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Happy' correctly",
+                    targetWord: 'Happy',
+                    targetTranslation: 'دڵخۆش'
+                },
+                {
+                    type: 'pronunciation',
+                    question: "Say 'Shoes' correctly",
+                    targetWord: 'Shoes',
+                    targetTranslation: 'پێڵاو'
                 }
             ]
         }

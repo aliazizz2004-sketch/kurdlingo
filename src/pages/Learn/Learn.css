@@ -20,7 +20,7 @@
     background: rgba(0, 0, 0, 0.05);
     border-radius: 16px;
     padding: 4px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--color-border);
 }
 
 .level-toggle-tab {
@@ -35,7 +35,7 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: transparent;
-    color: #9ca3af;
+    color: var(--color-border-hover);
     letter-spacing: 0.02em;
 }
 
@@ -46,7 +46,7 @@
 
 .level-toggle-tab.active {
     background: linear-gradient(135deg, #ff9600 0%, #FF6A00 100%);
-    color: #ffffff;
+    color: var(--color-surface);
     box-shadow:
         0 4px 12px rgba(255, 150, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -79,7 +79,7 @@
 
     /* VISIBLE GRAY - not white */
     background: var(--color-background);
-    color: #3c3c3c;
+    color: var(--color-text-main);
 }
 
 /* Subtle decorative accent */
@@ -136,7 +136,7 @@
     align-items: center;
     padding: 28px 32px;
     border-radius: 16px;
-    color: #ffffff;
+    color: var(--color-surface);
     position: relative;
     overflow: hidden;
 
@@ -168,7 +168,7 @@
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--color-surface);
     letter-spacing: -0.01em;
 }
 
@@ -194,7 +194,7 @@
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 12px;
-    color: #ffffff;
+    color: var(--color-surface);
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -253,13 +253,13 @@
     position: relative;
 
     /* White card background for contrast */
-    background: #ffffff;
+    background: var(--color-surface);
     border-radius: 24px;
     margin: 0 -10px;
-    border: 3px solid #e0e0e0;
+    border: 3px solid var(--color-border);
     box-shadow:
         inset 0 4px 8px rgba(0, 0, 0, 0.04),
-        0 6px 0 #c0c0c0;
+        0 6px 0 var(--color-border-hover);
 }
 
 /* ─────────────────────────────────────────────
@@ -367,8 +367,8 @@
     cursor: pointer;
 
     /* Base Face */
-    background: var(--node-bg, #e5e7eb);
-    color: var(--node-text, #9ca3af);
+    background: var(--node-bg, var(--color-surface-dim));
+    color: var(--node-text, var(--color-border-hover));
     border: none;
 
     /* 
@@ -383,7 +383,7 @@
         /* Top sheen */
         inset 0 -4px 2px rgba(0, 0, 0, 0.05),
         /* Bottom shade */
-        0 8px 0 var(--node-shadow, #d1d5db),
+        0 8px 0 var(--node-shadow, var(--color-border-hover)),
         /* The Hard 3D Side */
         0 12px 10px rgba(0, 0, 0, 0.15);
     /* Drop shadow on ground */
@@ -414,7 +414,7 @@
     box-shadow:
         inset 0 4px 5px rgba(255, 255, 255, 0.5),
         inset 0 -4px 5px rgba(0, 0, 0, 0.05),
-        0 10px 0 var(--node-shadow, #d1d5db),
+        0 10px 0 var(--node-shadow, var(--color-border-hover)),
         /* Shadow grows */
         0 16px 20px rgba(0, 0, 0, 0.2);
 }
@@ -434,7 +434,7 @@
         inset 0 6px 5px rgba(0, 0, 0, 0.1),
         /* Inner shadow deeper implies getting pushed in */
         inset 0 -2px 2px rgba(255, 255, 255, 0.2),
-        0 0 0 var(--node-shadow, #d1d5db),
+        0 0 0 var(--node-shadow, var(--color-border-hover)),
         /* Hard shadow disappears */
         0 2px 2px rgba(0, 0, 0, 0.1);
     /* Ground shadow shrinks largely */
@@ -456,12 +456,12 @@
 }
 
 .path-node.locked .node-circle {
-    background: #e5e7eb;
+    background: var(--color-surface-dim);
     /* Force gray */
-    color: #9ca3af;
+    color: var(--color-border-hover);
     box-shadow:
         inset 0 2px 0 rgba(255, 255, 255, 0.5),
-        0 4px 0 #d1d5db;
+        0 4px 0 var(--color-border-hover);
     transform: translateY(4px);
     /* Permanently half-pressed */
     filter: none;
@@ -469,7 +469,7 @@
 
 .path-node.locked:active .node-circle {
     transform: translateY(4px);
-    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5), 0 4px 0 #d1d5db;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5), 0 4px 0 var(--color-border-hover);
 }
 
 /* Current Lesson Pulse Ring */
@@ -528,7 +528,7 @@
     right: -4px;
     width: 28px;
     height: 28px;
-    background: #ffffff;
+    background: var(--color-surface);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -556,7 +556,7 @@
     top: -70px; /* Moved higher to not clash with the crown */
     left: 50%;
     transform: translateX(-50%);
-    background: #ffffff;
+    background: var(--color-surface);
     color: #4b5563;
     padding: 8px 16px;
     border-radius: 12px;
@@ -567,7 +567,7 @@
     white-space: nowrap;
     box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15), 0 12px 20px rgba(0, 0, 0, 0.15);
     z-index: 20;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--color-surface-dim);
     animation: float-bubble 2s ease-in-out infinite;
 }
 
@@ -579,9 +579,9 @@
     transform: translateX(-50%) rotate(45deg);
     width: 14px;
     height: 14px;
-    background: #ffffff;
-    border-bottom: 2px solid #e5e7eb;
-    border-right: 2px solid #e5e7eb;
+    background: var(--color-surface);
+    border-bottom: 2px solid var(--color-surface-dim);
+    border-right: 2px solid var(--color-surface-dim);
 }
 
 @keyframes float-bubble {
@@ -632,7 +632,7 @@
     right: -4px;
     width: 28px;
     height: 28px;
-    background: #ffffff;
+    background: var(--color-surface);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -650,7 +650,7 @@
     left: 50%;
     transform: translateX(-50%) scale(0.9);
     background: #1e293b;
-    color: #ffffff;
+    color: var(--color-surface);
     padding: 10px 18px;
     border-radius: 14px;
     font-weight: 700;
@@ -742,7 +742,7 @@
    SIDEBAR CARDS - Native Style with Color
    ----------------------------------------------------------------------------- */
 .glass-panel {
-    background: #ffffff;
+    background: var(--color-surface);
     border: 2px solid #e5e5e5;
     border-radius: 16px;
     padding: 20px;
@@ -750,7 +750,7 @@
     overflow: hidden;
 
     /* Duolingo's signature 3D shadow */
-    box-shadow: 0 2px 0 #d4d4d4;
+    box-shadow: 0 2px 0 var(--color-border-hover);
 }
 
 /* Colored accent strip on top of cards */
@@ -775,14 +775,14 @@
 
 .glass-panel:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 0 #d4d4d4, 0 8px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 0 var(--color-border-hover), 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .glass-panel h3 {
     margin: 0 0 14px 0;
     font-size: 1rem;
     font-weight: 700;
-    color: #3c3c3c;
+    color: var(--color-text-main);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -793,7 +793,7 @@
 }
 
 .glass-panel .stat-value {
-    color: #3c3c3c !important;
+    color: var(--color-text-main) !important;
     font-weight: 700;
 }
 

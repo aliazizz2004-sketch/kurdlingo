@@ -175,10 +175,10 @@ const Lesson = () => {
                 setUnitColor({ primary: '#3b82f6', dark: '#1e40af', light: '#1e293b' });
             } else {
                 const colors = [
-                    { primary: '#ff9600', dark: '#cc7800', light: '#fff3e0' }, // Unit 1: Orange
-                    { primary: '#3b82f6', dark: '#2563eb', light: '#dbeafe' }, // Unit 2: Blue
-                    { primary: '#a855f7', dark: '#9333ea', light: '#f3e8ff' }, // Unit 3: Purple
-                    { primary: '#ef4444', dark: '#dc2626', light: '#fee2e2' }  // Unit 4: Red
+                    { primary: '#ff9600', dark: '#cc7800', light: '#262319' }, // Unit 1: Orange
+                    { primary: '#3b82f6', dark: '#2563eb', light: '#1e2f3b' }, // Unit 2: Blue
+                    { primary: '#a855f7', dark: '#9333ea', light: '#271933' }, // Unit 3: Purple
+                    { primary: '#ef4444', dark: '#dc2626', light: '#3d1a1a' }  // Unit 4: Red
                 ];
                 setUnitColor(colors[foundUnitIndex % colors.length]);
             }
@@ -1463,158 +1463,138 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
     };
 
     return (
-        <div className="exercise-container roleplay-chat-container" style={{ display: 'flex', flexDirection: 'column', height: '100%', maxHeight: '600px' }}>
-            <h2 className="exercise-question">{exercise.question}</h2>
+        <div className="exercise-container roleplay-chat-container">
+            <h2 className="exercise-question" dir="auto">{exercise.question}</h2>
 
             {/* Scenario description */}
             {exercise.scenario && (
-                <div className="roleplay-scenario">
+                <div className="roleplay-scenario" style={{ marginBottom: '20px' }}>
                     <span className="scenario-icon">🎭</span>
                     <p>{exercise.scenario}</p>
                 </div>
             )}
 
-            {/* Chat interface */}
-            <div className="chat-interface" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-                <div className="chat-messages" style={{ flex: 1, overflowY: 'auto' }}>
-                    {messages.map((msg, idx) => (
-                        <div key={idx} className={`chat-message ${msg.sender}`}>
-                            <div className="message-avatar">
-                                {msg.avatar || (msg.sender === 'ai' ? '🤖' : '👤')}
-                            </div>
-                            <div className="message-content">
-                                {msg.name && <span className="message-name">{msg.name}</span>}
-                                <div className="message-bubble">
-                                    {msg.text}
-                                    {msg.sender === 'user' && (
-                                        <span className="voice-badge" title="Spoken answer">🎤</span>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-
-                    {isChecking && (
-                        <div className="chat-message ai">
-                            <div className="message-avatar">🤖</div>
-                            <div className="message-content">
-                                <div className="message-bubble typing">
-                                    <span className="typing-dot"></span>
-                                    <span className="typing-dot"></span>
-                                    <span className="typing-dot"></span>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    <div ref={chatEndRef} />
+            {/* Simplified UI - AI Character & Question */}
+            <div className="pronunciation-card" style={{ marginBottom: '30px' }}>
+                <div className="pronunciation-emoji" style={{ fontSize: '64px', marginBottom: '10px' }}>
+                    {messages[0]?.avatar || '🤖'}
                 </div>
+                <div className="pronunciation-target" dir="rtl" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                    {messages[0]?.text}
+                </div>
+                <button
+                    className={`pronunciation-listen-btn ${isSpeakingAI ? 'playing' : ''}`}
+                    onClick={replayAIMessage}
+                    type="button"
+                    disabled={isSpeakingAI}
+                    style={{ marginTop: '15px' }}
+                >
+                    <Volume2 size={20} />
+                    <span>{isSpeakingAI ? (t('playing') || 'گوێگرتن...') : (t('listen') || '🔊 گوێبگرە')}</span>
+                </button>
+            </div>
 
-                {/* Feedback display */}
-                {feedback && (
-                    <div className={`chat-feedback ${feedback.correct ? 'correct' : 'incorrect'}`}>
-                        <div className="feedback-icon">
-                            {feedback.correct ? <Check size={20} /> : <X size={20} />}
-                        </div>
-                        <div className="feedback-text">
-                            <p>{feedback.message}</p>
-                            {spokenText && (
-                                <p className="spoken-transcript">
-                                    <strong>{t('youSaid') || 'You said'}:</strong> "{spokenText}"
-                                </p>
-                            )}
-                            {!feedback.correct && feedback.correctAnswer && (
-                                <p className="correct-answer">
-                                    <strong>{t('correctAnswer') || 'Correct answer'}:</strong> {feedback.correctAnswer}
-                                </p>
-                            )}
-                        </div>
+            {/* Simplified Mic Area */}
+            <div className={`pronunciation-mic-area ${hasAnswered ? (feedback?.correct ? 'correct' : 'incorrect') : (isRecording ? 'listening' : (isChecking || isTranscribing ? 'processing' : 'idle'))}`}>
+                
+                {/* IDLE / NOT RECORDING YET */}
+                {!isRecording && !isChecking && !isTranscribing && !hasAnswered && (
+                    <div className="pron-idle-state">
+                        <button className="pronunciation-mic-btn" onClick={toggleRecording} type="button">
+                            <div className="mic-circle">
+                                <Mic size={40} strokeWidth={1.5} color="white" />
+                            </div>
+                            <span className="mic-label">{t('tapToSpeak') || 'بکلیک بکە و وەڵام بدەوە'}</span>
+                        </button>
                     </div>
                 )}
 
-                {/* Voice input area */}
-                {!hasAnswered ? (
-                    <div className="voice-input-area">
-                        {/* Replay button */}
-                        <button
-                            className={`voice-replay-btn ${isSpeakingAI ? 'playing' : ''}`}
-                            onClick={replayAIMessage}
-                            disabled={isSpeakingAI}
-                            title={t('replayMessage') || 'دووبارە گوێبگرە'}
-                            type="button"
-                            aria-label="Replay AI message"
-                        >
-                            <Volume2 size={22} />
-                        </button>
-
-                        {/* Main mic button */}
-                        <div className="voice-mic-wrapper">
-                            {isTranscribing || isChecking ? (
-                                <div className="voice-processing">
-                                    <Loader2 className="animate-spin" size={32} />
-                                    <span>{isTranscribing
-                                        ? (t('transcribing') || 'پرۆسێسکردنی دەنگ...')
-                                        : (t('checking') || 'پشکنین...')}
-                                    </span>
-                                </div>
-                            ) : (
-                                <button
-                                    className={`voice-mic-btn ${isRecording ? 'recording' : ''}`}
-                                    onClick={toggleRecording}
-                                    type="button"
-                                    disabled={isChecking || isTranscribing}
-                                    aria-label={isRecording ? 'Stop recording' : 'Start recording'}
-                                >
-                                    <div className={`voice-mic-circle ${isRecording ? 'active' : ''}`}>
-                                        {isRecording
-                                            ? <MicOff size={28} strokeWidth={2} />
-                                            : <Mic size={28} strokeWidth={2} />
-                                        }
-                                    </div>
-                                    {isRecording && (
-                                        <div className="voice-pulse-rings">
-                                            <span className="pulse-ring ring-1"></span>
-                                            <span className="pulse-ring ring-2"></span>
-                                            <span className="pulse-ring ring-3"></span>
-                                        </div>
-                                    )}
-                                </button>
-                            )}
-                            <span className={`voice-mic-label ${isRecording ? 'recording' : ''}`}>
-                                {isRecording
-                                    ? (t('tapToStop') || 'تکلیک بکە بۆ وەستان 🛑')
-                                    : (t('tapToSpeak') || 'صدایت مکن ✌️')}
-                            </span>
-                            {/* Show live transcript while recording */}
-                            {isRecording && spokenText && (
-                                <div className="voice-live-transcript">
-                                    {spokenText}
-                                </div>
-                            )}
-                            {voiceError && (
-                                <span className="voice-error-msg">{voiceError}</span>
-                            )}
+                {/* RECORDING / LISTENING */}
+                {isRecording && (
+                    <div className="pronunciation-listening" onClick={toggleRecording} style={{cursor: 'pointer'}}>
+                        <div className="pulse-container">
+                            <div className="pulse-wave"></div>
+                            <div className="pulse-wave delay-1"></div>
+                            <div className="pulse-wave delay-2"></div>
+                            <div className="mic-circle active">
+                                <Mic size={40} strokeWidth={1.5} color="white" />
+                            </div>
                         </div>
-
-                        {/* Spacer for symmetry */}
-                        <div style={{ width: 48 }} />
+                        <span className="listening-label">{t('tapToStop') || 'تکلیک بکە بۆ وەستان 🛑'}</span>
+                        {spokenText && <p style={{marginTop: '15px', fontWeight: 'bold'}} dir="auto">"{spokenText}"</p>}
                     </div>
-                ) : (
-                    <div className="exercise-footer" style={{ position: 'sticky', bottom: 0 }}>
-                        <Button
-                            variant={feedback?.correct ? "success" : "danger"}
-                            size="lg"
-                            fullWidth
-                            onClick={handleContinue}
-                        >
-                            {t('continue') || 'بەردەوامبە'}
-                        </Button>
+                )}
+
+                {/* PROCESSING */}
+                {(isChecking || isTranscribing) && (
+                    <div className="pronunciation-processing">
+                        <div className="processing-ring">
+                            <Loader2 className="animate-spin" size={48} />
+                        </div>
+                        <span>{t('checking') || 'پشکنین...'}</span>
+                    </div>
+                )}
+
+                {/* CORRECT */}
+                {hasAnswered && feedback?.correct && (
+                    <div className="pronunciation-result correct" style={{paddingTop: '20px'}}>
+                        <div className="result-badge correct"><CheckCircle2 size={40} /></div>
+                        <h3>{t('perfect') || '🎉 نایاب!'}</h3>
+                        <p>{feedback.message}</p>
+                        {spokenText && (
+                            <div className="you-said-card">
+                                <span className="you-said-label">{t('youSaid') || 'تۆت گوت'}:</span>
+                                <span className="you-said-text" dir="auto">"{spokenText}"</span>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* INCORRECT */}
+                {hasAnswered && !feedback?.correct && (
+                    <div className="pronunciation-result incorrect" style={{paddingTop: '20px'}}>
+                        <div className="result-badge incorrect"><XCircle size={40} /></div>
+                        <h3>{t('notQuiteRight') || 'دروست نییە'}</h3>
+                        <p>{feedback?.message}</p>
+                        {spokenText && (
+                            <div className="you-said-card wrong">
+                                <span className="you-said-label">{t('youSaid') || 'تۆت گوت'}:</span>
+                                <span className="you-said-text" dir="auto">"{spokenText}"</span>
+                            </div>
+                        )}
+                        {feedback?.correctAnswer && (
+                            <div className="expected-card">
+                                <span className="expected-label">{t('expected') || 'دەکرێت بڵێیت'}:</span>
+                                <span className="expected-text" dir="auto">"{feedback.correctAnswer}"</span>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {voiceError && (
+                    <div className="pronunciation-result error" style={{marginTop:'15px'}}>
+                        <div className="result-badge error">⚠️</div>
+                        <p>{voiceError}</p>
                     </div>
                 )}
             </div>
 
+            {hasAnswered && (
+                <div className="exercise-footer">
+                    <Button
+                        variant={feedback?.correct ? "success" : "danger"}
+                        size="lg"
+                        fullWidth
+                        onClick={handleContinue}
+                    >
+                        {t('continue') || 'بەردەوامبە'}
+                    </Button>
+                </div>
+            )}
+            
             {/* Hints */}
             {exercise.hints && exercise.hints.length > 0 && !hasAnswered && (
-                <div className="chat-hints">
+                <div className="chat-hints" style={{marginTop:'20px'}}>
                     <span className="hints-label">{t('hints') || 'Hints'}:</span>
                     {exercise.hints.map((hint, idx) => (
                         <span key={idx} className="hint-chip">{hint}</span>
@@ -1651,6 +1631,14 @@ const PronunciationExercise = ({ exercise, onAnswer }) => {
             window.speechSynthesis?.cancel();
         };
     }, []);
+
+    // Reset when moving to a new exercise
+    useEffect(() => {
+        setStatus('idle');
+        setTranscript('');
+        setAttempts(0);
+        setIsPlaying(false);
+    }, [exercise.id, exercise.question, exercise.targetWord]);
 
     // Check browser support
     useEffect(() => {

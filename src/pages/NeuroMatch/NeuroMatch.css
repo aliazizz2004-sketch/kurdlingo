@@ -10,7 +10,7 @@
     width: 100%;
     min-height: 100vh;
     font-family: 'Outfit', system-ui, sans-serif;
-    color: #e2e8f0;
+    color: var(--color-surface-dim);
     position: relative;
     overflow: hidden;
     background: #0a0a1a;
@@ -527,7 +527,7 @@
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
-    color: #e2e8f0;
+    color: var(--color-surface-dim);
     text-align: left;
     transition: all 0.15s;
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
@@ -679,7 +679,7 @@
     background: rgba(255, 255, 255, 0.06);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    color: #e2e8f0;
+    color: var(--color-surface-dim);
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
@@ -795,7 +795,7 @@
     cursor: pointer;
     border: 2px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.04);
-    color: #e2e8f0;
+    color: var(--color-surface-dim);
     text-align: center;
     transition: all 0.15s;
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);

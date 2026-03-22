@@ -11,7 +11,7 @@
     height: 100vh;
     height: 100dvh;
     font-family: 'Outfit', system-ui, sans-serif;
-    color: #e2e8f0;
+    color: var(--color-surface-dim);
     position: relative;
     overflow: hidden;
     background: #030712;
@@ -32,7 +32,7 @@
 
 .stg-star {
     position: absolute;
-    background: white;
+    background: var(--color-surface);
     border-radius: 50%;
 }
 
@@ -660,7 +660,7 @@
     border-radius: 50%;
     z-index: 25;
     pointer-events: none;
-    background: #ffffff;
+    background: var(--color-surface);
     /* Intense glowing orange core with layered shadows for visibility */
     box-shadow:
         0 0 5px 2px #ffffff,

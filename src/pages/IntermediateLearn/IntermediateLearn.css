@@ -47,7 +47,7 @@
 
 .int-level-tab.active {
     background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-    color: #ffffff;
+    color: var(--color-surface);
     box-shadow:
         0 4px 12px rgba(59, 130, 246, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -180,7 +180,7 @@
     align-items: center;
     padding: 28px 32px;
     border-radius: 16px;
-    color: #ffffff;
+    color: var(--color-surface);
     position: relative;
     overflow: hidden;
 
@@ -226,7 +226,7 @@
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--color-surface);
     letter-spacing: -0.01em;
 }
 
@@ -249,7 +249,7 @@
     background: rgba(255, 255, 255, 0.12);
     border: 2px solid rgba(255, 255, 255, 0.25);
     border-radius: 12px;
-    color: #ffffff;
+    color: var(--color-surface);
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;

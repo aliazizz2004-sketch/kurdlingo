@@ -10,7 +10,7 @@
     min-height: 100vh;
     min-height: 100dvh;
     font-family: 'Outfit', system-ui, sans-serif;
-    color: #e2e8f0;
+    color: var(--color-surface-dim);
     background: #030712;
     position: relative;
     outline: none;

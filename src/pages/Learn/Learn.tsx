@@ -39,9 +39,16 @@ const Learn: React.FC = () => {
     const location = useLocation(); // Track location changes
     const { t } = useLanguage();
     const [units, setUnits] = React.useState<Unit[]>([]);
+    const activeNodeRef = React.useRef<HTMLAnchorElement>(null);
 
-
-    // Modern Phosphor Icon mapping
+    // Auto-scroll to active lesson node
+    React.useEffect(() => {
+        if (activeNodeRef.current) {
+            setTimeout(() => {
+                activeNodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    }, [units]);    // Modern Phosphor Icon mapping
     const getLessonIcon = (title: string) => {
         if (!title) return Star;
         const lower = title.toLowerCase();
@@ -206,6 +213,7 @@ const Learn: React.FC = () => {
                                     return (
                                         <React.Fragment key={lesson.id}>
                                             <Link
+                                                ref={isCurrent ? activeNodeRef : null}
                                                 to={isLocked ? '#' : lessonPath}
                                                 className={`path-node ${positionClass} ${isCurrent ? 'current' : ''} ${isLocked ? 'locked' : ''} ${completed ? 'completed' : ''}`}
                                                 onClick={handleClick}

@@ -31,6 +31,15 @@ const IntermediateLearn: React.FC = () => {
     const location = useLocation();
     const { t } = useLanguage();
     const [units, setUnits] = React.useState<Unit[]>([]);
+    const activeNodeRef = React.useRef<HTMLAnchorElement>(null);
+
+    React.useEffect(() => {
+        if (activeNodeRef.current) {
+            setTimeout(() => {
+                activeNodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    }, [units]);
 
 
     // Icon mapping for intermediate lessons
@@ -169,6 +178,7 @@ const IntermediateLearn: React.FC = () => {
 
                                     return (
                                         <Link
+                                            ref={isCurrent ? activeNodeRef : null}
                                             to={isLocked ? '#' : lessonPath}
                                             key={lesson.id}
                                             className={`int-path-node ${positionClass} ${isCurrent ? 'current' : ''} ${isLocked ? 'locked' : ''} ${completed ? 'completed' : ''}`}
