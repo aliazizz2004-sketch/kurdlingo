@@ -1176,6 +1176,11 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
 
     // Speak AI messages on mount/exercise change
     useEffect(() => {
+        if (recognitionRef.current) {
+            try { recognitionRef.current.abort(); } catch (e) { }
+            recognitionRef.current.onend = null;
+        }
+
         setMessages((exercise.chatMessages || []).filter(m => m.sender === 'ai' && !m.text.startsWith('confirm:')));
         setSpokenText('');
         setFeedback(null);
@@ -1463,35 +1468,39 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
     };
 
     return (
-        <div className="exercise-container roleplay-chat-container">
-            <h2 className="exercise-question" dir="auto">{exercise.question}</h2>
+        <div className="exercise-container">
+            <h2 className="exercise-question" dir="auto" style={{ marginBottom: '40px' }}>
+                {exercise.question}
+            </h2>
 
-            {/* Scenario description */}
-            {exercise.scenario && (
-                <div className="roleplay-scenario" style={{ marginBottom: '20px' }}>
-                    <span className="scenario-icon">🎭</span>
-                    <p>{exercise.scenario}</p>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', justifyContent: 'center' }}>
+                    <button
+                        onClick={replayAIMessage}
+                        disabled={isSpeakingAI}
+                        style={{
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '16px',
+                            border: 'none',
+                            background: isSpeakingAI ? 'var(--color-surface-dim)' : 'var(--unit-color, #1cb0f6)',
+                            color: isSpeakingAI ? 'var(--color-text-dim)' : 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: isSpeakingAI ? 'default' : 'pointer',
+                            boxShadow: isSpeakingAI ? 'none' : '0 4px 0 var(--unit-color-dark, #1899d6)',
+                            transition: 'all 0.2s',
+                            transform: isSpeakingAI ? 'translateY(4px)' : 'none',
+                            flexShrink: 0
+                        }}
+                    >
+                        <Volume2 size={24} />
+                    </button>
+                    <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--color-text)', textAlign: 'center', direction: 'auto' }}>
+                        {messages[0]?.text}
+                    </div>
                 </div>
-            )}
-
-            {/* Simplified UI - AI Character & Question */}
-            <div className="pronunciation-card" style={{ marginBottom: '30px' }}>
-                <div className="pronunciation-emoji" style={{ fontSize: '64px', marginBottom: '10px' }}>
-                    {messages[0]?.avatar || '🤖'}
-                </div>
-                <div className="pronunciation-target" dir="rtl" style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                    {messages[0]?.text}
-                </div>
-                <button
-                    className={`pronunciation-listen-btn ${isSpeakingAI ? 'playing' : ''}`}
-                    onClick={replayAIMessage}
-                    type="button"
-                    disabled={isSpeakingAI}
-                    style={{ marginTop: '15px' }}
-                >
-                    <Volume2 size={20} />
-                    <span>{isSpeakingAI ? (t('playing') || 'گوێگرتن...') : (t('listen') || '🔊 گوێبگرە')}</span>
-                </button>
             </div>
 
             {/* Simplified Mic Area */}
