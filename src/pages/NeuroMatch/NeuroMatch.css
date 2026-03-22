@@ -10,7 +10,7 @@
     width: 100%;
     min-height: 100vh;
     font-family: 'Outfit', system-ui, sans-serif;
-    color: var(--color-surface-dim);
+    color: var(--color-text);
     position: relative;
     overflow: hidden;
     background: #0a0a1a;
@@ -527,7 +527,7 @@
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--color-surface-dim);
+    color: var(--color-text);
     text-align: left;
     transition: all 0.15s;
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
@@ -564,15 +564,15 @@
 }
 
 .nm-option.correct {
-    background: rgba(255, 150, 0, 0.15);
-    border-color: #ff9600;
-    color: #ffeda6;
-    box-shadow: 0 3px 0 rgba(204, 120, 0, 0.4), 0 0 20px rgba(255, 150, 0, 0.15);
+    background: rgba(88, 204, 2, 0.15);
+    border-color: #58cc02;
+    color: #58cc02;
+    box-shadow: 0 3px 0 rgba(70, 163, 2, 0.4), 0 0 20px rgba(88, 204, 2, 0.15);
     animation: option-correct 0.4s ease;
 }
 
 .nm-option.correct .nm-opt-num {
-    background: #ff9600;
+    background: #58cc02;
     color: white;
 }
 
@@ -679,7 +679,7 @@
     background: rgba(255, 255, 255, 0.06);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    color: var(--color-surface-dim);
+    color: var(--color-text);
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
@@ -742,9 +742,9 @@
 }
 
 .nm-scramble-feedback.correct {
-    background: rgba(255, 150, 0, 0.1);
-    border: 1px solid rgba(255, 150, 0, 0.2);
-    color: #ff9600;
+    background: rgba(88, 204, 2, 0.1);
+    border: 1px solid rgba(88, 204, 2, 0.2);
+    color: #58cc02;
 }
 
 .nm-scramble-feedback.wrong {
@@ -795,7 +795,7 @@
     cursor: pointer;
     border: 2px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.04);
-    color: var(--color-surface-dim);
+    color: var(--color-text);
     text-align: center;
     transition: all 0.15s;
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
@@ -830,9 +830,9 @@
 }
 
 .nm-match-card.matched {
-    background: rgba(255, 150, 0, 0.1);
-    border-color: rgba(255, 150, 0, 0.2);
-    color: rgba(255, 200, 100, 0.5);
+    background: rgba(88, 204, 2, 0.1);
+    border-color: rgba(88, 204, 2, 0.2);
+    color: rgba(88, 204, 2, 0.5);
     opacity: 0.5;
     pointer-events: none;
     box-shadow: none;

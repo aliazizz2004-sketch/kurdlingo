@@ -10,7 +10,7 @@
     min-height: 100vh;
     min-height: 100dvh;
     font-family: 'Outfit', system-ui, sans-serif;
-    color: var(--color-surface-dim);
+    color: var(--color-text);
     background: #030712;
     position: relative;
     outline: none;
@@ -359,9 +359,9 @@
     }
 }
 
-/* Typed correct — orange pop */
+/* Typed correct — green pop */
 .tr-char.typed.correct {
-    color: #ff9600;
+    color: #58cc02;
     animation: tr-char-pop 0.15s ease-out;
 }
 
@@ -376,12 +376,12 @@
 @keyframes tr-char-pop {
     0% {
         transform: scale(1.3);
-        color: #ffb44d;
+        color: #a5ed6f;
     }
 
     100% {
         transform: scale(1);
-        color: #ff9600;
+        color: #58cc02;
     }
 }
 

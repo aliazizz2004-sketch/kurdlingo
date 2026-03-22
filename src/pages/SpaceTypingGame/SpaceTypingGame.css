@@ -11,7 +11,7 @@
     height: 100vh;
     height: 100dvh;
     font-family: 'Outfit', system-ui, sans-serif;
-    color: var(--color-surface-dim);
+    color: var(--color-text);
     position: relative;
     overflow: hidden;
     background: #030712;

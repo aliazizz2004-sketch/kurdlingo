@@ -660,7 +660,7 @@
 }
 
 .pair-card:hover {
-    background: #1e2f3b;
+    background: var(--color-surface-dim);
     border-color: var(--unit-color, #1cb0f6);
     box-shadow: 0 6px 0 var(--unit-color-dark, #1899d6);
     transform: translateY(-2px);
@@ -675,24 +675,26 @@
 .pair-card.selected {
     background: var(--color-surface-dim);
     border-color: var(--unit-color, #1cb0f6);
-    box-shadow: 0 5px 0 #1899d6;
+    box-shadow: 0 5px 0 var(--unit-color-dark, #1899d6);
     color: var(--unit-color, #1cb0f6);
 }
 
 .pair-card.matched {
-    background: #2d2214;
-    border-color: #ff9600;
-    opacity: 0.7;
+    background: rgba(88, 204, 2, 0.15);
+    border-color: #58cc02;
+    opacity: 0.8;
     cursor: not-allowed;
-    box-shadow: 0 3px 0 #cc7800;
+    box-shadow: 0 3px 0 #46a302;
     animation: matchPulse 0.4s ease;
+    color: #58cc02;
 }
 
 .pair-card.wrong {
-    background: #3d1a1a;
-    border-color: #ff4b4b;
-    box-shadow: 0 5px 0 #d52222;
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    box-shadow: 0 5px 0 #b91c1c;
     animation: shake 0.4s ease;
+    color: #ef4444;
 }
 
 @keyframes matchPulse {
@@ -1647,7 +1649,7 @@
 .dark-blue-mode.lesson-view,
 .dark-blue-mode .lesson-page {
     background: #0c1222 !important;
-    color: var(--color-surface-dim);
+    color: var(--color-text);
 }
 
 .dark-blue-mode .lesson-header {
@@ -1679,7 +1681,7 @@
 }
 
 .dark-blue-mode .exercise-question {
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .exercise-question small {
@@ -1690,7 +1692,7 @@
 .dark-blue-mode .option-btn {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
     box-shadow: 0 5px 0 #0f172a !important;
 }
 
@@ -1713,20 +1715,20 @@
 .dark-blue-mode .word-chip {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 /* Dark blue: Fill blank */
 .dark-blue-mode .sentence-display {
     background: #111827 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 /* Dark blue: Typing exercise */
 .dark-blue-mode .typing-input {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .typing-input:focus {
@@ -1753,7 +1755,7 @@
 }
 
 .dark-blue-mode .feedback-text h3 {
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .feedback-text p {
@@ -1766,7 +1768,7 @@
 }
 
 .dark-blue-mode .completion-content h1 {
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 /* Dark blue: Roleplay chat */
@@ -1791,7 +1793,7 @@
 .dark-blue-mode .chat-message.ai .message-bubble {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .chat-message.ai .message-avatar {
@@ -1819,7 +1821,7 @@
 .dark-blue-mode .chat-input {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .chat-input:focus {
@@ -1854,7 +1856,7 @@
 
 .dark-blue-mode .chat-feedback .correct-answer {
     background: rgba(0, 0, 0, 0.3) !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .chat-hints {
@@ -1927,7 +1929,7 @@
 }
 
 .dark-blue-mode .exercise-question {
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .exercise-question small {
@@ -1938,7 +1940,7 @@
 .dark-blue-mode .option-btn {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
     box-shadow: 0 5px 0 #0f172a !important;
 }
 
@@ -1961,20 +1963,20 @@
 .dark-blue-mode .word-chip {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 /* Dark blue: Fill blank */
 .dark-blue-mode .sentence-display {
     background: #111827 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 /* Dark blue: Typing exercise */
 .dark-blue-mode .typing-input {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .typing-input:focus {
@@ -2001,7 +2003,7 @@
 }
 
 .dark-blue-mode .feedback-text h3 {
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .feedback-text p {
@@ -2014,7 +2016,7 @@
 }
 
 .dark-blue-mode .completion-content h1 {
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 /* Dark blue: Roleplay chat */
@@ -2039,7 +2041,7 @@
 .dark-blue-mode .chat-message.ai .message-bubble {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .chat-message.ai .message-avatar {
@@ -2067,7 +2069,7 @@
 .dark-blue-mode .chat-input {
     background: #1e293b !important;
     border-color: #334155 !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .chat-input:focus {
@@ -2102,7 +2104,7 @@
 
 .dark-blue-mode .chat-feedback .correct-answer {
     background: rgba(0, 0, 0, 0.3) !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 .dark-blue-mode .chat-hints {
@@ -2892,7 +2894,7 @@
 /* 4. Fix Typing & Fill Blank Prompts */
 .dark-blue-mode .typing-prompt {
     background: #1e293b !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
     border: 1px solid #334155 !important;
 }
 
@@ -2917,7 +2919,7 @@
 
 .dark-blue-mode .option-image {
     background: #0f172a !important;
-    color: var(--color-surface-dim) !important;
+    color: var(--color-text) !important;
 }
 
 /* 6. Fix Global Text Visibility */
@@ -3456,7 +3458,7 @@
 
 /* removed dark-blue-mode */
  .you-said strong {
-    color: var(--color-surface-dim);
+    color: var(--color-text);
 }
 
 .dark-blue-mode .mic-label {
@@ -3651,7 +3653,7 @@
 .dark-blue-mode .voice-live-transcript {
     background: rgba(15, 23, 42, 0.85);
     border-color: rgba(239, 68, 68, 0.4);
-    color: var(--color-surface-dim);
+    color: var(--color-text);
 }
 
 /* Recording state label color */
