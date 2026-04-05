@@ -1,19 +1,79 @@
 import { DictionaryEntry } from '../bookDictionaryData';
 
 export const transportEntries: DictionaryEntry[] = [
-    { id: 't1', english: 'To hit the road', kurdish: 'دەستپێکردنی گەشتێک / بەڕێکەوتن' },
-    { id: 't2', english: 'To be stuck in traffic', kurdish: 'لە قەرەباڵغی هاتوچۆدا گیرخواردن' },
-    { id: 't3', english: 'Rush hour', kurdish: 'کاتی قەرەباڵغی و لوتکەی هاتوچۆ' },
-    { id: 't4', english: 'To give someone a lift', kurdish: 'کەسێک لەگەڵ خۆت گەیاندنە جێگایەک' },
-    { id: 't5', english: 'To carpool', kurdish: 'بەکارهێنانی ئۆتۆمبێل پێکەوە بۆ کار' },
-    { id: 't6', english: 'To hail a cab', kurdish: 'تەکسێ ڕاگرتن لە شەقام' },
-    { id: 't7', english: 'To miss the boat', kurdish: 'لەدەستدانی هەلێک (وەک لەدەستدانی شەمەندەفەر)' },
-    { id: 't8', english: 'To take a detour', kurdish: 'گۆڕینی ڕێگا بەرەو ڕێگایەکی دوورتر بۆ خۆلادان' },
-    { id: 't9', english: 'Daily commute', kurdish: 'هاتوچۆی ڕۆژانە نێوان ماڵ و کار' },
-    { id: 't10', english: 'Traffic is backing up', kurdish: 'ئۆتۆمبێلەکان کەڵەکە دەبنەوە' },
-    { id: 't11', english: 'Bumper-to-bumper', kurdish: 'قەرەباڵغییەکی زۆر (بمبەر بە بمبەر)' },
-    { id: 't12', english: 'To beat the traffic', kurdish: 'زوو دەرچوون بۆ خۆدوورخستنەوە لە قەرەباڵغی' },
-    { id: 't13', english: 'To run a red light', kurdish: 'پەڕینەوە لە چرای سوور' },
-    { id: 't14', english: 'To pull over', kurdish: 'ئۆتۆمبێل ڕاگرتن لە قەراغ شەقام' },
-    { id: 't15', english: 'A bumpy ride', kurdish: 'گەشتێکی پڕ لە کێشە یان ناجێگیر' }
+    {
+        id: 't1', english: 'To hit the road', kurdish: 'دەستپێکردنی گەشتێک / بەڕێکەوتن',
+        usageContext: 'کاتی دەستپێکردنی گەشتێکی درێژ، سەفەر بۆ شارێکی دیکە، یان تەنیا بۆ کارەوە.',
+        moreDetails: '"Hit the road" دابینکراوە لە سەردەمی ئۆتۆمبێل. گەشتباز "roads" بوون سیمبوڵی ئازادی. "Let\'s hit the road" بانگهۆزكردنی هاوڕێیانە.'
+    },
+    {
+        id: 't2', english: 'To be stuck in traffic', kurdish: 'لە قەرەباڵغی هاتوچۆدا گیرخواردن',
+        usageContext: 'کاتی دواکەوتن لە کار، چاوپێکەوتن، یان سەردانی — بیشتر لە شارستانی گەورەکاندا.',
+        moreDetails: 'لە لندەن و دووبەی، ئیستانبوڵ "traffic jams" بەشی ژیانی ڕۆژانەیە. "I\'m stuck in traffic" وەڵامی باوی تەلەفۆنییە بۆ "کوێیت؟"'
+    },
+    {
+        id: 't3', english: 'Rush hour', kurdish: 'کاتی قەرەباڵغی و لوتکەی هاتوچۆ',
+        usageContext: 'سەعاتی ٧-٩ بەیانی و ٥-٧ئێوارەی کاری ڕۆژانە کاتی زۆربوونی ئۆتۆمبێل لە شار.',
+        moreDetails: 'ئەو شارانەی گەورەیە "rush hour" بەشێکی گرینگی پلانی مەترۆیانە. بلیتی جێی لەرجیدا لە کاتی rush hour گرانتر دەبێت لە هەندێک وڵات.'
+    },
+    {
+        id: 't4', english: 'To give someone a lift', kurdish: 'کەسێک لەگەڵ خۆت گەیاندنە جێگایەک',
+        usageContext: 'کاتی بردنی هاوڕێ، خانووبەرە، کار — کاتی باران، بێ ئۆتۆمبێل بوون، یان سەفەری شەو.',
+        moreDetails: '"Lift" لە بریتانیادا "ride"ی ئەمریکاییە. "Can you give me a lift?" پرسیاری باوی هاوڕێکارانە. Uber و Lyft ئەم ئیشە ئاسانتر کردووە.'
+    },
+    {
+        id: 't5', english: 'To carpool', kurdish: 'بەکارهێنانی ئۆتۆمبێل پێکەوە بۆ کار',
+        usageContext: 'کاتی هاتوچۆی ڕۆژانە لەگەڵ هاوکاران بۆ کەمکردنەوەی تێچووی بنزین و پاراستنی ژینگە.',
+        moreDetails: '"Carpool" سیاسەتێکی بەرگریکردنی ژینگەیە. لە هەندێک وڵات لەین تایبەتی "carpool lane" هەیە کە بۆ ئۆتۆمبێلی ٢ کەس و بیشتر دیاریکراوە.'
+    },
+    {
+        id: 't6', english: 'To hail a cab', kurdish: 'تەکسێ ڕاگرتن لە شەقام',
+        usageContext: 'لە شارستانیی گەورەکان، بیشتر نیویۆرک، لندەن، پاریس — دەستت بەرزدەکەیت بۆ ڕاگرتنی تەکسییە.',
+        moreDetails: '"Hail" مانای "بانگ کردن" یا "دەستبەرزکردن"ە. لە نیویۆرک "Yellow cab" نیشانەیە. ئێستا ئاپی "Uber" و "Lyft" ئەم ئیشەی گەیاندووە.'
+    },
+    {
+        id: 't7', english: 'To miss the boat', kurdish: 'لەدەستدانی هەلێک',
+        usageContext: 'کاتی دواکەوتن لە هەلێکی کار، سرمایەگوزاری، کۆرسی خوێندن، یان هەر هەلێکی حیاتی.',
+        moreDetails: '"Miss the boat" دابینکراوە لە سەردەمی گواستنەوەی دەریا. ئایا "boat" ڕاگرتیت؟ نەخێر؟ پاشماوەیت مایەوە. مانای مەجازی ئێستا بچووکترین بن.'
+    },
+    {
+        id: 't8', english: 'To take a detour', kurdish: 'گۆڕینی ڕێگا بەرەو یەکی دوورتر',
+        usageContext: 'کاتی گیرکردنی شەقام، ئاستی هاتوچۆ، یا گەڕانی سەرچاوەکانی ناوچەیەک.',
+        moreDetails: '"Detour" هاتوەتەوە لە فەرەنسی. مانایی هاتنەوەیە لەڕێی دیکەوە. "Road diversions" و "detours" زیاتر باون لە کاتی دروستکردنی ڕێگا.'
+    },
+    {
+        id: 't9', english: 'Daily commute', kurdish: 'هاتوچۆی ڕۆژانە نێوان ماڵ و کار',
+        usageContext: 'باسکردنی کاتی هاتوچۆ، کاتی ئۆتۆبوس، ئازمودنی ڕۆژانەی کار — لە چاوپێکەوتن یان لەگەڵ هاوڕێدا.',
+        moreDetails: '"Commute" داهێنراوی ئینگلیزییە کە زیاتر لە ١٥٠ سال پێشینەیی هەیە. "Commuter belt" ناوچەی دەرەوەی شارهباشترکه مرووڤ سەفەر دەکات بۆ ناوەندی شار.'
+    },
+    {
+        id: 't10', english: 'Traffic is backing up', kurdish: 'ئۆتۆمبێلەکان کەڵەکە دەبنەوە',
+        usageContext: 'لە ڕادیۆی ئۆتۆمبێل، ئاپی مەپ، یا کاتی ئاگادارکردنەوەی هاوڕێیان.',
+        moreDetails: '"Back up" مانای "قەیرکەوتن و کەڵەکەبوونەوە"یە. گوگڵ مابپس و Waze ئەم ئاگادارییە دەدەن لە ڕاستییدا.'
+    },
+    {
+        id: 't11', english: 'Bumper-to-bumper', kurdish: 'قەرەباڵغی زۆر (بمبەر بە بمبەر)',
+        usageContext: 'وەسفکردنی قەرەباڵغیی زۆر — لە پیادەڕۆیدا، شاری ئومومی، سووپەرمارکیتەکانی کاتی جژن.',
+        moreDetails: '"Bumper" بەشی پاشەواو و پێشەوەی ئۆتۆمبێلە. "Bumper to bumper" یانی ئۆتۆمبێلەکان ڕاستەوخۆ پشتی یەکتری هاوردووەتەوە — بێ فرادە.'
+    },
+    {
+        id: 't12', english: 'To beat the traffic', kurdish: 'زوو دەرچوون بۆ خۆدوورخستنەوە لە قەرەباڵغی',
+        usageContext: 'چوونی زوو سەر کار، زوو گەڕانەوە، یا هەڵبژاردنی کاتی نایەکسانی سەفەر.',
+        moreDetails: '"Beat the traffic" یانی "بردنی کات لەسەر قەرەباڵغی". زیاتر لە ئامریکادا بەکاردێت. "Early bird gets the worm" — زووترچتنی هاوتایەتی.'
+    },
+    {
+        id: 't13', english: 'To run a red light', kurdish: 'پەڕینەوە لە چرای سوور',
+        usageContext: 'باسکردنی ئەکسیدەنت، پارەی جریمە، یا کاتی یادکردنەوەی رووداوێکی خەتەرناک.',
+        moreDetails: 'جریمەی "running a red light" لە بریتانیادا £١٠٠-٢٠٠ پوندە. دوربینەکان ئۆتۆمەتیکی تۆماری دەکەن. "Running a red" گوتنی کورتکراوی ئینگلیزییە.'
+    },
+    {
+        id: 't14', english: 'To pull over', kurdish: 'ئۆتۆمبێل ڕاگرتن لە قەراغ شەقام',
+        usageContext: 'کاتێک پۆلیسی ئۆتۆمبێلت ڕادەگرێت، یان خۆت پرسیارت هەیە یا کێشەی ئۆتۆمبێلت هەیە.',
+        moreDetails: '"Pull over" باڵ — بکشینە یان لامەوە. "Sir, please pull over" دەقی لە فیلمی ئامریکاییدا زۆر دی ئەکسدەیت. لە بریتانیادا "Pull in to the left" بیشتر بەکاردێت.'
+    },
+    {
+        id: 't15', english: 'A bumpy ride', kurdish: 'گەشتێکی پڕ لە کێشە یان ناجێگیر',
+        usageContext: 'ئاماژەیه مەجازی بۆ ئەزموونێکی قورس — پرۆژەی کاری، پەیوەندی، یا قۆناغی ژیان.',
+        moreDetails: '"Bumpy" از "bump" ی جادزی دێت. مانای لیتەراڵیش کار دەکات (ئۆتۆبوسی شەڕوولی) و مانای مەجازیش (ئەزموونی قورسی).'
+    },
 ];

@@ -24,6 +24,8 @@ export interface DictionaryEntry {
         english: string;
         kurdish: string;
     };
+    usageContext?: string;   // Where / when this term is used (Kurdish)
+    moreDetails?: string;    // Deeper linguistic / cultural note (Kurdish)
 }
 
 export interface DictionaryCategory {

@@ -1,19 +1,79 @@
 import { DictionaryEntry } from '../bookDictionaryData';
 
 export const emotionsEntries: DictionaryEntry[] = [
-    { id: 'e1', english: 'To be over the moon', kurdish: 'لەخۆشیدا فوو بکەیت دەفڕیت / زۆر دڵخۆش' },
-    { id: 'e2', english: 'To feel blue', kurdish: 'هەستکردن بە بێتاقەتی و خەمۆکی' },
-    { id: 'e3', english: 'To hit the roof', kurdish: 'زۆر تووڕە بوون و تەقینەوە لە توڕەییدا' },
-    { id: 'e4', english: 'To be on cloud nine', kurdish: 'گەیشتنە لوتکەی خۆشی و کامەرانی' },
-    { id: 'e5', english: 'Butterflies in ones stomach', kurdish: 'هەستکردن بە دڵەڕاوکێ و شڵەژان (وەک پێش تاقیکردنەوە)' },
-    { id: 'e6', english: 'To tear up', kurdish: 'پڕبوونی چاو لە فرمێسک' },
-    { id: 'e7', english: 'To lose ones temper', kurdish: 'کۆنتڕۆڵ لەدەستدان لەکاتی تووڕەیی' },
-    { id: 'e8', english: 'To bear a grudge', kurdish: 'ڕق لە دڵگرتن و لەبیرنەکردن' },
-    { id: 'e9', english: 'To bottle up emotions', kurdish: 'شاردنەوەی هەستەکان و دەرنەبڕینیان' },
-    { id: 'e10', english: 'To be thrilled to bits', kurdish: 'خۆشحاڵبوونی لەڕادەبەدەر بە شتێک' },
-    { id: 'e11', english: 'To feel under pressure', kurdish: 'کەوتنە ژێر پاڵەپەستۆ و فشارەوە' },
-    { id: 'e12', english: 'A rollercoaster of emotions', kurdish: 'تەوژمی هەستی جیاواز کە زوو زوو دەگۆڕێت' },
-    { id: 'e13', english: 'To swallow ones pride', kurdish: 'وازهێنان لە غرور و قبوڵکردنی ڕاستی' },
-    { id: 'e14', english: 'To have a soft spot for someone', kurdish: 'عاتیفە و خۆشەویستییەکی تایبەت بۆ کەسێک' },
-    { id: 'e15', english: 'To be at your wits end', kurdish: 'گەیشتن بە ئاستێک کە نازانیت چیدەکەیت لە کێشەیەکدا' }
+    {
+        id: 'e1', english: 'To be over the moon', kurdish: 'زۆر دڵخۆش و خۆشحاڵ',
+        usageContext: 'کاتی هەواڵی زۆر باش — پەسەند بوون لە کار، هاوسەرگیری، منداڵبوون، پاسبوون لە ئیمتحان.',
+        moreDetails: '"Over the moon" دابینکراوە لە هەزاران سال لەمەوبەر. مانایی هەستی ئازادی لەسەر هیچ سنووری لەسەر ژیان.'
+    },
+    {
+        id: 'e2', english: 'To feel blue', kurdish: 'هەستکردن بە خەمۆکی و تەنیایی',
+        usageContext: 'کاتی دڵتەنگی بەبێ هۆکاری دیاریکراو — لە ژیانی ڕۆژانەدا زۆر باوە.',
+        moreDetails: 'رەنگی شینی لە کەلتووری غەرب ئاماژەیه بۆ خەمۆکی. "Blues music" لە ئەمریکادا لە هەمان هۆکارەوە دابینکراوە.'
+    },
+    {
+        id: 'e3', english: 'To hit the roof', kurdish: 'زۆر تووڕە بوون و تەقینەوە',
+        usageContext: 'کاتی بیستنی هەواڵی زۆر خراپ یان هەڵەیەکی گەورە — بەتایبەتی ژیانی خێزانیدا.',
+        moreDetails: '"Hit the roof" مانای فزیکی — فڕینی تا سەقف لەبەر توڕەیی. هاوتایەتی: "Hit the ceiling", "Go through the roof".'
+    },
+    {
+        id: 'e4', english: 'To be on cloud nine', kurdish: 'لے لوتکەی خۆشی و کامەرانی',
+        usageContext: 'کاتی خۆشحاڵیی زۆر — دوای ئەزمونی زۆر خۆش، پێگەی نوێ، یا هەواڵی زۆر باش.',
+        moreDetails: '"Cloud nine" لە کلاسبەندی هاوایی ناسای دابینکراوە — "nimbus" باڵاترین جۆری ئەودا. ئێستا "seventh heaven" هاوتایەتی باوتره.'
+    },
+    {
+        id: 'e5', english: 'Butterflies in your stomach', kurdish: 'هەستکردن بە دڵەڕاوکێ و شڵەژان',
+        usageContext: 'پێش باسکردن لە ڕووبەرووی خەڵک، تاقیکردنەوە، لقای یەکەمی ئارەزووی، یا هەر بابەتی توش کەرووکردن.',
+        moreDetails: 'توانای ئابووری و دەروونی هاوکارانه کرینومی بایۆلۆجیکی بزانیت: لە کاتی ترسدا خوێن لە سک بۆ مسکولی دیکە دەگوازدرێتەوە.'
+    },
+    {
+        id: 'e6', english: 'To tear up', kurdish: 'پڕبوونی چاو لە فرمێسک',
+        usageContext: 'لە کاتی گوتنی خەیری، بینینی فیلمی سۆزداری، یا دەمی خوشەویستیی زۆردا.',
+        moreDetails: '"Tear up" کەمتر جدییه لە "cry". ئاماژەیه بۆ سەرەتای گریانین نه گریانی زۆر. "Misty-eyed" هاوتایەتیه.'
+    },
+    {
+        id: 'e7', english: 'To lose your temper', kurdish: 'کۆنتڕۆڵ لەدەستدان لە توڕەییدا',
+        usageContext: 'کاتی تەقینەوە بەهۆی هیلاک یان نائیدیلی — لەگەڵ خزم، لە کار، یا لە تراففیکدا.',
+        moreDetails: '"Temper" ئاماژەیه بۆ کاپاسیتەی کۆنتڕۆڵکردنی توڕەیی. "Keep your temper" پێچەوانەیه. پزیشکانی دەروونی پیشنیاردەکەن "counting to ten" بۆ کۆنتڕۆڵکردن.'
+    },
+    {
+        id: 'e8', english: 'To bear a grudge', kurdish: 'ڕق لە دڵگرتن و لەبیرنەکردن',
+        usageContext: 'دوای کێشەی گەورە، دۆڕانی هەلی گرنگ، یا کاتی ئەوەی کەسێک بیانووی خراپ هێناوە.',
+        moreDetails: '"Grudge" یانی "توڕەیی نهێنیی مانماوە". "Holding a grudge" زۆر کارانه — پزیشکان دەڵێن زیانی دەروونی هەیە بۆ ئەوەی ڕقی هەیە.'
+    },
+    {
+        id: 'e9', english: 'To bottle up emotions', kurdish: 'شاردنەوەی هەستەکان و دەرنەبڕینیان',
+        usageContext: 'کاتی باسکردنی دەروونی، تەرابییەکان، یا دوای ڕووداوێکی گران. زۆر لە کولتووری غەربدا باسدەکرێت.',
+        moreDetails: '"Bottle up" مانای "کردنی ناو بوتڵ و دادانی سەر"ە. پزیشکانی دەروونی ئەمەیی وەکو ئامرازی خراپی دەروونی ناو دەبەن.'
+    },
+    {
+        id: 'e10', english: 'To be thrilled to bits', kurdish: 'خۆشحاڵبوونی پڕ لەڕادەدا',
+        usageContext: 'کاتی هەواڵی زۆر خۆش — هەدیەی شانەزاین، گشتی ئازادی، داچوونی ئاهەنگ.',
+        moreDetails: '"Thrilled to bits" بریتانی يه. "Bits" یانی "تیکەکان" — زۆر خۆشحاڵ کە تا دابووی بچووک بیت! "Thrilled to pieces" هاوتایەتی.'
+    },
+    {
+        id: 'e11', english: 'To feel under pressure', kurdish: 'کەوتنە ژێر فشاری کار و ژیان',
+        usageContext: 'پێش ئیمتحان، مۆهلەتی کار، یا دەمی بڕیاری گەورەی ژیان.',
+        moreDetails: '"Under pressure" گۆرانیەکی Bowie و Queen هەیەتی. فشار بیۆلۆجیکییه بۆ چالاکی، بەڵام زیادیش کێشەی دەروونی دروست دەکات.'
+    },
+    {
+        id: 'e12', english: 'A rollercoaster of emotions', kurdish: 'تەوژمی هەستی جیاواز و زووگۆڕ',
+        usageContext: 'وەسفی ئەزموونێکی پێچاو — پارێزگارییەکی قورس، ئایینی، فیلمی سۆزداری.',
+        moreDetails: '"Rollercoaster" ئاماژەیه بۆ ئەو ماشینەی لە پارکی گەرمیدا. مانای مەجازی "گواسیتنەوەی خێرای هەست" گرتووەتەوە.'
+    },
+    {
+        id: 'e13', english: 'To swallow your pride', kurdish: 'وازهێنان لە غرور و قبوڵکردنی ڕاستی',
+        usageContext: 'کاتی پێویستی بوون عەفو بخوازیت، داوای یارمەتی بکەیت، یا قبووڵی هەڵەی خۆت بکەیت.',
+        moreDetails: '"Swallow pride" — وەکو خواردنەوەی افتیخارت. ئاسان نییە بەڵام هێنینگۆ بریتانی دەڵێت ئەوەی زۆر مممتازە کاردەکات.'
+    },
+    {
+        id: 'e14', english: 'To have a soft spot for someone', kurdish: 'خۆشەویستییەکی تایبەت بۆ کەسێک',
+        usageContext: 'کاتی باسکردن لا باخچەوانیی خۆشەویستی تایبەت — هاوڕێی کۆن، منداڵی نوێ، یان ئەوەی زۆری یارمەتیی داوە.',
+        moreDetails: '"Soft spot" ئاماژەیه بۆ بەشی لاوازی دڵ. مانایی هەبوونی ئاستی تایبەتی خۆشەویستی بۆ کەسێکیه.'
+    },
+    {
+        id: 'e15', english: "To be at your wit's end", kurdish: 'گەیشتن بەوەی نازانیت چیدەکەیت',
+        usageContext: 'دوای هەوڵدانی زۆر — لە کێشەی ئابووری، دەروونی یان پەیوەندییدا.',
+        moreDetails: '"Wit" مانای "ئەقڵ و تێگەیشتن". "End of your wit" = بووتتەوە بەسوور. پزیشکانی دەروونی "burned out" هاوتایەتیی تەکنیکیتری لاکارە.'
+    },
 ];

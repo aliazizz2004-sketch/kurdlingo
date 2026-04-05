@@ -1,362 +1,390 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-    MagnifyingGlass, ArrowLeft, BookmarkSimple, SpeakerHigh, 
-    Lightbulb, CaretRight, X
+import {
+    MagnifyingGlass, ArrowLeft, BookmarkSimple, SpeakerHigh, X,
+    List, GridFour, Info, MapPin, Lightbulb
 } from '@phosphor-icons/react';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
 import { bookDictionaryData } from '../../data/bookDictionaryData';
 import './BookDictionary.css';
 
 interface MappedWord {
-  id: string;
-  word: string; // This is now English
-  pos: string;
-  phonetic: string;
-  freq: number;
-  freqLabel: string;
-  level: number;
-  levelLabel: string;
-  defs: Array<{ meaning: string; ex: string; trans: string }>;
-  synonyms: string[];
-  antonyms: string[];
-  mnemonic: string;
-  categoryId: string;
-  categoryName: string;
+    id: string;
+    word: string;
+    categoryId: string;
+    categoryName: string;
+    kurdishMeaning: string;
+    exampleEn: string;
+    exampleKu: string;
+    color: string;
+    usageContext?: string;
+    moreDetails?: string;
 }
 
+// ── DETAIL MODAL ───────────────────────────────────────────────────────
+interface DetailModalProps {
+    word: MappedWord;
+    isSaved: boolean;
+    isPlaying: boolean;
+    onClose: () => void;
+    onBookmark: (id: string) => void;
+    onPlay: (word: string, id: string) => void;
+}
 
+const DetailModal: React.FC<DetailModalProps> = ({ word, isSaved, isPlaying, onClose, onBookmark, onPlay }) => {
+    const defaultWhere = 'لە وتوێژی ئینگلیزی ئاسایی و ژیانی ڕۆژانەدا';
+    const defaultDetails = 'ئەم دەقەیە بەشێکی گرینگی کانزای زمانی ئینگلیزییە.';
+    
+    return (
+        <motion.div
+            className="detail-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+        >
+            <motion.div
+                className="detail-drawer"
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+                onClick={e => e.stopPropagation()}
+            >
+                {/* Drag handle */}
+                <div className="drawer-handle" />
 
+                {/* Header */}
+                <div className="drawer-header">
+                    <span className="drawer-cat" style={{ '--cat-c': word.color } as React.CSSProperties}>
+                        {word.categoryName}
+                    </span>
+                    <button className="drawer-close" onClick={onClose}>
+                        <X size={20} weight="bold" />
+                    </button>
+                </div>
+
+                {/* English word */}
+                <h2 className="drawer-en" dir="ltr">{word.word}</h2>
+
+                {/* Kurdish */}
+                <p className="drawer-ku" dir="rtl">{word.kurdishMeaning}</p>
+
+                {/* Actions */}
+                <div className="drawer-actions">
+                    <button
+                        className={`drawer-btn play ${isPlaying ? 'playing' : ''}`}
+                        onClick={() => onPlay(word.word, word.id)}
+                    >
+                        <SpeakerHigh size={20} weight="fill" />
+                        {isPlaying ? 'چاوەڕوان بە...' : 'گوێبگرە'}
+                    </button>
+                    <button
+                        className={`drawer-btn save ${isSaved ? 'saved' : ''}`}
+                        onClick={() => onBookmark(word.id)}
+                    >
+                        <BookmarkSimple size={20} weight={isSaved ? 'fill' : 'bold'} />
+                        {isSaved ? 'پاشەکەوتکراوە' : 'پاشەکەوت بکە'}
+                    </button>
+                </div>
+
+                {/* Example sentence */}
+                {word.exampleEn && (
+                    <div className="drawer-section">
+                        <div className="drawer-section-title">
+                            <Info size={16} weight="fill" />
+                            <span>نموونە</span>
+                        </div>
+                        <p className="drawer-example-en" dir="ltr">"{word.exampleEn}"</p>
+                        {word.exampleKu && (
+                            <p className="drawer-example-ku" dir="rtl">{word.exampleKu}</p>
+                        )}
+                    </div>
+                )}
+
+                {/* Where is it used */}
+                <div className="drawer-section">
+                    <div className="drawer-section-title">
+                        <MapPin size={16} weight="fill" />
+                        <span>کوێ بەکاردێت؟</span>
+                    </div>
+                    <p className="drawer-detail-text" dir="rtl">{word.usageContext || defaultWhere}</p>
+                </div>
+
+                {/* More details */}
+                <div className="drawer-section">
+                    <div className="drawer-section-title">
+                        <Lightbulb size={16} weight="fill" />
+                        <span>زانیاری زیاتر</span>
+                    </div>
+                    <p className="drawer-detail-text" dir="rtl">{word.moreDetails || defaultDetails}</p>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+};
+
+// ── MAIN COMPONENT ─────────────────────────────────────────────────────
 const BookDictionary: React.FC = () => {
     const navigate = useNavigate();
     const { speak } = useTextToSpeech();
 
-    const [view, setView] = useState<'list' | 'detail'>('list');
-    const [selectedWord, setSelectedWord] = useState<MappedWord | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const [savedWords, setSavedWords] = useState<Set<string>>(new Set());
-    const [toastMessage, setToastMessage] = useState<string | null>(null);
+    const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+    const [playingWordId, setPlayingWordId] = useState<string | null>(null);
+    const [activeWord, setActiveWord] = useState<MappedWord | null>(null);
 
-    // Audio State
-    const [isPlaying, setIsPlaying] = useState(false);
-
-    // Dynamic Data Mapping (Ensuring it's learning English now)
-    const allWords: MappedWord[] = useMemo(() => {
-        return bookDictionaryData.flatMap(cat => 
+    const allWords: MappedWord[] = useMemo(() =>
+        bookDictionaryData.flatMap(cat =>
             cat.entries.map((entry, idx) => ({
                 id: entry.id || `${cat.id}-${idx}`,
-                word: entry.english, // Make the English word the main focus
-                pos: 'Phrase',
-                phonetic: entry.pronunciation || '/.../', // E.g. phonetic notation if available, otherwise fallback
-                freq: Math.floor(Math.random() * 80) + 10,
-                freqLabel: cat.name.english + ' Core',
-                level: Math.floor(Math.random() * 5) + 1,
-                levelLabel: `Level A1 — ${cat.name.english}`,
-                defs: [{ 
-                    meaning: entry.kurdish, // Meaning in Kurdish
-                    ex: entry.example?.english || entry.english, // Example in English
-                    trans: entry.example?.kurdish || entry.kurdish // Example translation in Kurdish
-                }],
-                synonyms: [], 
-                antonyms: [],
-                mnemonic: `A common phrase to use when talking about ${cat.name.english.toLowerCase()}.`,
+                word: entry.english,
                 categoryId: cat.id,
-                categoryName: cat.name.english
+                categoryName: cat.name.english,
+                kurdishMeaning: entry.kurdish,
+                exampleEn: entry.example?.english || '',
+                exampleKu: entry.example?.kurdish || '',
+                color: cat.color,
+                usageContext: entry.usageContext,
+                moreDetails: entry.moreDetails
             }))
-        );
-    }, []);
+        ), []);
 
     const filteredWords = useMemo(() => {
         let base = allWords;
-        if (selectedCategory !== 'all') {
-            base = base.filter(w => w.categoryId === selectedCategory);
-        }
-        
-        if (!searchTerm.trim()) return selectedCategory === 'all' ? base.slice(0, 15) : base;
-
-        const lowerSearched = searchTerm.toLowerCase();
-        return base.filter(w => 
-            w.word.toLowerCase().includes(lowerSearched) || 
-            w.defs[0].meaning.toLowerCase().includes(lowerSearched)
+        if (selectedCategory === 'favorites') base = base.filter(w => savedWords.has(w.id));
+        else if (selectedCategory !== 'all') base = base.filter(w => w.categoryId === selectedCategory);
+        if (!searchTerm.trim()) return base.slice(0, 60);
+        const q = searchTerm.toLowerCase();
+        return base.filter(w =>
+            w.word.toLowerCase().includes(q) ||
+            w.kurdishMeaning.toLowerCase().includes(q)
         );
-    }, [searchTerm, selectedCategory, allWords]);
+    }, [searchTerm, selectedCategory, allWords, savedWords]);
 
-    // Helpers
-    const showToast = (msg: string) => {
-        setToastMessage(msg);
-        setTimeout(() => setToastMessage(null), 2500);
-    };
-
-    const toggleBookmark = (id: string) => {
+    const toggleBookmark = useCallback((id: string, e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
         setSavedWords(prev => {
             const next = new Set(prev);
-            if (next.has(id)) {
-                next.delete(id);
-                showToast("لابرا لە وشە پاشەکەوتکراوەکان");
-            } else {
-                next.add(id);
-                showToast("زیادکرا بۆ وشە پاشەکەوتکراوەکان");
-            }
+            if (next.has(id)) next.delete(id); else next.add(id);
             return next;
         });
-    };
+    }, []);
 
-    const handlePlayAudio = (text: string) => {
-        setIsPlaying(true);
-        speak(text, () => setIsPlaying(false));
-    };
+    const handlePlay = useCallback((word: string, id: string, e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
+        setPlayingWordId(id);
+        speak(word, () => setPlayingWordId(null));
+    }, [speak]);
 
-    const navigateToWord = (wordStr: string) => {
-        const found = allWords.find(w => w.word === wordStr || w.defs[0].meaning === wordStr);
-        if (found) {
-            setSelectedWord(found);
-            setView('detail');
-        }
-    };
-
-    // Components
-    const renderSidebar = () => (
-        <div className={`modern-dict-sidebar ${view !== 'list' ? 'mobile-hidden' : ''}`}>
-            <header className="dict-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
-                    <button className="icon-btn" onClick={() => navigate(-1)} style={{ marginLeft: '-8px' }}>
-                        <ArrowLeft size={24} weight="bold" />
-                    </button>
-                    <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>فەرهەنگ</h2>
-                </div>
-                
-                <div className="search-bar-wrapper">
-                    <MagnifyingGlass size={20} className="search-icon" weight="bold" />
-                    <input 
-                        type="text" 
-                        className="search-input" 
-                        placeholder="بەدوای ئینگلیزی یان کوردی بگەڕێ..." 
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                    />
-                    {searchTerm && (
-                        <button className="clear-icon" onClick={() => setSearchTerm('')}>
-                            <X size={20} weight="bold" />
-                        </button>
-                    )}
-                </div>
-            </header>
-            
-            <div className="category-pills-row" style={{ display: 'flex', gap: '8px', overflowX: 'auto', padding: '0 20px 16px', scrollbarWidth: 'none' }}>
-                <button 
-                   className={`pill-chip ${selectedCategory === 'all' ? 'pill-active' : ''}`} 
-                   onClick={() => setSelectedCategory('all')}
-                   style={{ background: selectedCategory === 'all' ? 'var(--color-primary)' : 'var(--color-surface-variant)', color: selectedCategory === 'all' ? '#fff' : 'inherit', whiteSpace: 'nowrap' }}
-                >
-                   هەموو وشەکان
-                </button>
-                {bookDictionaryData.map(c => (
-                    <button 
-                       key={c.id}
-                       className={`pill-chip ${selectedCategory === c.id ? 'pill-active' : ''}`}
-                       onClick={() => setSelectedCategory(c.id)}
-                       style={{ background: selectedCategory === c.id ? 'var(--color-primary)' : 'var(--color-surface-variant)', color: selectedCategory === c.id ? '#fff' : 'inherit', whiteSpace: 'nowrap' }}
-                    >
-                       {c.name.english}
-                    </button>
-                ))}
-            </div>
-
-            <div className="list-scroll-area">
-                <div className="list-section-label">
-                    {searchTerm ? 'ئەنجامەکان' : 'نوێترین'}
-                </div>
-                <div className="word-list">
-                    {filteredWords.map(w => (
-                        <div 
-                            key={w.id} 
-                            className={`word-row ${selectedWord?.id === w.id ? 'selected' : ''}`} 
-                            onClick={() => { setSelectedWord(w); setView('detail'); }}
-                        >
-                            <div className="row-content" dir="ltr" style={{ textAlign: 'left' }}>
-                                <div className="row-head">
-                                    <span className="row-word serif-font">{w.word}</span>
-                                    <span className="row-meta">{w.pos} • {w.phonetic}</span>
-                                </div>
-                                <span className="row-preview" dir="rtl" style={{ textAlign: 'right', display: 'block' }}>{w.defs[0].meaning}</span>
-                            </div>
-                            <div className="row-right">
-                                <div className="difficulty-dots">
-                                    {[1,2,3,4,5].map(dot => (
-                                        <div key={dot} className={`dot ${dot <= w.level ? 'filled' : ''}`} />
-                                    ))}
-                                </div>
-                                <CaretRight size={20} className="row-arrow" weight="bold" />
-                            </div>
-                        </div>
-                    ))}
-                    {filteredWords.length === 0 && (
-                        <div style={{ padding: '40px 20px', textAlign: 'center', color: '#6B7280' }}>
-                            هیچ وشەیەک نەدۆزرایەوە بۆ "{searchTerm}"
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-
-    const renderDetail = () => {
-        if (!selectedWord) {
-            return (
-                <div className="desktop-placeholder">
-                    <MagnifyingGlass size={64} weight="light" color="#D1D5DB" />
-                    <p>وشەیەک هەڵبژێرە بۆ بینینی وردەکارییەکەی</p>
-                </div>
-            );
-        }
-
-        return (
-            <div className="detail-screen">
-                <header className="detail-header">
-                    <button className="icon-btn detail-back-btn" onClick={() => setView('list')}>
-                        <ArrowLeft size={24} weight="bold" />
-                    </button>
-                    <button 
-                        className={`icon-btn ${savedWords.has(selectedWord.id) ? 'active' : ''}`} 
-                        onClick={() => toggleBookmark(selectedWord.id)}
-                    >
-                        <BookmarkSimple size={24} weight={savedWords.has(selectedWord.id) ? "fill" : "bold"} />
-                    </button>
-                </header>
-
-                <div className="list-scroll-area">
-                    <div className="hero-block">
-                        <span className="pos-badge">{selectedWord.pos}</span>
-                        <h1 className="headword serif-font">{selectedWord.word}</h1>
-                        <p className="phonetic">{selectedWord.phonetic}</p>
-                        
-                        <button className="listen-btn" onClick={() => handlePlayAudio(selectedWord.word)}>
-                            <SpeakerHigh size={20} weight="fill" />
-                            گوێبگرە
-                            <div className={`waveform ${isPlaying ? 'playing' : ''}`}>
-                                <div className="bar"></div>
-                                <div className="bar"></div>
-                                <div className="bar"></div>
-                                <div className="bar"></div>
-                            </div>
-                        </button>
-                        
-                        <span className="freq-label">{selectedWord.freqLabel}</span>
-                    </div>
-
-                    <div className="detail-section">
-                        <div className="def-card">
-                            {selectedWord.defs.map((def, idx) => (
-                                <div key={idx} className="def-item">
-                                    <div className="def-meaning">
-                                        <span className="def-num">{idx + 1}.</span>
-                                        <span className="def-text">{def.meaning}</span>
-                                    </div>
-                                    {def.ex !== selectedWord.word && (
-                                        <div className="def-ex">
-                                            <p className="ex-text">{def.ex}</p>
-                                            <p className="ex-trans">{def.trans}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {(selectedWord.synonyms.length > 0 || selectedWord.antonyms.length > 0) && (
-                        <div className="detail-section">
-                            <div className="syn-card">
-                                {selectedWord.synonyms.length > 0 && (
-                                    <>
-                                        <div className="section-title">هاوواتا</div>
-                                        <div className="pill-group" style={{ marginBottom: 16 }}>
-                                            {selectedWord.synonyms.map(syn => (
-                                                <button key={syn} className="pill-chip" onClick={() => navigateToWord(syn)}>
-                                                    {syn}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-                                {selectedWord.antonyms.length > 0 && (
-                                    <>
-                                        <div className="section-title">دژواتا</div>
-                                        <div className="pill-group">
-                                            {selectedWord.antonyms.map(ant => (
-                                                <button key={ant} className="pill-chip antonym" onClick={() => navigateToWord(ant)}>
-                                                    ↔ {ant}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    <div className="detail-section">
-                        <div className="tip-card">
-                            <div className="tip-icon">
-                                <Lightbulb size={24} weight="fill" />
-                            </div>
-                            <div className="tip-content">
-                                <div className="section-title">تێبینی بۆ لەبەرکردن</div>
-                                <p className="tip-text">{selectedWord.mnemonic}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="detail-section">
-                        <div className="diff-card">
-                            <span className="diff-label">{selectedWord.levelLabel}</span>
-                            <div className="difficulty-dots">
-                                {[1,2,3,4,5].map(dot => (
-                                    <div key={dot} className={`dot ${dot <= selectedWord.level ? 'filled' : ''}`} />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bottom-bar">
-                    <button className="btn-outline" onClick={() => {
-                        toggleBookmark(selectedWord.id);
-                        if (!savedWords.has(selectedWord.id)) showToast("زیادکرا بۆ کۆمەڵە!");
-                    }}>
-                        + زیادکردن بۆ کۆمەڵە
-                    </button>
-                </div>
-            </div>
-        );
-    };
+    const openDetail = (w: MappedWord) => setActiveWord(w);
+    const closeDetail = () => setActiveWord(null);
 
     return (
-        <div className="modern-dict-wrapper">
-            {renderSidebar()}
-            
-            <div className={`modern-dict-main ${view === 'list' ? 'mobile-hidden' : ''}`}>
-                {renderDetail()}
+        <div className="lexicon-root">
+            {/* ── HEADER ── */}
+            <header className="lexicon-header">
+                <div className="lex-header-left">
+                    <button className="lex-icon-btn" onClick={() => navigate(-1)}>
+                        <ArrowLeft size={24} weight="bold" />
+                    </button>
+                    <h1 className="lex-title">فەرهەنگ</h1>
+                </div>
+                <div className="lex-view-toggle">
+                    <button
+                        className={`lex-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                        onClick={() => setViewMode('grid')}
+                    >
+                        <GridFour size={20} weight={viewMode === 'grid' ? 'fill' : 'regular'} />
+                    </button>
+                    <button
+                        className={`lex-toggle-btn ${viewMode === 'table' ? 'active' : ''}`}
+                        onClick={() => setViewMode('table')}
+                    >
+                        <List size={20} weight={viewMode === 'table' ? 'fill' : 'regular'} />
+                    </button>
+                </div>
+            </header>
 
-                <AnimatePresence>
-                    {toastMessage && (
-                        <motion.div 
-                            initial={{ opacity: 0, y: 50, x: '-50%' }}
-                            animate={{ opacity: 1, y: 0, x: '-50%' }}
-                            exit={{ opacity: 0, y: 20, x: '-50%' }}
-                            className="dict-toast"
+            <main className="lexicon-main">
+                {/* ── SEARCH & FILTER ── */}
+                <div className="lex-controls-wrapper">
+                    <div className="lex-search-box">
+                        <MagnifyingGlass size={20} className="lex-search-icon" />
+                        <input
+                            className="lex-search-input"
+                            placeholder="گەڕان بۆ وشەکان..."
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                        {searchTerm && (
+                            <button className="lex-search-clear" onClick={() => setSearchTerm('')}>
+                                <X size={18} />
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="lex-categories no-scrollbar">
+                        <button
+                            className={`lex-cat-pill ${selectedCategory === 'all' ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory('all')}
+                        >هەموو پەرتووکەکان</button>
+                        <button
+                            className={`lex-cat-pill lex-cat-fav ${selectedCategory === 'favorites' ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory('favorites')}
                         >
-                            {toastMessage}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
+                            پەسەندکراوەکان <BookmarkSimple size={14} weight="fill" />
+                        </button>
+                        {bookDictionaryData.map(c => (
+                            <button
+                                key={c.id}
+                                className={`lex-cat-pill ${selectedCategory === c.id ? 'active' : ''}`}
+                                onClick={() => setSelectedCategory(c.id)}
+                            >{c.name.kurdish}</button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="lex-results-info">
+                    <span className="lex-badge">دۆزراوەکان</span>
+                    <span className="lex-count">{filteredWords.length} وشە</span>
+                </div>
+
+                {/* ── GRID VIEW ── */}
+                {viewMode === 'grid' && (
+                    <div className="lex-word-grid">
+                        <AnimatePresence>
+                            {filteredWords.map(w => (
+                                <motion.div
+                                    key={w.id}
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="lex-card"
+                                    style={{ '--card-theme': w.color } as React.CSSProperties}
+                                    onClick={() => openDetail(w)}
+                                >
+                                    {/* Category + English word */}
+                                    <div className="lex-card-top">
+                                        <span className="lex-card-cat">{w.categoryName}</span>
+                                        <h4 className="lex-card-en">{w.word}</h4>
+                                    </div>
+
+                                    {/* Example */}
+                                    <div className="lex-card-mid">
+                                        {w.exampleEn && (
+                                            <p className="lex-card-example">"{w.exampleEn}"</p>
+                                        )}
+                                    </div>
+
+                                    {/* Bottom: Kurdish word LEFT, Icons + Sorani label RIGHT */}
+                                    <div className="lex-card-bot">
+                                        <p className="lex-card-ku" dir="rtl">{w.kurdishMeaning}</p>
+                                        <div className="lex-card-bot-right">
+                                            <div className="lex-card-bot-icons">
+                                                <button
+                                                    className={`lex-card-btn fav ${savedWords.has(w.id) ? 'active' : ''}`}
+                                                    onClick={e => toggleBookmark(w.id, e)}
+                                                    title="پاشەکەوت بکە"
+                                                >
+                                                    <BookmarkSimple size={18} weight={savedWords.has(w.id) ? 'fill' : 'regular'} />
+                                                </button>
+                                                <button
+                                                    className={`lex-card-btn play ${playingWordId === w.id ? 'playing' : ''}`}
+                                                    onClick={e => handlePlay(w.word, w.id, e)}
+                                                    title="گوێبگرە"
+                                                >
+                                                    <SpeakerHigh size={18} weight={playingWordId === w.id ? 'fill' : 'regular'} />
+                                                </button>
+                                            </div>
+                                            <span className="lex-lang-label">Sorani</span>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                        {filteredWords.length === 0 && (
+                            <div className="lex-empty">نەدۆزرایەوە! بە دوای شتێکی تردا بگەڕێ.</div>
+                        )}
+                    </div>
+                )}
+
+                {/* ── TABLE VIEW: Kurdish RIGHT, English LEFT ── */}
+                {viewMode === 'table' && (
+                    <div className="lex-table-container">
+                        <div className="lex-table-header">
+                            {/* LTR order: audio | en | ku | bookmark */}
+                            <div className="lex-th-audio">دەنگ</div>
+                            <div className="lex-th-en">وشەی ئینگلیزی</div>
+                            <div className="lex-th-ku">مانای کوردی</div>
+                            <div className="lex-th-fav"></div>
+                        </div>
+                        <div className="lex-table-body">
+                            <AnimatePresence>
+                                {filteredWords.map(w => (
+                                    <motion.div
+                                        key={w.id}
+                                        layout
+                                        initial={{ opacity: 0, y: 8 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, x: -16 }}
+                                        className="lex-table-row"
+                                        onClick={() => openDetail(w)}
+                                    >
+                                        <div className="lex-td-audio">
+                                            <button
+                                                className={`lex-small-play ${playingWordId === w.id ? 'playing' : ''}`}
+                                                onClick={e => { e.stopPropagation(); handlePlay(w.word, w.id); }}
+                                            >
+                                                <SpeakerHigh size={18} weight={playingWordId === w.id ? 'fill' : 'regular'} />
+                                            </button>
+                                        </div>
+                                        <div className="lex-td-en">
+                                            <span className="lex-t-word" dir="ltr">{w.word}</span>
+                                            <span className="lex-t-cat">{w.categoryName}</span>
+                                        </div>
+                                        <div className="lex-td-ku">
+                                            <span className="lex-t-kurd" dir="rtl">{w.kurdishMeaning}</span>
+                                        </div>
+                                        <div className="lex-td-fav">
+                                            <button
+                                                className={`lex-small-fav ${savedWords.has(w.id) ? 'active' : ''}`}
+                                                onClick={e => { e.stopPropagation(); toggleBookmark(w.id); }}
+                                            >
+                                                <BookmarkSimple size={16} weight={savedWords.has(w.id) ? 'fill' : 'bold'} />
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                        {filteredWords.length === 0 && (
+                            <div className="lex-empty" style={{ marginTop: '40px' }}>هیچ وشەیەک نییە لەم بەشەدا.</div>
+                        )}
+                    </div>
+                )}
+            </main>
+
+            {/* ── DETAIL MODAL / DRAWER ── */}
+            <AnimatePresence>
+                {activeWord && (
+                    <DetailModal
+                        word={activeWord}
+                        isSaved={savedWords.has(activeWord.id)}
+                        isPlaying={playingWordId === activeWord.id}
+                        onClose={closeDetail}
+                        onBookmark={id => toggleBookmark(id)}
+                        onPlay={handlePlay}
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 };
-
-
-
 
 export default BookDictionary;

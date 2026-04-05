@@ -1,19 +1,79 @@
 import { DictionaryEntry } from '../bookDictionaryData';
 
 export const greetingsEntries: DictionaryEntry[] = [
-    { id: 'g1', english: 'What have you been up to?', kurdish: 'بە چیوە خەریک بوویت؟' },
-    { id: 'g2', english: 'It is a pleasure to make your acquaintance', kurdish: 'خۆشحاڵم بەم ناسینە' },
-    { id: 'g3', english: 'How are things holding up?', kurdish: 'ئیشوکارەکان چۆن دەڕۆن؟' },
-    { id: 'g4', english: 'Speak of the devil', kurdish: 'ناوت هێنا و خۆی پەیدا بوو' },
-    { id: 'g5', english: 'Pardon my intrusion', kurdish: 'ببورە بۆ بێزارکردن' },
-    { id: 'g6', english: 'To cross paths', kurdish: 'بەیەکگەیشتن لە ڕێگادا / ڕێکەوت کردن' },
-    { id: 'g7', english: 'Greetings and salutations', kurdish: 'ڕێز و سڵاوێکی گەرم' },
-    { id: 'g8', english: 'To give a warm welcome', kurdish: 'پێشوازییەکی گەرم کردن' },
-    { id: 'g9', english: 'I apologize for the delay', kurdish: 'داوای لێبوردن بۆ دواکەوتنەکە دەکەم' },
-    { id: 'g10', english: 'Lets catch up later', kurdish: 'با دواتر یەکتری ببینینەوە و قسە بکەین' },
-    { id: 'g11', english: 'Can not complain', kurdish: 'ناکرێت گلەیی بکەم (زۆر باشم)' },
-    { id: 'g12', english: 'I have heard so much about you', kurdish: 'زۆرم لەسەر تۆ بیستووە' },
-    { id: 'g13', english: 'To bump into someone', kurdish: 'بە ڕێکەوت تووشی کەسێک بوون' },
-    { id: 'g14', english: 'To get off on the wrong foot', kurdish: 'بە هەڵە یەکتر ناسین / بە خراپی دەست پێکردن' },
-    { id: 'g15', english: 'To make small talk', kurdish: 'قسەی کورت و ئاسایی کردن' }
+    {
+        id: 'g1', english: 'What have you been up to?', kurdish: 'بە چیوە خەریک بوویت؟',
+        usageContext: 'لە کاتی دیتنی هاوڕێیەک کە کاتێکی زیاتریت پێ نەبووە دەگوترێت. لە قسەی ئارادانە، نە لە ژینگەی فەرمیدا.',
+        moreDetails: 'ئەم دەقەیە شێوەیەکی نارەسمیە بۆ "How are you?" بەڵام زیاتر تیرۆژی کاروباری کەسەکەی تر دەکات. ئینگلیزیزمانکراوان زۆر بەکاریاندێنێت لە دەستپێکردنی گفتوگۆ.'
+    },
+    {
+        id: 'g2', english: 'It is a pleasure to make your acquaintance', kurdish: 'خۆشحاڵم بەم ناسینە',
+        usageContext: 'لە کاتی ناساندنی فەرمی — لە کۆنفرانس، کۆبوونەوەی کاری، یان پێشکەشکردنی خۆت بە کەسی نوێی گرنگدا.',
+        moreDetails: 'ئەمە دەقێکی زۆر فەرمی و کلاسیکییە. لە گفتوگۆی ئارادانە "Nice to meet you" زیاتر بەکاردێت. بەڵام بەکارهێنانی ئەمەیی نیشانەی ڕیزگرتن و مجامەلەیە.'
+    },
+    {
+        id: 'g3', english: 'How are things holding up?', kurdish: 'ئیشوکارەکان چۆن دەڕۆن؟',
+        usageContext: 'لە کاتی پرسیارکردن لە بارودۆخ یان کاروباری هاوڕێ کاتێک دەزانیت تازەتا کێشەیان هەبووە یان دۆخێکی قورسیان تێپەڕاندووە.',
+        moreDetails: '"Hold up" بە مانای "بەخۆدانەوە" دێت. ئەم دەقەیە پرسیار دەکات کە ئایا کەسەکە لا دەدات یان کەلک لەوانە دەوینێت. زۆر باوە لە کێبێرکردنی دووچارەکان.'
+    },
+    {
+        id: 'g4', english: 'Speak of the devil', kurdish: 'ناوت هێنا و خۆی پەیدا بوو',
+        usageContext: 'کاتێک کەسێک دەگەیتە دوێن تازەکە لەسەری قسە کراوە. بە گاڵتەیی دەگوترێت.',
+        moreDetails: 'ئەم دەقەیە كلتووری دووبارەی باوی کەلتووری غەرب. وردبینیی ئەم دەقەیه زۆر گرینگه: "Speak of the devil and he shall appear" جولەکەی کامڵیتره.'
+    },
+    {
+        id: 'g5', english: 'Pardon my intrusion', kurdish: 'ببورە بۆ بێزارکردن',
+        usageContext: 'کاتێک دەزانیت کاتی کەسێک دەگریت یان قسەکردنی دوولایەکیش دەبرێت. بیشتر لە ژینگەی فەرمیدا.',
+        moreDetails: '"Pardon" کورتکراوەی "Pardon me" یە کە بریتانییترە لە "Excuse me". زیاد بکارهێنانی نیشانەی ئەدەبی و جوانمەردییە.'
+    },
+    {
+        id: 'g6', english: 'To cross paths', kurdish: 'بەیەکگەیشتن لە ڕێگادا / ڕێکەوت کردن',
+        usageContext: 'بۆ وتنی ئەوەی بەهۆی ڕۆیشتنی جیاوازدا بەیەکگەیشتووین — لە ئارادانە و لە فەرمیییەکەدا.',
+        moreDetails: 'دەتوانرێت لیتەراڵی بەکاربێت (مەبەستت ڕێگا بێت) یا مەجازی (مەبەستت پەیوەندی یان ناسینبوون بێت). "Our paths crossed years ago" یانی کاتێک پێشدا ناسمانبووە.'
+    },
+    {
+        id: 'g7', english: 'Greetings and salutations', kurdish: 'ڕێز و سڵاوێکی گەرم',
+        usageContext: 'لە دەستپێکی نامەی فەرمی، ئیمەیل، یان وتاریدا. یان بە گاڵتەیی لە قسەی ئارادانە.',
+        moreDetails: '"Salutations" کلمەیەکی کلاسیکییە و کەم بەکاردێت. دووبارەکردنەوەی "Greetings" و "salutations" لەگەڵ یەکتر باوتر لە ستایلی داستان و نووسینی ئەدەبییەدایە.'
+    },
+    {
+        id: 'g8', english: 'To give a warm welcome', kurdish: 'پێشوازییەکی گەرم کردن',
+        usageContext: 'کاتێک میوانی تازەیەك پێشوازی دەکرێت — لە ماڵ، لە کار، لە کۆمەڵگەیەک.',
+        moreDetails: '"Warm" ئاماژەیە بۆ هەستی گەرمی و خۆشەویستی. پێچەوانەی ئەمەیش "Cold shoulder" یانی گوێت لێ نەگرتن یە. پیرۆزبوون لۆکەلیزەی ئەمریکاییه بیشتر.'
+    },
+    {
+        id: 'g9', english: 'I apologize for the delay', kurdish: 'داوای لێبوردن بۆ دواکەوتنەکە دەکەم',
+        usageContext: 'لە ئیمەیلی کاری، کاتێک وازانی دواتر وەڵاممی دایەوە، یان لە دەمی چاوپێکەوتن کاتێک دواتر دەگەیتی.',
+        moreDetails: 'ئەمە دەقێکی فەرمی زۆر بەکاربێتە. لە ژینگەی ئارادانە "Sorry for the late reply" زۆر بەکاردێت. پیشەیی بوونی وەڵام هەمیشە گرینگتره لە کاتی ئەی.'
+    },
+    {
+        id: 'g10', english: "Let's catch up later", kurdish: 'با دواتر یەکتری ببینینەوە و قسە بکەین',
+        usageContext: 'لە کۆتایی دیدارێکدا کاتێک حاڵی قسەکردنی زیاتری نییە. نیشاندەری ئارەزووی بینینی دووبارەیە.',
+        moreDetails: '"Catch up" یانی گەیشتنەوە بە یەکتر لەسەر نوێیەکان. ئەگەر کاتی دیاری نەکرا، ئینگلیزیزمانکراوان زۆرجار ئەمە بە نزیکترین ئارەزوو بەکاردێنن بێ پلانی ڕاستەقینە.'
+    },
+    {
+        id: 'g11', english: "Can't complain", kurdish: 'ناکرێت گلەیی بکەم (زۆر باشم)',
+        usageContext: 'کاتێک کەسێک پرسیار دەکات "How are you?" و دەتەوێت بڵێی زۆر باشی، بەڵام بە شێوەیەکی بێ دەنگ',
+        moreDetails: 'ئەمە ویژدانیترین وەڵامی ئینگلیزییه بۆ "چۆنیت؟". نیشانەیە کە شتێکی گرینگی نییە و هەموو شتێک ئاسایییە. بریتانیایی زیاتره.'
+    },
+    {
+        id: 'g12', english: "I've heard so much about you", kurdish: 'زۆرم لەسەر تۆ بیستووە',
+        usageContext: 'کاتی ناساندنی بە کەسێک کە پێشتر لەسەری باسکراوە — لە پارتی، لە کاردا، لە ماڵدا.',
+        moreDetails: 'ئەمە دەقێکی زۆر گەرمانەیە کە نیشانی دەدات تۆ گرینگیت هەیە پێش ناسینیش. دەتوانرێت لەگەڵ زیادەی "all good things" (هەموو شتی باش) بکاربێت بۆ دڵڕاحەتی ئەوەی رووبەرووتیت.'
+    },
+    {
+        id: 'g13', english: 'To bump into someone', kurdish: 'بە ڕێکەوت تووشی کەسێک بوون',
+        usageContext: 'کاتێک بەبێ پلان کەسێک دەبینیت — لە سوپەرمارکیت، لە کوچەدا، لە ئۆتۆبوسدا.',
+        moreDetails: '"Bump into" بە مانای کوتانەوە دێت، بەڵام بەمانای مەجازی بانواست دەکات بڕوانکردنی ناگهانی. پێچەوانەی "plan to meet" یە کە ئەوەی پڕ پلانبووە ئاماژەی پێدایە.'
+    },
+    {
+        id: 'g14', english: 'To get off on the wrong foot', kurdish: 'بە هەڵە یەکتر ناسین / بە خراپی دەست پێکردن',
+        usageContext: 'کاتێک پەیوەندی یان کارێکی نوێ بە شێوەیەکی خراپ دەستیپێکات — هەڵپارێزگاری، دیسئەگریمێنت، یان سووکایەتی بەهۆی نهۆشیاریەوە.',
+        moreDetails: 'دابەزینی ئەم دەقەیه دێتـه لە ئەوەی کاتێک سوپاییەکان دەستیدەپێکردن دەڵێن were ordered to "step off on the right foot". هەڵپەرکێی نادروست دەکرێت بتوانیت داڕێژیتتەوە بە "start fresh" یانی سەرتازە دەستپێکردن.'
+    },
+    {
+        id: 'g15', english: 'To make small talk', kurdish: 'قسەی کورت و ئاسایی کردن',
+        usageContext: 'لە پارتی، لە کاردا لەگەڵ کەسی نا ناسراو، لە چاوەڕواندا — هەر شوێنێک کە قسەکردن پڕ پلان نییە.',
+        moreDetails: '"Small talk" خوراکی کۆمەڵایەتی یە. بابەتە بەرعادیەکانی ئەم جۆرە قسەیە: کەش و هەوا، کار، پەرەسەندنەکان. لە کەلتووری ئینگلیزی ناگریتن بوودن بە small talk بزانیت خودانی زانیارییە.'
+    },
 ];

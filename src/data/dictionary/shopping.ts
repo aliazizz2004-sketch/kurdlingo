@@ -1,19 +1,79 @@
 import { DictionaryEntry } from '../bookDictionaryData';
 
 export const shoppingEntries: DictionaryEntry[] = [
-    { id: 's1', english: 'To cost an arm and a leg', kurdish: 'زۆر گران لەسەر کەوتن / قۆڵی بڕین' },
-    { id: 's2', english: 'To shop around', kurdish: 'گەڕان بۆ ئۆفەر و نرخی باشتری شتێک' },
-    { id: 's3', english: 'It was an absolute steal', kurdish: 'وەک موفت وابوو (زۆر هەرزان)' },
-    { id: 's4', english: 'To pay out of pocket', kurdish: 'لە گیرفانی خۆت پارە دان' },
-    { id: 's5', english: 'To go on a spending spree', kurdish: 'پارەخەرجکردنێکی زۆر بێ بیرکردنەوە' },
-    { id: 's6', english: 'To browse around', kurdish: 'تەنها سەیرکردنی ناو بازاڕ' },
-    { id: 's7', english: 'Out of stock', kurdish: 'لە کۆگا نەماوە / تەواو بووە' },
-    { id: 's8', english: 'In high demand', kurdish: 'خواستێکی زۆری لەسەرە' },
-    { id: 's9', english: 'To impulse buy', kurdish: 'کڕینی شتێک لەپڕ و بێ بەرنامە' },
-    { id: 's10', english: 'A total rip-off', kurdish: 'دزییەکی ئاشکرا (نرخێکی زۆر زیاد)' },
-    { id: 's11', english: 'Window shopping', kurdish: 'سەیرکردنی پەنجەرەی دوکانەکان بێ کڕین' },
-    { id: 's12', english: 'To snap up a bargain', kurdish: 'قۆستنەوەی هەلێکی باشی کڕین' },
-    { id: 's13', english: 'To slash prices', kurdish: 'داشکاندنی زۆری نرخەکان' },
-    { id: 's14', english: 'To haggle over the price', kurdish: 'موجادەلەکردن (مامەڵە کردن) لەسەر نرخ' },
-    { id: 's15', english: 'To be on a tight budget', kurdish: 'پارەی کەم بەدەستەوە بوون بۆ خەرجکردن' }
+    {
+        id: 's1', english: 'To cost an arm and a leg', kurdish: 'زۆر گران لەسەر کەوتن',
+        usageContext: 'کاتی قسەکردن لەسەر نرخی شتێکی باهایی — ئۆتۆمبێل، خانوو، گەشت، یان هەر شتێکی گران.',
+        moreDetails: 'ئەم دەقەیه دابەزینی تاریخییەکی هەیە دەگەڕێتەوە بۆ سەردەمێک کە جریمەی سزای لەشبڕین هەبوو. ئێستا بەشێکی مەتاللیکی ئینگلیزییە کە زۆر بەکاردێت لە باسی نرخدا.'
+    },
+    {
+        id: 's2', english: 'To shop around', kurdish: 'گەڕان بۆ ئۆفەر و نرخی باشتر',
+        usageContext: 'پێش کڕینی شتێکی گران — بیمە، ئۆتۆمبێل، ئامێری ماڵ، بڵیتی ئازادانه.',
+        moreDetails: '"Shop around" ئاماژەیە بۆ بینینی چەندین دوکان پێش بڕیار. لە کۆمیدی فینانسییەکاندا زۆر باوە. لیستی نرخ بدەوە بۆ بیمە؟ "Always shop around first!"'
+    },
+    {
+        id: 's3', english: 'It was an absolute steal', kurdish: 'وەک موفت وابوو (زۆر هەرزان)',
+        usageContext: 'کاتی بینینی شتێک بە نرخی زۆر کەم — سەیل، دوکانی دەستدووەم، یا باڕگین.',
+        moreDetails: '"Steal" لا دزین نییە! مانایی "bargain" خراپی یە. "That dress was a steal at £10!" یانی "ئەو کراسەیە زۆر هەرزان بوو." شادمانی کڕینی زیاد دەخاتەوە.'
+    },
+    {
+        id: 's4', english: 'To pay out of pocket', kurdish: 'لە گیرفانی خۆت پارە دان',
+        usageContext: 'کاتی بینیمانی کار یان بیمە تێچووەکەت پووشینەوە ناکات — پزیشکی، سەفەری کاری، تەمیر.',
+        moreDetails: '"Out of pocket" مانای پارەی شخصی خۆتت دەکات نە لەڕێی بیمەوە یا شیرکەت. لە مەریکادا زۆر باوە لە قسەی پزیشکی و بیمەدا.'
+    },
+    {
+        id: 's5', english: 'To go on a spending spree', kurdish: 'پارەخەرجکردنی زیاد بێ بیرکردنەوە',
+        usageContext: 'دوای مووچەگرتن، هەدیەی بڕی گەورە، یان لە شۆپینگ مۆڵدا کاتی دیل.',
+        moreDetails: '"Spree" یانی "کات و بێ کۆنترۆڵ". "Shopping spree" کۆی خەرج بێ سنوورە. پشکنینی بانکیت بکە دوای "spree" — زۆرجار شۆکبووندار!'
+    },
+    {
+        id: 's6', english: 'To browse around', kurdish: 'تەنیا سەیرکردنی ناو بازاڕ',
+        usageContext: 'کاتی چوونە ناو دوکانێک بێ بەرنامەی کڕینی دیاریکراو — ئینتەرنیت، مالمۆل، دوکانی کتێب.',
+        moreDetails: '"Browse" هاتوەتەوە لە "browsing", مانای گەڕان. لە ئینتەرنیتدا "browse the web" زیاتر بەکاردێت. "Just browsing!" وەڵامی باوی دوکانیارانە دەمی پرسیار.'
+    },
+    {
+        id: 's7', english: 'Out of stock', kurdish: 'لە کۆگا نەماوە',
+        usageContext: 'کاتی داواکردنی شتێک لە دوکانی ئۆنلاین یان لە مالمۆل — خواردنی دیاریکراو، جل، گاجێت.',
+        moreDetails: '"In stock" پێچەوانەیەتی. کۆمپانیاکانی ئۆنلاین زۆر بریارێک بۆ "back-order" که نیشان دەدات کە کاتێک پێویستییەکەت دابین دەبێت دەگات.'
+    },
+    {
+        id: 's8', english: 'In high demand', kurdish: 'خواستێکی زۆری لەسەرە',
+        usageContext: 'باسکردنی شتێک یان خزمەتگوزارییەک کە خەڵکی زیاتری داوای دەکات لە ئۆفەری بازاڕ — تکنەلۆژیا، شوقل، بازارگانی.',
+        moreDetails: '"Supply and demand" بنچینەی ئابووریناسییە. "High demand, low supply" نرخ بەرزتر دەکات. مووچەی مامۆستایان زۆرجار نیشانەی "high demand"ی شارزایییانە.'
+    },
+    {
+        id: 's9', english: 'To impulse buy', kurdish: 'کڕینی شتێک بەبێ پلان',
+        usageContext: 'لە کاتی مالمۆل، سایتی ئۆنلاین، یان کاتی دیلدا کاتی بینینی شتێک و خوازینی لەپڕ.',
+        moreDetails: '"Impulse buying" کێشەیەکی فینانسی باوە. دوکانەکان زۆر کەلوپەلی کەمنرخیان لە دەرگاکانی حسابدانەوەدا دادەنێن تەنها بۆ هاندانی "impulse." داڕشتنی لیست پێش کڕین زۆر یارمەتیدەر.'
+    },
+    {
+        id: 's10', english: 'A total rip-off', kurdish: 'فریودانی ئاشکرا',
+        usageContext: 'کاتی بینینی شتێک بنرخی زۆر بەرز لە بەهای ڕاستی — ماڵی گەشتی، ڕستووران لە شوێنی تواری، شتی سەرسوڕهێنەر.',
+        moreDetails: '"Rip-off" دێتەوە لە "ripping off" یانی "ڕیشاندنی کەسێک". "Tourist trap" شوێنێکی تایبەتی "rip-off" یە. ئایا دەانێیت بۆ ماشین باشکردنی نرخی نامعقوول؟ "Total rip-off!"'
+    },
+    {
+        id: 's11', english: 'Window shopping', kurdish: 'سەیرکردنی پەنجەرەکانی دوکان بێ کڕین',
+        usageContext: 'چوونە ناو شاری کۆمەڵگە تەنیا بۆ سەیر — بێ پارە، بۆ گەشت و گەزار، یان تەنها بۆ ئیلهام.',
+        moreDetails: 'پێش ئینتەرنیت، خەڵک ڕاستەوخۆ پەنجەرەی دوکانی سەیر دەکرد. ئێستا "window shopping" ئۆنلاین بێ کڕین زیاتر باوە. دوکانداران دیزاینی ناوچەی پەنجەرەیان بۆ ئەمە کامیک دەکەن.'
+    },
+    {
+        id: 's12', english: 'To snap up a bargain', kurdish: 'قۆستنەوەی هەلێکی باشی کڕین',
+        usageContext: 'کاتی دیلی کۆتاکاتی یا بینینی ئۆفەری کاتی محدود — بڵاک فرایدی، سەیل، یان ئۆفەری پەشیمانی.',
+        moreDetails: '"Snap up" مانای زووتر قاپیدانەوەیە. "Bargain" شتێکی زۆر باش بە نرخی کەمە. "If you see a good deal, snap it up!" — ئاماژەیە بۆ خێرابوون.'
+    },
+    {
+        id: 's13', english: 'To slash prices', kurdish: 'داشکاندنی زۆری نرخ',
+        usageContext: 'لە ڕیکلامی دوکان، هەواڵی بازار، یان کاتی باسکردن لە سیزوونی سەیل.',
+        moreDetails: '"Slash" مانای برین بەتیژیە. ئامازۆن "slash prices" دەکات بۆ "Prime Day". بازاردار زۆرجار "slash" دەگوترێت نرخی زۆر دابەزاو نیشان بدات بۆ کڕیار.'
+    },
+    {
+        id: 's14', english: 'To haggle over the price', kurdish: 'مامەڵەکردن لەسەر نرخ',
+        usageContext: 'لە بازارچەکانی کۆنتروڵنەکراو، کڕینی ئۆتۆمبێلی کۆن، یان لە کۆمەڵگەکانی کەلتووری "ئارزانکردنەوە" باوە.',
+        moreDetails: '"Haggling" لە کۆمەڵگەکانی خاوەن بازارچە (ئەعرەب، ئاسیا) كلتوورییە. لە غەرب کەمتر باوە. بەڵام لە مارکەتی پێت، لە دوکانی کتێبی کۆن، هەموو شوێنێک دەکرێت ترای بکەیت.'
+    },
+    {
+        id: 's15', english: 'To be on a tight budget', kurdish: 'پارەی کەم بەدەستەوە بوون بۆ خەرجکردن',
+        usageContext: 'کاتی خەرجکردنی سنووردار — سەفەری خێرا، قوتابخانە، ماندوویی لە پارەدا.',
+        moreDetails: '"Tight budget" مانای پارە زۆر کەمە. "Budgeting" شارەزایی فینانسی زۆر گرینگە. لیستی خەرجی نووسین پیشنیاری ئابووریناسانە, بیشترین ئامرازی "tight budget" دامانانیشە.'
+    },
 ];
