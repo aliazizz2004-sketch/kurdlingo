@@ -25,6 +25,7 @@ import Layout from './components/Layout/Layout';
 import PageTransition from './components/PageTransition';
 import ScrollToTop from './components/ScrollToTop';
 import ProfileSetupModal from './components/ProfileSetupModal';
+import VoiceTest from './pages/VoiceTest';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -56,6 +57,7 @@ const AnimatedRoutes = () => {
         <Route path="/dictionary" element={<Layout><BookDictionary /></Layout>} />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/eltis" element={<PageTransition><Eltis /></PageTransition>} />
+        <Route path="/voicetest" element={<Layout><VoiceTest /></Layout>} />
       </Routes>
     </AnimatePresence>
   );

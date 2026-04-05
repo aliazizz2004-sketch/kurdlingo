@@ -7,6 +7,7 @@ import {
     Settings, Play, Pause, RotateCcw, Loader2, Volume2, Mic, MicOff, CheckCircle2, XCircle, SkipForward, Flag
 } from 'lucide-react';
 import { sendChatMessage } from '../../services/api';
+import { transcribeWithGemini } from '../../utils/geminiVoice';
 import {
     // Colorful Flat Icons (all verified exports)
     FcCheckmark, FcCancel, FcIdea, FcMindMap, FcClock, FcCalendar,
@@ -1330,98 +1331,60 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
         });
     };
 
-    // Toggle voice recording (click to start, click again to stop)
-    const toggleRecording = () => {
+    // Toggle voice recording using direct Gemini API!
+    const toggleRecording = async () => {
         if (isCheckingRef.current || hasAnsweredRef.current || isTranscribing) return;
-
-        // If AI is still speaking, block the mic entirely
         if (isSpeakingAI) return;
 
         if (isRecording) {
-            setIsRecording(false);
-            if (recognitionRef.current) {
-                try { recognitionRef.current.stop(); } catch (e) { }
+            if (recognitionRef.current && recognitionRef.current.state === 'recording') {
+                recognitionRef.current.stop();
             }
-            return;
-        }
-
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) {
-            setVoiceError(t('unsupportedBrowser') || 'Speech recognition is not available in this browser.');
             return;
         }
 
         setVoiceError(null);
+        window.speechSynthesis?.cancel();
 
-        if (recognitionRef.current) {
-            try { recognitionRef.current.abort(); } catch (e) { }
-        }
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const mediaRecorder = new MediaRecorder(stream);
+            recognitionRef.current = mediaRecorder;
+            const audioChunks: Blob[] = [];
 
-        // CRITICAL: Kill any lingering speechSynthesis before opening the mic.
-        // Chrome Desktop shares one audio channel for TTS and STT.
-        // If speechSynthesis is even partially active, recognition.start() 
-        // immediately throws a 'network' error.
-        if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel();
-        }
-
-        // Small delay to let Chrome fully release the audio channel
-        const startRecognition = () => {
-            const recognition = new SpeechRecognition();
-            recognitionRef.current = recognition;
-            recognition.lang = exercise.speechLang || 'en-US';
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 5;
-
-            recognition.onstart = () => {
-                setIsRecording(true);
-                setSpokenText('');
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) audioChunks.push(event.data);
             };
 
-            recognition.onresult = (event: any) => {
-                const results = event.results[0];
-                let bestTranscript = results[0].transcript;
-
-                setSpokenText(bestTranscript);
+            mediaRecorder.onstop = async () => {
                 setIsRecording(false);
+                setIsTranscribing(true);
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                stream.getTracks().forEach(track => track.stop());
 
-                if (bestTranscript.trim()) {
-                    console.log("Roleplay STT Result:", bestTranscript);
-                    submitAnswer(bestTranscript.trim());
+                try {
+                    const transcript = await transcribeWithGemini(audioBlob);
+                    setSpokenText(transcript);
+                    if (transcript.trim()) {
+                        submitAnswer(transcript.trim());
+                    } else {
+                        setVoiceError(t('couldNotHear') || 'Could not hear you. Please try again.');
+                    }
+                } catch (e) {
+                    console.error("Gemini Error:", e);
+                    setVoiceError(t('voiceError') || 'AI transcription failed. Please try again.');
+                } finally {
+                    setIsTranscribing(false);
                 }
             };
 
-            recognition.onerror = (event: any) => {
-                console.error('Speech recognition error:', event.error);
-                setIsRecording(false);
-
-                if (event.error === 'no-speech' || event.error === 'aborted' || event.error === 'network') {
-                    return;
-                }
-
-                setVoiceError(t('couldNotHear') || 'Could not hear you. Please try again.');
-            };
-
-            recognition.onend = () => {
-                setIsRecording(false);
-            };
-
-            try {
-                recognition.start();
-            } catch (err) {
-                console.error('Recognition start error:', err);
-                setIsRecording(false);
-                setVoiceError(t('voiceError') || 'Voice processing failed. Please try again.');
-            }
-        };
-
-        // If speechSynthesis was active, wait 300ms for Chrome to release audio hardware
-        if ('speechSynthesis' in window && window.speechSynthesis.pending) {
-            window.speechSynthesis.cancel();
-            setTimeout(startRecognition, 300);
-        } else {
-            startRecognition();
+            mediaRecorder.start();
+            setIsRecording(true);
+            setSpokenText('...');
+        } catch (err) {
+            console.error('Mic error:', err);
+            setVoiceError(t('unsupportedBrowser') || 'Microphone access denied. Ensure you are on HTTPS.');
+            setIsRecording(false);
         }
     };
 
@@ -1460,12 +1423,14 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
             
             The user (You) just said: "${userInput}"
 
-            Is this a valid, intelligible, and appropriate response for this context?
+            Is this response contextually relevant to the scenario?
+            CRITICAL INSTRUCTION: Be extremely lenient! The user is a beginner. AS LONG AS the user's sentence is in the same context and relation with the scenario (e.g., related to foods, kebabs, ordering), you MUST evaluate it as isCorrect: true. ANY phrase like "I wanna two kebabs", "give me food", etc. MUST be correct. Do NOT enforce strict politeness, formality, or perfect grammar. If it relates to the food/scenario context, it is mathematically correct.
+
             Return ONLY a valid JSON object:
             {
                 "isCorrect": boolean,
-                "feedback": "constructive feedback on grammar/politeness (keep it short)",
-                "aiResponse": "Your next response as the roleplay partner (only if user is correct)"
+                "feedback": "Short positive feedback! If there's a minor error, just point it out nicely but you MUST still set isCorrect: true as long as it's perfectly understandable.",
+                "aiResponse": "Your next response as the roleplay partner (if user is correct)"
             }
             `;
 
@@ -1490,27 +1455,8 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
                     message: evaluation.feedback || t('greatResponse') || 'Great response!'
                 });
 
-                // Show the confirm message from exercise data, or fallback to AI response
-                const confirmMsg = (exercise.chatMessages || []).find(m => m.sender === 'ai' && m.text.startsWith('confirm:'));
-                const responseText = confirmMsg 
-                    ? confirmMsg.text.replace('confirm:', '').trim() 
-                    : evaluation.aiResponse;
-                
-                if (responseText) {
-                    const aiMessage = {
-                        sender: 'ai' as const,
-                        text: responseText,
-                        avatar: exercise.chatMessages?.[0]?.avatar || '🤖',
-                        name: exercise.chatMessages?.[0]?.name || 'AI'
-                    };
-                    setTimeout(() => {
-                        setMessages(prev => [...prev, aiMessage]);
-                        setIsSpeakingAI(true);
-                        speakText(responseText).finally(() => {
-                            setTimeout(() => setIsSpeakingAI(false), 500);
-                        });
-                    }, 600);
-                }
+                // AI no longer answers back when user is correct.
+                // We just rely on the feedback message shown in the UI.
             } else {
                 setFeedback({
                     correct: false,
@@ -1544,64 +1490,77 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
                 {exercise.question}
             </h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '40px 0' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', justifyContent: 'center' }}>
-                    <button
-                        onClick={replayAIMessage}
-                        disabled={isSpeakingAI}
-                        style={{
-                            width: '50px',
-                            height: '50px',
-                            borderRadius: '16px',
-                            border: 'none',
-                            background: isSpeakingAI ? 'var(--color-surface-dim)' : 'var(--unit-color, #1cb0f6)',
-                            color: isSpeakingAI ? 'var(--color-text-dim)' : 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: isSpeakingAI ? 'default' : 'pointer',
-                            boxShadow: isSpeakingAI ? 'none' : '0 4px 0 var(--unit-color-dark, #1899d6)',
-                            transition: 'all 0.2s',
-                            transform: isSpeakingAI ? 'translateY(4px)' : 'none',
-                            flexShrink: 0
-                        }}
-                    >
-                        <Volume2 size={24} />
-                    </button>
-                    <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--color-text)', textAlign: 'center', direction: 'auto' }}>
-                        {messages[0]?.text}
+            <div className="conversation-container" style={{ margin: '20px auto 40px auto' }}>
+                {messages.map((m, idx) => (
+                    <div key={idx} className={`dialogue-wrapper ${m.sender === 'user' ? 'user' : 'other'}`} style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start', maxWidth: '100%', width: 'auto' }}>
+                        <div className="speaker-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start', margin: '0 5px' }}>
+                            <span>{m.name || m.sender}</span>
+                            {m.sender === 'ai' && idx === messages.length - 1 && (
+                                <button type="button" onClick={replayAIMessage} disabled={isSpeakingAI} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer', opacity: isSpeakingAI ? 0.5 : 1, marginLeft: '10px' }}>
+                                    <Volume2 size={16} />
+                                </button>
+                            )}
+                        </div>
+                        <div className={`dialogue-line ${m.sender === 'user' ? 'user' : 'other'}`}>
+                            <div className="dialogue-text" dir="auto" style={{ width: '100%' }}>{m.text}</div>
+                        </div>
                     </div>
-                </div>
+                ))}
+                
+                {/* Live recording preview */}
+                {isRecording && spokenText && (
+                    <div className="dialogue-wrapper user" style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignSelf: 'flex-end', maxWidth: '100%', opacity: 0.8 }}>
+                        <div className="speaker-label" style={{ alignSelf: 'flex-end', margin: '0 5px' }}>{t('you') || 'YOU'}</div>
+                        <div className="dialogue-line user">
+                            <div className="dialogue-text" dir="auto" style={{ width: '100%' }}>{spokenText}...</div>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Simplified Mic Area */}
             <div className={`pronunciation-mic-area ${hasAnswered ? (feedback?.correct ? 'correct' : 'incorrect') : (isRecording ? 'listening' : (isChecking || isTranscribing ? 'processing' : 'idle'))}`}>
                 
-                {/* IDLE / NOT RECORDING YET */}
-                {!isRecording && !isChecking && !isTranscribing && !hasAnswered && (
-                    <div className="pron-idle-state">
-                        <button className="pronunciation-mic-btn" onClick={toggleRecording} type="button" disabled={isSpeakingAI} style={{ opacity: isSpeakingAI ? 0.4 : 1 }}>
-                            <div className="mic-circle">
-                                <Mic size={40} strokeWidth={1.5} color="white" />
-                            </div>
-                            <span className="mic-label">{isSpeakingAI ? (t('waitForAI') || '...چاوەڕوان بە') : (t('tapToSpeak') || 'بکلیک بکە و وەڵام بدەوە')}</span>
-                        </button>
-                    </div>
-                )}
-
-                {/* RECORDING / LISTENING */}
-                {isRecording && (
-                    <div className="pronunciation-listening" onClick={toggleRecording} style={{cursor: 'pointer'}}>
-                        <div className="pulse-container">
-                            <div className="pulse-wave"></div>
-                            <div className="pulse-wave delay-1"></div>
-                            <div className="pulse-wave delay-2"></div>
-                            <div className="mic-circle active">
-                                <Mic size={40} strokeWidth={1.5} color="white" />
-                            </div>
+                {/* UNIFIED TEST-PAGE STYLE CONTROLS */}
+                {!hasAnswered && !isChecking && !isTranscribing && (
+                    <div style={{ background: 'var(--color-surface)', padding: '20px', borderRadius: '16px', border: '2px solid var(--color-border)', textAlign: 'center', width: '100%', marginTop: '20px' }}>
+                        <p style={{ marginBottom: '20px', fontSize: '16px', color: 'var(--color-text)' }}>
+                            {isSpeakingAI ? (t('waitForAI') || '...چاوەڕوان بە') : (t('tapToSpeak') || 'بکلیک بکە و وەڵام بدەوە')}
+                        </p>
+                        
+                        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '20px' }}>
+                            <button 
+                                onClick={toggleRecording}
+                                disabled={isRecording || isSpeakingAI}
+                                style={{ padding: '10px 20px', borderRadius: '8px', background: '#1cb0f6', color: 'white', border: 'none', cursor: 'pointer', opacity: (isRecording || isSpeakingAI) ? 0.5 : 1, fontWeight: 'bold' }}
+                            >
+                                Start Recording
+                            </button>
+                            <button 
+                                onClick={toggleRecording}
+                                disabled={!isRecording}
+                                style={{ padding: '10px 20px', borderRadius: '8px', background: 'var(--color-error, #ff4b4b)', color: 'white', border: 'none', cursor: 'pointer', opacity: !isRecording ? 0.5 : 1, fontWeight: 'bold' }}
+                            >
+                                Stop Recording
+                            </button>
                         </div>
-                        <span className="listening-label">{t('tapToStop') || 'تکلیک بکە بۆ وەستان 🛑'}</span>
-                        {spokenText && <p style={{marginTop: '15px', fontWeight: 'bold'}} dir="auto">"{spokenText}"</p>}
+
+                        <div style={{ marginBottom: isRecording ? '20px' : '0' }}>
+                            <strong>Status: </strong> 
+                            <span style={{ 
+                                color: isRecording ? 'red' : 'orange',
+                                fontWeight: 'bold', textTransform: 'uppercase'
+                            }}>
+                                {isRecording ? 'recording' : 'idle'}
+                            </span>
+                        </div>
+
+                        {isRecording && (
+                            <div style={{ padding: '20px', background: 'rgba(255,0,0,0.1)', border: '2px dashed red', borderRadius: '8px', textAlign: 'center' }}>
+                                🎙️ Speak anything now...
+                                {spokenText && <p style={{marginTop: '15px', fontWeight: 'bold'}} dir="auto">"{spokenText}"</p>}
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -1661,14 +1620,20 @@ const RoleplayChat = ({ exercise, onAnswer }) => {
 
             {hasAnswered && (
                 <div className="exercise-footer">
-                    <Button
-                        variant={feedback?.correct ? "success" : "danger"}
-                        size="lg"
-                        fullWidth
-                        onClick={handleContinue}
-                    >
-                        {t('continue') || 'بەردەوامبە'}
-                    </Button>
+                    {feedback?.correct ? (
+                        <Button variant="success" size="lg" fullWidth onClick={handleContinue}>
+                            {t('continue') || 'بەردەوامبە'}
+                        </Button>
+                    ) : (
+                        <Button variant="primary" size="lg" fullWidth onClick={() => {
+                            setHasAnswered(false);
+                            setFeedback(null);
+                            setSpokenText('');
+                        }}>
+                            <Mic size={18} style={{ marginRight: 8 }} />
+                            {t('tryAgain') || 'دووبارە هەوڵبدە'}
+                        </Button>
+                    )}
                 </div>
             )}
             
@@ -1769,111 +1734,63 @@ const PronunciationExercise = ({ exercise, onAnswer }) => {
         window.speechSynthesis.speak(utterance);
     };
 
-    // Start speech recognition
-    const startListening = () => {
+    // Start speech recognition using direct Gemini API!
+    const startListening = async () => {
         if (isPlaying) return;
 
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) {
-            setStatus('unsupported');
+        // Toggle logic: stop recording if it's already listening
+        if (status === 'listening' && recognitionRef.current && recognitionRef.current.state === 'recording') {
+            recognitionRef.current.stop();
             return;
         }
 
-        if (recognitionRef.current) {
-            try { recognitionRef.current.abort(); } catch (e) { }
-        }
+        window.speechSynthesis?.cancel();
 
-        // CRITICAL: Kill any lingering speechSynthesis before opening the mic.
-        if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel();
-        }
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const mediaRecorder = new MediaRecorder(stream);
+            recognitionRef.current = mediaRecorder;
+            const audioChunks: Blob[] = [];
 
-        const startRec = () => {
-            const recognition = new SpeechRecognition();
-            recognitionRef.current = recognition;
-            recognition.lang = exercise.speechLang || 'en-US';
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 5;
-
-            recognition.onstart = () => {
-                setStatus('listening');
-                setTranscript('');
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) audioChunks.push(event.data);
             };
 
-            recognition.onresult = (event) => {
-                const results = event.results[0];
-                const expected = (exercise.expectedAnswer || exercise.targetTranslation).toLowerCase().trim();
-                const accepted = (exercise.acceptedAnswers || []).map(a => a.toLowerCase().trim());
-
-                let bestMatch = '';
-                let bestScore = 0;
-
-                // Check all alternative transcriptions for best match
-                for (let i = 0; i < results.length; i++) {
-                    const alt = results[i].transcript.toLowerCase().trim();
-
-                    // Exact match
-                    if (alt === expected || accepted.includes(alt)) {
-                        bestMatch = alt;
-                        bestScore = 1;
-                        break;
-                    }
-
-                    // Fuzzy match
-                    const score = similarity(alt, expected);
-                    // Also check against accepted answers
-                    const acceptedScore = Math.max(0, ...accepted.map(a => similarity(alt, a)));
-                    const finalScore = Math.max(score, acceptedScore);
-
-                    if (finalScore > bestScore) {
-                        bestScore = finalScore;
-                        bestMatch = alt;
-                    }
-                }
-
-                setTranscript(bestMatch || results[0].transcript);
+            mediaRecorder.onstop = async () => {
                 setStatus('processing');
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                stream.getTracks().forEach(track => track.stop());
 
-                const isCorrect = bestScore >= 0.6;
+                try {
+                    const text = await transcribeWithGemini(audioBlob);
+                    const expected = (exercise.expectedAnswer || exercise.targetTranslation).toLowerCase().trim();
+                    const accepted = (exercise.acceptedAnswers || []).map((a: string) => a.toLowerCase().trim());
+                    
+                    const bestMatch = text.toLowerCase().trim();
+                    setTranscript(text);
 
-                setTimeout(() => {
-                    setStatus(isCorrect ? 'correct' : 'incorrect');
-                    setAttempts(prev => prev + 1);
-                }, 800);
-            };
+                    let bestScore = similarity(bestMatch, expected);
+                    const acceptedScore = Math.max(0, ...accepted.map((a: string) => similarity(bestMatch, a)));
+                    const finalScore = Math.max(bestScore, acceptedScore);
 
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-                if (event.error === 'no-speech' || event.error === 'aborted' || event.error === 'network') {
-                    if (statusRef.current === 'listening') {
-                        setStatus('idle');
-                    }
-                } else if (event.error === 'not-allowed') {
+                    const isCorrect = finalScore >= 0.6;
+                    setTimeout(() => {
+                        setStatus(isCorrect ? 'correct' : 'incorrect');
+                        setAttempts((prev: number) => prev + 1);
+                    }, 500);
+
+                } catch (e) {
+                    console.error("Gemini Error:", e);
                     setStatus('error');
-                } else {
-                    setStatus('idle');
                 }
             };
 
-            recognition.onend = () => {
-                if (statusRef.current === 'listening') {
-                    setStatus('idle');
-                }
-            };
-
-            try {
-                recognition.start();
-            } catch (e) {
-                setStatus('error');
-            }
-        };
-
-        if ('speechSynthesis' in window && window.speechSynthesis.pending) {
-            window.speechSynthesis.cancel();
-            setTimeout(startRec, 300); // 300ms wait for browser hardware release
-        } else {
-            startRec();
+            mediaRecorder.start();
+            setStatus('listening');
+            setTranscript('...');
+        } catch (e) {
+            console.error('Mic error:', e);
+            setStatus('error');
         }
     };
 
@@ -1937,45 +1854,51 @@ const PronunciationExercise = ({ exercise, onAnswer }) => {
             {/* Mic Area - Premium Voice UI */}
             <div className={`pronunciation-mic-area ${status}`}>
 
-                {/* IDLE - Beautiful mic button */}
-                {status === 'idle' && (
-                    <div className="pron-idle-state">
-                        <button className="pronunciation-mic-btn" onClick={startListening} type="button" aria-label="Start speaking">
-                            <div className="mic-circle">
-                                <Mic size={40} strokeWidth={1.5} color="white" />
+                {/* UNIFIED TEST-PAGE STYLE CONTROLS */}
+                {(status === 'idle' || status === 'listening') && (
+                    <div style={{ background: 'var(--color-surface)', padding: '20px', borderRadius: '16px', border: '2px solid var(--color-border)', textAlign: 'center', width: '100%', marginTop: '20px' }}>
+                        <p style={{ marginBottom: '20px', fontSize: '16px', color: 'var(--color-text)' }}>
+                            {t('tapToSpeak') || 'بکلیک بکە و بخوێنەرەوە'}
+                        </p>
+                        
+                        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '20px' }}>
+                            <button 
+                                onClick={startListening}
+                                disabled={status === 'listening'}
+                                style={{ padding: '10px 20px', borderRadius: '8px', background: '#1cb0f6', color: 'white', border: 'none', cursor: 'pointer', opacity: status === 'listening' ? 0.5 : 1, fontWeight: 'bold' }}
+                            >
+                                Start Recording
+                            </button>
+                            <button 
+                                onClick={startListening}
+                                disabled={status !== 'listening'}
+                                style={{ padding: '10px 20px', borderRadius: '8px', background: 'var(--color-error, #ff4b4b)', color: 'white', border: 'none', cursor: 'pointer', opacity: status !== 'listening' ? 0.5 : 1, fontWeight: 'bold' }}
+                            >
+                                Stop Recording
+                            </button>
+                        </div>
+
+                        <div style={{ marginBottom: status === 'listening' ? '20px' : '0' }}>
+                            <strong>Status: </strong> 
+                            <span style={{ 
+                                color: status === 'listening' ? 'red' : 'orange',
+                                fontWeight: 'bold', textTransform: 'uppercase'
+                            }}>
+                                {status}
+                            </span>
+                        </div>
+
+                        {status === 'listening' && (
+                            <div style={{ padding: '20px', background: 'rgba(255,0,0,0.1)', border: '2px dashed red', borderRadius: '8px', textAlign: 'center' }}>
+                                🎙️ Speak anything now...
                             </div>
-                            <span className="mic-label">{t('tapToSpeak') || 'بکلیک بکە و بخوێنەرەوە'}</span>
-                        </button>
-                        {attempts > 0 && (
-                            <div className="pron-attempts-badge">
+                        )}
+                        
+                        {attempts > 0 && status === 'idle' && (
+                            <div style={{ marginTop: '15px', fontSize: '14px', color: 'var(--color-text-dim)' }}>
                                 {t('attemptsLeft') || 'هەوڵی ماوە'}: {3 - attempts}
                             </div>
                         )}
-                    </div>
-                )}
-
-                {/* LISTENING - Professional animated state */}
-                {status === 'listening' && (
-                    <div className="pronunciation-listening">
-                        <div className="pulse-container">
-                            <div className="pulse-wave"></div>
-                            <div className="pulse-wave delay-1"></div>
-                            <div className="pulse-wave delay-2"></div>
-                            <div className="mic-circle active">
-                                <Mic size={40} strokeWidth={1.5} color="white" />
-                            </div>
-                        </div>
-                        <span className="listening-label">{t('listening') || '🎤 گوێگرتن...'}</span>
-                        <div className="sound-bars">
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                        </div>
-                        <p className="pron-instruction">{t('speakClearly') || 'ئاشکرا بخوێنەرەوە...'}</p>
                     </div>
                 )}
 

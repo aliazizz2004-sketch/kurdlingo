@@ -189,21 +189,22 @@ export const unit3: Unit = {
                 },
                 {
                     type: 'roleplay-chat',
-                    question: 'Order food at a restaurant in Kurdish!',
-                    scenario: '🍽️ You are at a Kurdish restaurant. The waiter is taking your order. Order your favorite dish!',
+                    question: 'Order food at a restaurant in English!',
+                    scenario: '🍽️ You are at a restaurant. The waiter is taking your order. Order your favorite dish in English!',
                     chatMessages: [
-                        { sender: 'ai', text: 'سڵاو و بەخێربێیت! ئەم چێشتخانەیە ناوبانگی کەبابەکانمانە. چی حەزدەکەیت فەرمان بدەیت؟', avatar: '🧑‍🍳', name: 'گارسۆن' },
-                        { sender: 'ai', text: 'confirm: زۆر باش! ئێستا دەینێم بۆت. نۆشی گیانت!', avatar: '🧑‍🍳', name: 'گارسۆن' }
+                        { sender: 'ai', text: 'Hello and welcome! Our restaurant is famous for its kebabs. What would you like to order?', avatar: '🧑‍🍳', name: 'Waiter' },
+                        { sender: 'ai', text: 'confirm: Very good! I will bring it right away. Enjoy your meal!', avatar: '🧑‍🍳', name: 'Waiter' }
                     ],
                     acceptableResponses: [
-                        'من کەباب و بریانیم دەوێت',
-                        'کەبابێکم دەوێت',
-                        'دەمەوێت کەباب بخۆم',
-                        'من دۆلمەم دەوێت',
-                        'بریانی و سەڵاتە دەوێم'
+                        'I want kebab and biryani',
+                        'I would like a kebab',
+                        'I want to eat kebab',
+                        'I want dolma',
+                        'I want biryani and salad'
                     ],
-                    keywordsRequired: ['دەوێت'],
-                    hints: ['kebab', 'biryani', 'dolma', 'want']
+                    keywordsRequired: ['want'],
+                    hints: ['kebab', 'biryani', 'dolma', 'want'],
+                    speechLang: 'en-US'
                 },
                 {
                     type: 'conversation',
@@ -505,20 +506,21 @@ export const unit3: Unit = {
                 },
                 {
                     type: 'roleplay-chat',
-                    question: 'Answer job interview questions in Kurdish!',
-                    scenario: '💼 You are in a job interview. The interviewer asks about your profession and experience. Answer professionally!',
+                    question: 'Answer job interview questions in English!',
+                    scenario: '💼 You are in a job interview. The interviewer asks about your profession and experience. Answer professionally in English!',
                     chatMessages: [
-                        { sender: 'ai', text: 'سڵاو و بەخێربێیت! تکایە خۆت پێناسە بکە. پیشەکەت چییە و چەند ساڵ ئەزموونت هەیە؟', avatar: '👔', name: 'چاوپێکەوتنەکەر' },
-                        { sender: 'ai', text: 'confirm: زۆر باش! ئەزموونت باشە. کەی دەتوانیت دەست بکەیت بە کار؟', avatar: '👔', name: 'چاوپێکەوتنەکەر' }
+                        { sender: 'ai', text: 'Hello and welcome! Please introduce yourself. What is your profession and how many years of experience do you have?', avatar: '👔', name: 'Interviewer' },
+                        { sender: 'ai', text: 'confirm: Very good! You have good experience. When can you start working?', avatar: '👔', name: 'Interviewer' }
                     ],
                     acceptableResponses: [
-                        'من ئەندازیارم و پێنج ساڵ ئەزموونم هەیە',
-                        'من مامۆستام و سێ ساڵ ئەزموونم هەیە',
-                        'پیشەکەم پزیشکە و دە ساڵ ئەزموونم هەیە',
-                        'من پرۆگرامەرم و چوار ساڵ ئەزموونم هەیە'
+                        'I am an engineer and I have five years experience',
+                        'I am a teacher and I have three years experience',
+                        'My profession is doctor and I have ten years experience',
+                        'I am a programmer and I have four years experience'
                     ],
-                    keywordsRequired: ['ئەزموون'],
-                    hints: ['my profession', 'experience', 'year']
+                    keywordsRequired: ['experience'],
+                    hints: ['profession', 'experience', 'years'],
+                    speechLang: 'en-US'
                 },
                 {
                     type: 'conversation',
@@ -658,20 +660,21 @@ export const unit3: Unit = {
                 },
                 {
                     type: 'roleplay-chat',
-                    question: 'Check into your hotel in Kurdish!',
-                    scenario: '🏨 You have arrived at a hotel in Kurdistan. Talk to the receptionist to check in!',
+                    question: 'Check into your hotel in English!',
+                    scenario: '🏨 You have arrived at a hotel. Talk to the receptionist to check in!',
                     chatMessages: [
-                        { sender: 'ai', text: 'سڵاو و بەخێربێیت بۆ ئوتێلەکەمان! ئایا حجزتان هەیە؟', avatar: '👩‍💼', name: 'پەڕستاری پێشوازی' },
-                        { sender: 'ai', text: 'confirm: زۆر باش! فەرمووە ئەمە کلیلی ژوورەکەتانە. ژوور ٣٠٥.', avatar: '👩‍💼', name: 'پەڕستاری پێشوازی' }
+                        { sender: 'ai', text: 'Hello and welcome to our hotel! Do you have a reservation?', avatar: '👩‍💼', name: 'Receptionist' },
+                        { sender: 'ai', text: 'confirm: Very good! Here is your room key. Room 305.', avatar: '👩‍💼', name: 'Receptionist' }
                     ],
                     acceptableResponses: [
-                        'بەڵێ حجزم هەیە بەناوی ئەحمەد',
-                        'بەڵێ من حجزم هەیە',
-                        'حجزم هەیە ناوم ئەحمەدە',
-                        'سڵاو بەڵێ حجزم کردووە'
+                        'Yes I have a reservation under the name Ahmed',
+                        'Yes I have a reservation',
+                        'I have a reservation my name is Ahmed',
+                        'Hello yes I made a reservation'
                     ],
-                    keywordsRequired: ['حجز', 'بەڵێ'],
-                    hints: ['reservation', 'my name', 'yes']
+                    keywordsRequired: ['reservation'],
+                    hints: ['reservation', 'name', 'yes'],
+                    speechLang: 'en-US'
                 },
                 {
                     type: 'conversation',

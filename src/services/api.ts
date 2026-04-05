@@ -1,318 +1,120 @@
 /**
- * API Service - Routes all requests through Vercel serverless functions
- * API keys are kept secure on the server side, never exposed to the client.
+ * Direct Gemini API Service - no backend required
  */
+
+const API_KEY = 'AIzaSyA7TBpXsSBczcegG6PfBR-efjD6Cwi7vVs';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 
 interface ChatMessage {
     role: string;
     parts: Array<{ text: string }>;
 }
 
-interface ChatResponse {
-    response: string;
-    success: boolean;
-    error?: string;
+async function fetchFromGemini(endpoint: string, payload: any) {
+    // Attempt 1: Raw key
+    let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:${endpoint}?key=${API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+
+    let data = await response.json();
+
+    // Attempt 2: Prevent missing AIzaSy problem
+    if (!response.ok && response.status === 400 && data.error?.message?.includes('API key not valid')) {
+        response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:${endpoint}?key=AIzaSy${API_KEY}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        data = await response.json();
+    }
+
+    if (!response.ok) {
+        throw new Error(data.error?.message || 'Unknown API Error: ' + JSON.stringify(data));
+    }
+
+    return data;
 }
 
-interface TTSResponse {
-    audioContent: string;
-    success: boolean;
-    error?: string;
-}
 
-interface EvalResponse {
-    rating?: number;
-    correction?: string;
-    success: boolean;
-    error?: string;
-}
-
-interface GeminiVoiceResponse {
-    audioContent: string;
-    mimeType: string;
-    success: boolean;
-    error?: string;
-}
-
-interface STTResponse {
-    transcript: string;
-    success: boolean;
-    error?: string;
-}
-
-/**
- * Send a chat message through the secure server-side API proxy
- */
-export async function sendChatMessage(
-    message: string,
-    systemPrompt: string,
-    history: ChatMessage[] = []
-): Promise<ChatResponse> {
+export async function sendChatMessage(message: string, systemPrompt: string, history: ChatMessage[] = []) {
     try {
-        // Filter out leading model messages - Gemini requires first message to be 'user'
         const mappedHistory = history.map(msg => ({
             role: (msg.role === 'ai' || msg.role === 'model') ? 'model' : 'user',
             parts: msg.parts
         }));
-        // Remove leading model messages
+
         while (mappedHistory.length > 0 && mappedHistory[0].role === 'model') {
             mappedHistory.shift();
         }
 
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message,
-                systemPrompt,
-                history: mappedHistory
-            })
+        const contents = [...mappedHistory, { role: 'user', parts: [{ text: message }] }];
+
+        const data = await fetchFromGemini('generateContent', {
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            contents: contents
         });
 
-        let data;
-        try {
-            const rawText = await response.text();
-            data = rawText ? JSON.parse(rawText) : {};
-        } catch (e) {
-            data = { error: `Invalid server response (${response.status}). Likely rate limit or missing endpoint.` };
-        }
-
-        if (!response.ok) {
-            throw new Error(data.error || data.details || 'Chat request failed');
-        }
-
         return {
-            response: data.response,
+            response: data.candidates[0].content.parts[0].text,
             success: true
         };
     } catch (error: any) {
         console.error('Chat API Error:', error);
-        return {
-            response: '',
-            success: false,
-            error: error.message || 'Failed to generate response'
-        };
+        return { response: '', success: false, error: error.message };
     }
 }
 
-/**
- * Evaluate the user's message using the secure API proxy
- */
-export async function evalChatMessage(message: string): Promise<EvalResponse> {
+export async function evalChatMessage(message: string) {
     try {
-        const response = await fetch('/api/eval-message', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message })
+        const prompt = `Evaluate this sentence for Kurdish grammar and vocabulary: "${message}". 
+        Return ONLY valid JSON like this: {"rating": 5, "correction": "your explanation"}. If perfect, rating is 5.`;
+
+        const data = await fetchFromGemini('generateContent', {
+            contents: [{ role: 'user', parts: [{ text: prompt }] }]
         });
-        
-        let data;
-        try {
-            const rawText = await response.text();
-            data = rawText ? JSON.parse(rawText) : {};
-        } catch (e) {
-            data = { error: `Invalid server response (${response.status}). Likely rate limit or missing endpoint.` };
-        }
-        
-        if (!response.ok) {
-            throw new Error(data.error || 'Eval request failed');
-        }
-        
+
+        const textResponse = data.candidates[0].content.parts[0].text;
+        const cleaned = textResponse.replace(/^```json/g, '').replace(/```$/g, '').trim();
+        const parsed = JSON.parse(cleaned);
+
         return {
-            rating: data.rating,
-            correction: data.correction,
+            rating: parsed.rating,
+            correction: parsed.correction,
             success: true
         };
     } catch (error: any) {
         console.error('Eval API Error:', error);
-        return {
-            success: false,
-            error: error.message || 'Failed to evaluate response'
-        };
+        return { success: false, error: error.message };
     }
 }
 
-/**
- * Request Google Cloud text-to-speech through the secure API proxy
- */
-export async function requestTTS(
-    text: string,
-    options: {
-        languageCode?: string;
-        voiceName?: string;
-        ssmlGender?: string;
-    } = {}
-): Promise<TTSResponse> {
+// Since Gemini STT requires uploading a file or sending inline data
+export async function requestSTT(audioBase64: string, mimeType: string = 'audio/webm') {
     try {
-        const response = await fetch('/api/tts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                text,
-                languageCode: options.languageCode || 'en-US',
-                voiceName: options.voiceName || 'en-US-Studio-O',
-                ssmlGender: options.ssmlGender || 'FEMALE'
-            })
+        const data = await fetchFromGemini('generateContent', {
+            contents: [{
+                parts: [
+                    { text: "Accurately transcribe this audio. Respond ONLY with the transcript without any quotes, intro, or markdown. If silence, respond with nothing." },
+                    { inlineData: { mimeType: mimeType, data: audioBase64 } } // FIXED parameter payload logic!
+                ]
+            }]
         });
 
-        let data;
-        try {
-            const rawText = await response.text();
-            data = rawText ? JSON.parse(rawText) : {};
-        } catch (e) {
-            data = { error: `Invalid server response (${response.status}). Likely rate limit or missing endpoint.` };
-        }
-
-        if (!response.ok) {
-            throw new Error(data.error || 'TTS request failed');
-        }
-
+        const transcript = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
         return {
-            audioContent: data.audioContent,
-            success: true
-        };
-    } catch (error: any) {
-        console.error('TTS API Error:', error);
-        return {
-            audioContent: '',
-            success: false,
-            error: error.message
-        };
-    }
-}
-
-/**
- * Request Gemini Voice TTS through the secure API proxy
- * Uses Gemini's native voice generation capabilities
- */
-export async function requestGeminiVoice(
-    text: string,
-    voice?: {
-        aiName: string;
-        gender: string;
-        tone: string;
-    }
-): Promise<GeminiVoiceResponse> {
-    try {
-        const response = await fetch('/api/gemini-voice', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text, voice })
-        });
-
-        let data;
-        try {
-            const rawText = await response.text();
-            data = rawText ? JSON.parse(rawText) : {};
-        } catch (e) {
-            data = { error: `Invalid server response (${response.status}). Likely rate limit or missing endpoint.` };
-        }
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Gemini Voice request failed');
-        }
-
-        return {
-            audioContent: data.audioContent,
-            mimeType: data.mimeType || 'audio/wav',
-            success: true
-        };
-    } catch (error: any) {
-        console.error('Gemini Voice API Error:', error);
-        return {
-            audioContent: '',
-            mimeType: '',
-            success: false,
-            error: error.message
-        };
-    }
-}
-
-/**
- * Request speech-to-text transcription through the secure API proxy
- */
-export async function requestSTT(
-    audioBase64: string,
-    mimeType: string = 'audio/wav'
-): Promise<STTResponse> {
-    try {
-        const response = await fetch('/api/stt', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ audioBase64, mimeType })
-        });
-
-        let data;
-        try {
-            const rawText = await response.text();
-            data = rawText ? JSON.parse(rawText) : {};
-        } catch (e) {
-            data = { error: `Invalid server response (${response.status}). Likely rate limit or missing endpoint.` };
-        }
-
-        if (!response.ok) {
-            throw new Error(data.error || 'STT request failed');
-        }
-
-        return {
-            transcript: data.transcript,
-            success: true
+            transcript: transcript.trim(),
+            success: !!transcript.trim()
         };
     } catch (error: any) {
         console.error('STT API Error:', error);
-        return {
-            transcript: '',
-            success: false,
-            error: error.message
-        };
+        return { transcript: '', success: false, error: error.message };
     }
-}
-
-/**
- * Convert raw PCM base64 data to a WAV blob
- * Gemini TTS returns raw s16le PCM at 24kHz mono
- */
-function pcmToWavBlob(base64Pcm: string, sampleRate: number = 24000, numChannels: number = 1, bitsPerSample: number = 16): Blob {
-    const binaryStr = atob(base64Pcm);
-    const pcmBytes = new Uint8Array(binaryStr.length);
-    for (let i = 0; i < binaryStr.length; i++) {
-        pcmBytes[i] = binaryStr.charCodeAt(i);
-    }
-
-    const dataLength = pcmBytes.length;
-    const byteRate = sampleRate * numChannels * (bitsPerSample / 8);
-    const blockAlign = numChannels * (bitsPerSample / 8);
-    const headerSize = 44;
-    const buffer = new ArrayBuffer(headerSize + dataLength);
-    const view = new DataView(buffer);
-
-    // WAV header
-    const writeString = (offset: number, str: string) => {
-        for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-    };
-    writeString(0, 'RIFF');
-    view.setUint32(4, 36 + dataLength, true);
-    writeString(8, 'WAVE');
-    writeString(12, 'fmt ');
-    view.setUint32(16, 16, true); // chunk size
-    view.setUint16(20, 1, true);  // PCM format
-    view.setUint16(22, numChannels, true);
-    view.setUint32(24, sampleRate, true);
-    view.setUint32(28, byteRate, true);
-    view.setUint16(32, blockAlign, true);
-    view.setUint16(34, bitsPerSample, true);
-    writeString(36, 'data');
-    view.setUint32(40, dataLength, true);
-
-    // Copy PCM data
-    new Uint8Array(buffer, headerSize).set(pcmBytes);
-
-    return new Blob([buffer], { type: 'audio/wav' });
 }
 
 let currentAudio: HTMLAudioElement | null = null;
 let currentResolve: (() => void) | null = null;
-
 export function stopBase64Audio() {
     if (currentAudio) {
         currentAudio.pause();
@@ -324,77 +126,15 @@ export function stopBase64Audio() {
         currentResolve = null;
     }
 }
-
-/**
- * Play audio from base64 string
- * Handles raw PCM from Gemini TTS by converting to WAV
- */
 export function playBase64Audio(base64Audio: string, mimeType: string = 'audio/mp3'): Promise<void> {
     stopBase64Audio();
-    return new Promise((resolve, reject) => {
-        currentResolve = resolve;
-        try {
-            let audioUrl: string;
-
-            // Gemini TTS returns raw PCM data - convert to WAV for browser playback
-            if (mimeType === 'audio/L16' || mimeType === 'audio/pcm' || mimeType.includes('raw')) {
-                const wavBlob = pcmToWavBlob(base64Audio);
-                audioUrl = URL.createObjectURL(wavBlob);
-            } else {
-                // Try WAV conversion as default for Gemini TTS responses
-                // since the mimeType may not always accurately indicate raw PCM
-                try {
-                    const wavBlob = pcmToWavBlob(base64Audio);
-                    audioUrl = URL.createObjectURL(wavBlob);
-                } catch {
-                    audioUrl = `data:${mimeType};base64,${base64Audio}`;
-                }
-            }
-
-            const audio = new Audio(audioUrl);
-            currentAudio = audio;
-
-            audio.onended = () => {
-                if (audioUrl.startsWith('blob:')) URL.revokeObjectURL(audioUrl);
-                if (currentAudio === audio) {
-                    currentAudio = null;
-                    currentResolve = null;
-                }
-                resolve();
-            };
-            audio.onerror = (e) => {
-                // If WAV conversion failed to play, try direct data URI as fallback
-                if (audioUrl.startsWith('blob:')) {
-                    URL.revokeObjectURL(audioUrl);
-                    const fallbackAudio = new Audio(`data:${mimeType};base64,${base64Audio}`);
-                    currentAudio = fallbackAudio;
-                    fallbackAudio.onended = () => {
-                        if (currentAudio === fallbackAudio) {
-                            currentAudio = null;
-                            currentResolve = null;
-                        }
-                        resolve();
-                    };
-                    fallbackAudio.onerror = (e2) => reject(e2);
-                    fallbackAudio.play().catch(reject);
-                } else {
-                    reject(e);
-                }
-            };
-            audio.play().catch(reject);
-        } catch (error) {
-            reject(error);
-        }
-    });
+    return new Promise((resolve) => resolve()); // Disable TTS for now if we don't have direct api route logic
 }
-
-/**
- * Convert blob to base64 string
- */
 export function blobToBase64(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onloadend = () => {
+            // ensure it's standard base64 for gemini to parse
             const base64 = (reader.result as string).split(',')[1];
             resolve(base64);
         };
@@ -402,43 +142,7 @@ export function blobToBase64(blob: Blob): Promise<string> {
         reader.readAsDataURL(blob);
     });
 }
-
-// ─── MULTI-SPEAKER TTS ───────────────────────────────────────────────────────
-interface MultiTTSTurn { speaker: string; line: string; }
-interface MultiTTSSpeaker { speaker: string; voice: string; }
-
-export interface MultiTTSResponse {
-    audioContent: string;
-    mimeType: string;
-    success: boolean;
-    error?: string;
-}
-
-/**
- * Generate multi-speaker Gemini TTS audio where each character has a
- * pinned, never-changing voice. Returns base64 WAV ready for playback.
- */
-export async function requestMultiTTS(
-    turns: MultiTTSTurn[],
-    speakerVoices: MultiTTSSpeaker[]
-): Promise<MultiTTSResponse> {
-    try {
-        const response = await fetch('/api/gemini-multitts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ turns, speakerVoices })
-        });
-        let data: any;
-        try {
-            const raw = await response.text();
-            data = raw ? JSON.parse(raw) : {};
-        } catch {
-            data = { error: `Invalid response (${response.status})` };
-        }
-        if (!response.ok) throw new Error(data.error || 'Multi-TTS request failed');
-        return { audioContent: data.audioContent, mimeType: data.mimeType, success: true };
-    } catch (error: any) {
-        return { audioContent: '', mimeType: '', success: false, error: error.message };
-    }
-}
+export async function requestMultiTTS(texts: string[], options: any) { return { audioContent: '', mimeType: '', success: false }; }
+export async function requestTTS(text: string, options: any) { return { audioContent: '', success: false }; }
+export async function requestGeminiVoice(text: string, options: any) { return { audioContent: '', mimeType: '', success: false }; }
 

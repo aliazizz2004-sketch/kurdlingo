@@ -13,6 +13,7 @@ import { healthEntries } from './dictionary/health';
 import { homeEntries } from './dictionary/home';
 import { emotionsEntries } from './dictionary/emotions';
 import { timeEntries } from './dictionary/time';
+import { slangEntries } from './dictionary/slang';
 
 export interface DictionaryEntry {
     id: string;
@@ -117,6 +118,14 @@ export const bookDictionaryData: DictionaryCategory[] = [
         color: '#667eea',
         gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         entries: timeEntries
+    },
+    {
+        id: 'slang',
+        name: { english: 'Slang & Idioms', kurdish: 'ئیدیۆم و قسەی باو' },
+        icon: 'ChatCircleQuote',
+        color: '#00d084',
+        gradient: 'linear-gradient(135deg, #00d084 0%, #009e66 100%)',
+        entries: slangEntries
     }
 ];
 

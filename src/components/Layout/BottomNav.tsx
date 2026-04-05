@@ -82,7 +82,7 @@ const BottomNav = () => {
                             <>
                                 {isActive && <motion.div layoutId="bottom-nav-pill" className="bottom-nav-active-pill" initial={false} transition={springTransition} />}
                                 <HugeiconsIcon icon={MessageMultiple02Icon} size={26} color={isActive ? '#e07600' : '#9ca3af'} strokeWidth={isActive ? 2 : 1.75} />
-                                <span className="nav-label" style={{ color: isActive ? '#e07600' : '#9ca3af' }}>{t('roleplay') || 'Role-Play'}</span>
+                                <span className="nav-label" style={{ color: isActive ? '#e07600' : '#9ca3af' }}>{t('roleplay') || 'ڕۆڵگێڕان'}</span>
                             </>
                         )}
                     </NavLink>

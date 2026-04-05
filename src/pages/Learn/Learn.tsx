@@ -150,14 +150,14 @@ const Learn: React.FC = () => {
                 <div className="level-toggle-tabs">
                     <button className="level-toggle-tab active">
                         <Star size={18} weight="fill" />
-                        Beginner
+                        {t('beginner') || 'سەرەتایی'}
                     </button>
                     <button
                         className="level-toggle-tab"
                         onClick={() => navigate('/intermediate')}
                     >
                         <Rocket size={18} weight="fill" />
-                        Intermediate
+                        {t('intermediate') || 'مامناوەند'}
                     </button>
                 </div>
             </div>
@@ -366,9 +366,9 @@ const Learn: React.FC = () => {
                             <Rocket size={28} weight="fill" color="#ff9600" />
                         </div>
                         <div>
-                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>🚀 Space Typing</h3>
+                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>🚀 {t('spaceGame') || 'تایپی ئەفیرانەوەیی'}</h3>
                             <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
-                                {t('practice') || 'Practice'} 🌟
+                                {t('practice') || 'ڕاهێنان'} 🌟
                             </p>
                         </div>
                     </div>
@@ -378,7 +378,7 @@ const Learn: React.FC = () => {
                         margin: 0,
                         lineHeight: 1.4
                     }}>
-                        Type words to destroy falling space objects!
+                        وشەکان تایپ بکە بۆ لەناوبردنی تەنیە ئاسمانییەکان!
                     </p>
                 </div>
 
@@ -409,9 +409,9 @@ const Learn: React.FC = () => {
                             <Lightning size={28} weight="fill" color="#a855f7" />
                         </div>
                         <div>
-                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>Typing Rush</h3>
+                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>ڕاکردنی تایپکردن</h3>
                             <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
-                                Speed Test
+                                تاقیکردنەوەی خێرایی
                             </p>
                         </div>
                     </div>
@@ -421,7 +421,7 @@ const Learn: React.FC = () => {
                         margin: 0,
                         lineHeight: 1.4
                     }}>
-                        Type full paragraphs as fast as you can!
+                        پەرەگرافەکان بە خێراترین شێوە تایپ بکە!
                     </p>
                 </div>
             </div>

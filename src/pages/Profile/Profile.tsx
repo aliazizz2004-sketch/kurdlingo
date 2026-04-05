@@ -45,11 +45,11 @@ const Profile = () => {
         <div className="profile-page">
             <SignedOut>
                 <div className="signed-out-card">
-                    <h2>{t('profile') || 'Profile'}</h2>
-                    <p>You need to be signed in to save progress and customize your profile.</p>
+                    <h2>{t('profile') || 'پرۆفایل'}</h2>
+                    <p>پێویستە بچیتە ژوورەوە بۆ پاشەکەوتکردنی پێشکەوتنەکانت و دەستکاریکردنی پرۆفایلەکەت.</p>
                     <div className="auth-buttons">
                         <button onClick={() => navigate('/login')} className="sidebar-btn sidebar-signin">
-                           Log In / Sign Up
+                           چوونەژوورەوە / خۆتۆمارکردن
                         </button>
                     </div>
                 </div>
@@ -153,7 +153,7 @@ const Profile = () => {
                     <div className="sign-out-container" style={{ cursor: 'pointer' }} onClick={async () => { await supabase.auth.signOut(); navigate('/login'); }}>
                         <div className="sign-out-trigger">
                             <LogOut size={20} />
-                            <span>Sign Out</span>
+                            <span>چوونەدەرەوە</span>
                         </div>
                     </div>
                 </div>

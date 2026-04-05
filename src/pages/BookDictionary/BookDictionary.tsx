@@ -94,10 +94,10 @@ const BookDictionary: React.FC = () => {
             const next = new Set(prev);
             if (next.has(id)) {
                 next.delete(id);
-                showToast("Removed from saved words");
+                showToast("لابرا لە وشە پاشەکەوتکراوەکان");
             } else {
                 next.add(id);
-                showToast("Added to saved words");
+                showToast("زیادکرا بۆ وشە پاشەکەوتکراوەکان");
             }
             return next;
         });
@@ -124,7 +124,7 @@ const BookDictionary: React.FC = () => {
                     <button className="icon-btn" onClick={() => navigate(-1)} style={{ marginLeft: '-8px' }}>
                         <ArrowLeft size={24} weight="bold" />
                     </button>
-                    <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>Dictionary</h2>
+                    <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>فەرهەنگ</h2>
                 </div>
                 
                 <div className="search-bar-wrapper">
@@ -132,7 +132,7 @@ const BookDictionary: React.FC = () => {
                     <input 
                         type="text" 
                         className="search-input" 
-                        placeholder="Search English or Kurdish..." 
+                        placeholder="بەدوای ئینگلیزی یان کوردی بگەڕێ..." 
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                     />
@@ -150,7 +150,7 @@ const BookDictionary: React.FC = () => {
                    onClick={() => setSelectedCategory('all')}
                    style={{ background: selectedCategory === 'all' ? 'var(--color-primary)' : 'var(--color-surface-variant)', color: selectedCategory === 'all' ? '#fff' : 'inherit', whiteSpace: 'nowrap' }}
                 >
-                   All Terms
+                   هەموو وشەکان
                 </button>
                 {bookDictionaryData.map(c => (
                     <button 
@@ -166,7 +166,7 @@ const BookDictionary: React.FC = () => {
 
             <div className="list-scroll-area">
                 <div className="list-section-label">
-                    {searchTerm ? 'Results' : 'Recent'}
+                    {searchTerm ? 'ئەنجامەکان' : 'نوێترین'}
                 </div>
                 <div className="word-list">
                     {filteredWords.map(w => (
@@ -194,7 +194,7 @@ const BookDictionary: React.FC = () => {
                     ))}
                     {filteredWords.length === 0 && (
                         <div style={{ padding: '40px 20px', textAlign: 'center', color: '#6B7280' }}>
-                            No words found for "{searchTerm}"
+                            هیچ وشەیەک نەدۆزرایەوە بۆ "{searchTerm}"
                         </div>
                     )}
                 </div>
@@ -207,7 +207,7 @@ const BookDictionary: React.FC = () => {
             return (
                 <div className="desktop-placeholder">
                     <MagnifyingGlass size={64} weight="light" color="#D1D5DB" />
-                    <p>Select a word to see its details</p>
+                    <p>وشەیەک هەڵبژێرە بۆ بینینی وردەکارییەکەی</p>
                 </div>
             );
         }
@@ -234,7 +234,7 @@ const BookDictionary: React.FC = () => {
                         
                         <button className="listen-btn" onClick={() => handlePlayAudio(selectedWord.word)}>
                             <SpeakerHigh size={20} weight="fill" />
-                            Listen
+                            گوێبگرە
                             <div className={`waveform ${isPlaying ? 'playing' : ''}`}>
                                 <div className="bar"></div>
                                 <div className="bar"></div>
@@ -270,7 +270,7 @@ const BookDictionary: React.FC = () => {
                             <div className="syn-card">
                                 {selectedWord.synonyms.length > 0 && (
                                     <>
-                                        <div className="section-title">Synonyms</div>
+                                        <div className="section-title">هاوواتا</div>
                                         <div className="pill-group" style={{ marginBottom: 16 }}>
                                             {selectedWord.synonyms.map(syn => (
                                                 <button key={syn} className="pill-chip" onClick={() => navigateToWord(syn)}>
@@ -282,7 +282,7 @@ const BookDictionary: React.FC = () => {
                                 )}
                                 {selectedWord.antonyms.length > 0 && (
                                     <>
-                                        <div className="section-title">Antonyms</div>
+                                        <div className="section-title">دژواتا</div>
                                         <div className="pill-group">
                                             {selectedWord.antonyms.map(ant => (
                                                 <button key={ant} className="pill-chip antonym" onClick={() => navigateToWord(ant)}>
@@ -302,7 +302,7 @@ const BookDictionary: React.FC = () => {
                                 <Lightbulb size={24} weight="fill" />
                             </div>
                             <div className="tip-content">
-                                <div className="section-title">Memory Tip</div>
+                                <div className="section-title">تێبینی بۆ لەبەرکردن</div>
                                 <p className="tip-text">{selectedWord.mnemonic}</p>
                             </div>
                         </div>
@@ -323,9 +323,9 @@ const BookDictionary: React.FC = () => {
                 <div className="bottom-bar">
                     <button className="btn-outline" onClick={() => {
                         toggleBookmark(selectedWord.id);
-                        if (!savedWords.has(selectedWord.id)) showToast("Added to deck!");
+                        if (!savedWords.has(selectedWord.id)) showToast("زیادکرا بۆ کۆمەڵە!");
                     }}>
-                        + Add to deck
+                        + زیادکردن بۆ کۆمەڵە
                     </button>
                 </div>
             </div>

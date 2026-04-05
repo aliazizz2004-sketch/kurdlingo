@@ -31,12 +31,13 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
     const navItems = [
         { icon: Home01Icon, label: t('learn'), path: '/learn' },
         { icon: Book02Icon, label: t('guidebook'), path: '/guidebook-hub' },
-        { icon: MessageMultiple02Icon, label: t('roleplay') || 'Role-Play', path: '/roleplay' },
+        { icon: MessageMultiple02Icon, label: t('roleplay') || 'ڕۆڵگێڕان', path: '/roleplay' },
         { icon: Book04Icon, label: t('dictionary'), path: '/dictionary' },
         { icon: Award01Icon, label: t('leaderboards'), path: '/leaderboard' },
         { icon: Target02Icon, label: t('quests'), path: '/quests' },
         { icon: ShoppingBag01Icon, label: t('shop'), path: '/shop' },
         { icon: UserCircle02Icon, label: t('profile'), path: '/profile' },
+        { icon: Target02Icon, label: 'Voice Test', path: '/voicetest' },
     ];
 
     return (
@@ -88,7 +89,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
                             <div className="nav-icon-hi">
                                 <HugeiconsIcon icon={UserCircle02Icon} size={22} color="#6b7280" strokeWidth={1.75} />
                             </div>
-                            {!isCollapsed && <span className="nav-label-hi" style={{ marginLeft: 8 }}>Account</span>}
+                            {!isCollapsed && <span className="nav-label-hi" style={{ marginLeft: 8 }}>{t('profile')}</span>}
                         </div>
                     </SignedIn>
                     <SignedOut>
