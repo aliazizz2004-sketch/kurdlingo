@@ -74,7 +74,7 @@
     background: linear-gradient(135deg, rgba(255, 150, 0, 0.12), rgba(255, 200, 0, 0.12));
     border: 1px solid rgba(255, 150, 0, 0.2);
     border-radius: 18px;
-    color: #ff9600;
+    color: #2563eb;
 }
 
 .tr-menu-title {
@@ -82,7 +82,7 @@
     font-weight: 900;
     letter-spacing: -1.5px;
     margin: 0 0 0.3rem;
-    background: linear-gradient(135deg, #ff9600, #ffc800, #ffeda6);
+    background: linear-gradient(135deg, #2563eb, #ffc800, #ffeda6);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -163,7 +163,7 @@
 }
 
 .tr-hs-tag {
-    color: #ff9600;
+    color: #2563eb;
 }
 
 .tr-passage-arrow {
@@ -235,7 +235,7 @@
 
 .tr-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ffc800, #ff9600);
+    background: linear-gradient(90deg, #ffc800, #2563eb);
     border-radius: 3px;
     transition: width 0.15s ease;
     box-shadow: 0 0 8px rgba(255, 150, 0, 0.4);
@@ -260,11 +260,11 @@
 }
 
 .tr-hud-stat.wpm-stat {
-    color: #ff9600;
+    color: #2563eb;
 }
 
 .tr-hud-stat.acc-stat {
-    color: #ff9600;
+    color: #2563eb;
 }
 
 .tr-hud-stat.time-stat {
@@ -342,7 +342,7 @@
 .tr-char.current {
     color: white;
     background: rgba(255, 150, 0, 0.25);
-    border-bottom: 2px solid #ff9600;
+    border-bottom: 2px solid #2563eb;
     animation: tr-cursor-blink 1s step-end infinite;
 }
 
@@ -350,7 +350,7 @@
 
     0%,
     50% {
-        border-bottom-color: #ff9600;
+        border-bottom-color: #2563eb;
     }
 
     51%,
@@ -419,7 +419,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 1.3rem;
     font-weight: 700;
-    color: #ff9600;
+    color: #2563eb;
     min-width: 28px;
     text-align: center;
     background: rgba(255, 150, 0, 0.1);
@@ -515,7 +515,7 @@
     letter-spacing: -0.5px;
     margin: 0 0 0.2rem;
     text-transform: uppercase;
-    background: linear-gradient(135deg, #ff9600, #cc7800);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -546,7 +546,7 @@
 }
 
 .tr-rstat svg {
-    color: #ff9600;
+    color: #2563eb;
 }
 
 .tr-rstat-val {
@@ -586,7 +586,7 @@
 }
 
 .tr-btn-primary {
-    background: linear-gradient(135deg, #ff9600, #cc7800);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
     box-shadow: 0 4px 0 #995a00;
 }

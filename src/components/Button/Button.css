@@ -176,7 +176,7 @@
    ============================================ */
 
 .btn-success {
-    background: linear-gradient(180deg, #ffb44d 0%, #ff9600 100%);
+    background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
     color: white;
     border: 1px solid var(--color-primary-dark);
     box-shadow: 
@@ -185,7 +185,7 @@
 }
 
 .btn-success:hover:not(:disabled) {
-    background: linear-gradient(180deg, #ffc870 0%, #ffb44d 100%);
+    background: linear-gradient(180deg, #ffc870 0%, #60a5fa 100%);
     box-shadow: var(--shadow-button-hover);
     transform: translateY(-1px);
 }

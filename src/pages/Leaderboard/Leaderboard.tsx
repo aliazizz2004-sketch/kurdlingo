@@ -67,7 +67,7 @@ const Leaderboard = () => {
                         background: u.id === user?.id ? '#fff4e6' : 'white' /* subtle orange background for self */
                     }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <span style={{ fontWeight: 'bold', color: u.rank <= 3 ? '#ff9600' : 'var(--color-text-light)', width: '20px' }}>{u.rank}</span>
+                            <span style={{ fontWeight: 'bold', color: u.rank <= 3 ? '#2563eb' : 'var(--color-text-light)', width: '20px' }}>{u.rank}</span>
                             <div style={{ width: '40px', height: '40px', background: '#f3f4f6', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 {u.avatar}
                             </div>

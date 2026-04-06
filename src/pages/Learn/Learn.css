@@ -45,7 +45,7 @@
 }
 
 .level-toggle-tab.active {
-    background: linear-gradient(135deg, #ff9600 0%, #FF6A00 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #FF6A00 100%);
     color: white;
     box-shadow:
         0 4px 12px rgba(255, 150, 0, 0.3),
@@ -90,7 +90,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #ff9600, #1cb0f6, #ff9600, #ff4b4b);
+    background: linear-gradient(90deg, #2563eb, #1cb0f6, #2563eb, #ff4b4b);
     z-index: 1000;
 }
 
@@ -544,7 +544,7 @@ body.dark-mode .path-node.locked .node-circle {
     justify-content: center;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
     z-index: 5;
-    color: var(--node-accent, #ff9600);
+    color: var(--node-accent, #2563eb);
 }
 
 @keyframes bounce-slight {
@@ -770,7 +770,7 @@ body.dark-mode .path-node.locked .node-circle {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #ff9600, #FF6A00);
+    background: linear-gradient(90deg, #2563eb, #FF6A00);
 }
 
 /* Different colors for different cards */
@@ -779,7 +779,7 @@ body.dark-mode .path-node.locked .node-circle {
 }
 
 .glass-panel:nth-child(3)::before {
-    background: linear-gradient(90deg, #ff9600, #e68600);
+    background: linear-gradient(90deg, #2563eb, #e68600);
 }
 
 .glass-panel:hover {

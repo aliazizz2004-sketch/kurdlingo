@@ -6,12 +6,12 @@
   /* --- BRAND PALETTE (Vibrant & Rich) --- */
 
   /* Primary Orange (Brand Theme) */
-  --color-primary: #ff9600;
-  --color-primary-light: #ffb44d;
+  --color-primary: #2563eb;
+  --color-primary-light: #60a5fa;
   /* Fallback */
-  --color-primary-dark: #cc7800;
-  --color-primary-shadow: #cc7800;
-  --grad-primary: linear-gradient(135deg, #ff9600 0%, #e68600 100%);
+  --color-primary-dark: #1d4ed8;
+  --color-primary-shadow: #1e3a8a;
+  --grad-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   /* Richer Gradient */
 
   /* Secondary Red (Error/Alert) */

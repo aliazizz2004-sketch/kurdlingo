@@ -1,0 +1,2 @@
+admin@kurdlingoo.test
+password123

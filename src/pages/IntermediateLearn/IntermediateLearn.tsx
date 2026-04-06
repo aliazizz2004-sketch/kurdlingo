@@ -277,7 +277,7 @@ const IntermediateLearn: React.FC = () => {
                             width: '48px',
                             height: '48px',
                             borderRadius: '12px',
-                            background: 'linear-gradient(135deg, #ff9600 0%, #cc7800 100%)',
+                            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'

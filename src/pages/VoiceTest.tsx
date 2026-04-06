@@ -5,7 +5,7 @@ export default function VoiceTest() {
     const [status, setStatus] = useState<string>('idle');
     const [errorMsg, setErrorMsg] = useState<string>('');
     const [transcript, setTranscript] = useState<string>('');
-    const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+    const [_audioChunks, setAudioChunks] = useState<Blob[]>([]);
     
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 

@@ -70,7 +70,7 @@ const Profile = () => {
                             <h1 className="profile-name">{displayName}</h1>
                             {user?.email && <p className="profile-email">{user.email}</p>}
                             <div className="profile-badges">
-                                <span className="stat-pill"><Flame size={16} color="#ff9600" fill="#ff9600" /> {stats.streak} {t('dayStreak')}</span>
+                                <span className="stat-pill"><Flame size={16} color="#2563eb" fill="#2563eb" /> {stats.streak} {t('dayStreak')}</span>
                                 <span className="stat-pill"><Zap size={16} color="#ffc800" fill="#ffc800" /> {dbProfile?.xp || stats.totalXp} XP</span>
                             </div>
                         </div>
@@ -85,7 +85,7 @@ const Profile = () => {
                         <h2 className="section-title">{t('statistics')}</h2>
                         <div className="bento-stats-grid">
                             <div className="bento-card streak">
-                                <div className="bento-icon-wrapper"><Flame size={36} color="#ff9600" /></div>
+                                <div className="bento-icon-wrapper"><Flame size={36} color="#2563eb" /></div>
                                 <div className="bento-info">
                                     <h3 className="bento-value">{stats.streak}</h3>
                                     <p className="bento-label">{t('dayStreak')}</p>

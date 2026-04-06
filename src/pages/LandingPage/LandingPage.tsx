@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/AuthContext';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronRight, Sparkles, MessageCircle, Gamepad2, ArrowLeft } from 'lucide-react';
+import { Sparkles, MessageCircle, Gamepad2, ArrowLeft } from 'lucide-react';
 import './LandingPage.css';
 
 const slides = [

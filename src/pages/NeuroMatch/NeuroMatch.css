@@ -363,7 +363,7 @@
     font-weight: 800;
     font-size: 0.95rem;
     background: rgba(255, 150, 0, 0.1);
-    color: #ff9600;
+    color: #2563eb;
     border: 1px solid rgba(255, 150, 0, 0.15);
     transition: all 0.3s;
     min-width: 52px;
@@ -464,7 +464,7 @@
     background: rgba(255, 150, 0, 0.12);
     border: 1px solid rgba(255, 150, 0, 0.2);
     border-radius: 20px;
-    color: #ff9600;
+    color: #2563eb;
     font-size: 0.75rem;
     font-weight: 600;
     margin-bottom: 12px;
@@ -702,7 +702,7 @@
 
 .nm-word-chip.selected {
     background: rgba(255, 150, 0, 0.15);
-    border-color: #ff9600;
+    border-color: #2563eb;
     color: #ffeda6;
     box-shadow: 0 3px 0 rgba(204, 120, 0, 0.3);
 }
@@ -713,7 +713,7 @@
     justify-content: center;
     gap: 6px;
     padding: 14px 24px;
-    background: linear-gradient(135deg, #ff9600, #cc7800);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
     border: none;
     border-radius: 14px;
@@ -823,7 +823,7 @@
 
 .nm-match-card.selected {
     background: rgba(255, 150, 0, 0.15);
-    border-color: #ff9600;
+    border-color: #2563eb;
     color: #ffeda6;
     box-shadow: 0 3px 0 rgba(204, 120, 0, 0.4), 0 0 16px rgba(255, 150, 0, 0.15);
     transform: translateY(-2px);
@@ -969,7 +969,7 @@
 }
 
 .nm-btn-primary {
-    background: linear-gradient(135deg, #ff9600, #cc7800);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
     box-shadow: 0 4px 0 #995a00;
 }

@@ -5,14 +5,14 @@
      ============================================ */
 
   /* ── Brand Colors ─────────────────────────────── */
-  --color-primary: #ff9600;
-  --color-primary-dark: #cc7800;
-  --color-primary-light: #ffb44d;
-  --color-primary-50: rgba(255, 150, 0, 0.15);
-  --color-primary-surface: rgba(255, 150, 0, 0.10);
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #60a5fa;
+  --color-primary-50: rgba(37, 99, 235, 0.15);
+  --color-primary-surface: rgba(37, 99, 235, 0.10);
 
   /* ── Achievements & Streaks ────────────────────── */
-  --color-gold: #ff9600;
+  --color-gold: #2563eb;
   --color-gold-dark: #cd7900;
   --color-gold-light: #ffc800;
 
@@ -52,7 +52,7 @@
   --color-success: #58cc02;
   --color-success-dark: #46a302;
   --color-error: #ff4b4b;
-  --color-warning: #ff9600;
+  --color-warning: #2563eb;
   --color-info: #1cb0f6;
 
   /* ── Typography ────────────────────────────────── */

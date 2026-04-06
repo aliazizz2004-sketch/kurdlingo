@@ -126,7 +126,7 @@ export function stopBase64Audio() {
         currentResolve = null;
     }
 }
-export function playBase64Audio(base64Audio: string, mimeType: string = 'audio/mp3'): Promise<void> {
+export function playBase64Audio(_base64Audio: string, _mimeType: string = 'audio/mp3'): Promise<void> {
     stopBase64Audio();
     return new Promise((resolve) => resolve()); // Disable TTS for now if we don't have direct api route logic
 }
@@ -142,7 +142,7 @@ export function blobToBase64(blob: Blob): Promise<string> {
         reader.readAsDataURL(blob);
     });
 }
-export async function requestMultiTTS(texts: string[], options: any) { return { audioContent: '', mimeType: '', success: false }; }
-export async function requestTTS(text: string, options: any) { return { audioContent: '', success: false }; }
-export async function requestGeminiVoice(text: string, options: any) { return { audioContent: '', mimeType: '', success: false }; }
+export async function requestMultiTTS(_texts: string[], _options: any) { return { audioContent: '', mimeType: '', success: false }; }
+export async function requestTTS(_text: string, _options: any) { return { audioContent: '', success: false }; }
+export async function requestGeminiVoice(_text: string, _options: any) { return { audioContent: '', mimeType: '', success: false }; }
 

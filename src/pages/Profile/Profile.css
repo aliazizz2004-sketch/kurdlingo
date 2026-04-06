@@ -20,7 +20,7 @@
     width: 48px;
     height: 48px;
     border: 5px solid #e5e5e5;
-    border-bottom-color: #ff9600;
+    border-bottom-color: #2563eb;
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
@@ -72,7 +72,7 @@
 
 .profile-cover {
     height: 140px;
-    background: linear-gradient(135deg, #ff9600 0%, #ff6a00 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #ff6a00 100%);
     position: relative;
 }
 
@@ -169,7 +169,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #ff9600;
+    background: #2563eb;
     color: white;
     border: none;
     border-radius: 16px;
@@ -177,7 +177,7 @@
     font-size: 16px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 0 #cc7800;
+    box-shadow: 0 4px 0 #1d4ed8;
     transition: all 0.15s ease;
     align-self: center;
     margin-top: 12px;
@@ -186,14 +186,14 @@
 }
 
 .edit-profile-action:hover {
-    background: #ffb44d;
+    background: #60a5fa;
     transform: translateY(-2px);
-    box-shadow: 0 6px 0 #cc7800;
+    box-shadow: 0 6px 0 #1d4ed8;
 }
 
 .edit-profile-action:active {
     transform: translateY(4px);
-    box-shadow: 0 0px 0 #cc7800;
+    box-shadow: 0 0px 0 #1d4ed8;
 }
 
 /* ============================================
@@ -241,7 +241,7 @@
 }
 
 .bento-card.streak { border-color: #ffd8a0; }
-.bento-card.streak:hover { border-color: #ffb44d; box-shadow: 0 8px 0 #ff9600; }
+.bento-card.streak:hover { border-color: #60a5fa; box-shadow: 0 8px 0 #2563eb; }
 .bento-card.xp { border-color: #ffe87a; }
 .bento-card.xp:hover { border-color: #ffc800; box-shadow: 0 8px 0 #e6b400; }
 .bento-card.lessons { border-color: #a0eaff; }

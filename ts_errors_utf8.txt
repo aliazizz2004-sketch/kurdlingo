@@ -1,0 +1,10 @@
+src/pages/LandingPage/LandingPage.tsx(5,10): error TS6133: 'ChevronRight' is declared but its value is never read.
+src/pages/VoiceTest.tsx(8,12): error TS6133: 'audioChunks' is declared but its value is never read.
+src/services/api.ts(129,33): error TS6133: 'base64Audio' is declared but its value is never read.
+src/services/api.ts(129,54): error TS6133: 'mimeType' is declared but its value is never read.
+src/services/api.ts(145,39): error TS6133: 'texts' is declared but its value is never read.
+src/services/api.ts(145,56): error TS6133: 'options' is declared but its value is never read.
+src/services/api.ts(146,34): error TS6133: 'text' is declared but its value is never read.
+src/services/api.ts(146,48): error TS6133: 'options' is declared but its value is never read.
+src/services/api.ts(147,42): error TS6133: 'text' is declared but its value is never read.
+src/services/api.ts(147,56): error TS6133: 'options' is declared but its value is never read.

@@ -1,0 +1,10 @@
+Retrieving project…
+Fetching deployments in abdullas-projects-44a00286
+> Deployments for abdullas-projects-44a00286/dolingo [405ms]
+
+  Age     Project                                Deployment                                                          Status      Environment     Duration     Username                
+  1m      abdullas-projects-44a00286/dolingo     https://dolingo-arjofa754-abdullas-projects-44a00286.vercel.app     ● Ready     Production      51s          abdullaazizb58-3148     
+  4m      abdullas-projects-44a00286/dolingo     https://dolingo-a9kl2uav5-abdullas-projects-44a00286.vercel.app     ● Error     Production      29s          abdullaazizb58-3148     
+
+https://dolingo-arjofa754-abdullas-projects-44a00286.vercel.app
+https://dolingo-a9kl2uav5-abdullas-projects-44a00286.vercel.app

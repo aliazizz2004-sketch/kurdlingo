@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#fff1de",
+                    "on-tertiary": "#d1ffc8",
+                    "outline-variant": "#8fb1d2",
+                    "surface-container": "#d8eaff",
+                    "on-secondary-fixed": "#463000",
+                    "on-tertiary-container": "#005e17",
+                    "primary-dim": "#005578",
+                    "on-secondary-fixed-variant": "#6b4b00",
+                    "error-container": "#fb5151",
+                    "tertiary": "#006b1b",
+                    "tertiary-fixed-dim": "#83e881",
+                    "primary-container": "#36bcfd",
+                    "surface-tint": "#006289",
+                    "primary": "#006289",
+                    "inverse-surface": "#000f1e",
+                    "secondary-fixed-dim": "#feb700",
+                    "on-error": "#ffefee",
+                    "error": "#b31b25",
+                    "surface-container-high": "#cee5ff",
+                    "on-primary-fixed-variant": "#003e58",
+                    "secondary": "#785500",
+                    "surface-variant": "#c3e0ff",
+                    "on-surface-variant": "#3d5e7d",
+                    "on-error-container": "#570008",
+                    "tertiary-dim": "#005d16",
+                    "surface-container-highest": "#c3e0ff",
+                    "surface-bright": "#f2f7ff",
+                    "surface": "#f2f7ff",
+                    "on-tertiary-fixed": "#00480f",
+                    "on-tertiary-fixed-variant": "#00691a",
+                    "inverse-primary": "#36bcfd",
+                    "on-background": "#08314d",
+                    "tertiary-fixed": "#91f78e",
+                    "on-primary-container": "#00344c",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#08314d",
+                    "surface-dim": "#b2d8ff",
+                    "on-primary": "#e8f4ff",
+                    "on-secondary-container": "#5f4200",
+                    "surface-container-low": "#e8f2ff",
+                    "secondary-dim": "#694a00",
+                    "background": "#f2f7ff",
+                    "error-dim": "#9f0519",
+                    "primary-fixed": "#36bcfd",
+                    "secondary-fixed": "#ffc965",
+                    "on-primary-fixed": "#001a28",
+                    "inverse-on-surface": "#7fa0c1",
+                    "tertiary-container": "#91f78e",
+                    "secondary-container": "#ffc965",
+                    "primary-fixed-dim": "#1aaeee",
+                    "outline": "#597a99"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Be Vietnam Pro"],
+                    "label": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .lexicon-wheel {
+        position: relative;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        border: 2px dashed rgba(0, 98, 137, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(-15deg);
+    }
+    .letter-node {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        background: white;
+        border: 1px solid #c3e0ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #006289;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: rotate(15deg);}
+    .letter-node:hover {
+        transform: rotate(15deg) scale(1.2);
+        background: #006289;
+        color: white;
+        box-shadow: 0 10px 25px -5px rgba(0, 98, 137, 0.4);
+    }
+    .active-letter {
+        background: #006289 !important;
+        color: white !important;
+        width: 64px !important;
+        height: 64px !important;
+        font-size: 1.5rem !important;
+        box-shadow: 0 0 40px rgba(0, 98, 137, 0.3);
+        border: 4px solid #fff !important;
+    }.word-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen overflow-x-hidden">
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/40 backdrop-blur-3xl px-6 py-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-2 rounded-xl">
+<span class="material-symbols-outlined text-white text-xl">bubble_chart</span>
+</div>
+<h1 class="text-2xl font-black text-primary tracking-tighter headline">LEXICON LENS</h1>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-white shadow-sm overflow-hidden">
+<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeNppJGCw4Xux1n8FYtghMm4fIB6uquz1NxAiYjvZzAT2Atf5MriwqGi5MKLbWde7qbP81YPvI6QBXD3QxQgM8pc-RyeyCX9MiY0bpzB69ku4uQlXO4NJET_T-ZIGFFEL8t_l50Wqo-X85d1DUiPU3iYQYcFRYbv1OshyJVDTUFEQ1seQpaB_8En8dkIxec9EKX--g-32z92wOqFkbXvmFS4NEoK_1lbv1GGnAX9yU6z82dHtsjtsKY1iYKGo4cTrTXz7R-Of0IzEH"/>
+</div>
+</header>
+<main class="relative pt-24 pb-32">
+<section class="min-h-[618px] flex flex-col items-center justify-center px-6 text-center relative">
+<div class="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary-container/20 rounded-full blur-3xl"></div>
+<div class="absolute top-1/2 -right-24 w-80 h-80 bg-tertiary-container/20 rounded-full blur-3xl"></div>
+</div>
+<div class="relative z-10 mb-8">
+<h2 class="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-2">Spin to Explore</h2>
+<p class="text-4xl font-black text-on-surface headline max-w-sm mx-auto leading-tight">Pick a Letter of the Kurdish Spirit</p>
+</div>
+<div class="lexicon-wheel">
+<div class="absolute inset-0 m-auto w-32 h-32 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-8 border-surface-container">
+<span class="text-6xl font-black text-primary leading-none">A</span>
+<span class="text-[10px] font-bold text-outline tracking-widest mt-1">ACTIVE</span>
+</div>
+<div class="letter-node active-letter" style="top: 0; left: 50%; transform: translate(-50%, -50%) rotate(15deg);">A</div>
+<div class="letter-node" style="top: 15%; right: 15%; transform: translate(50%, -50%) rotate(15deg);">B</div>
+<div class="letter-node" style="top: 50%; right: 0; transform: translate(50%, -50%) rotate(15deg);">C</div>
+<div class="letter-node" style="bottom: 15%; right: 15%; transform: translate(50%, 50%) rotate(15deg);">D</div>
+<div class="letter-node" style="bottom: 0; left: 50%; transform: translate(-50%, 50%) rotate(15deg);">E</div>
+<div class="letter-node" style="bottom: 15%; left: 15%; transform: translate(-50%, 50%) rotate(15deg);">F</div>
+<div class="letter-node" style="top: 50%; left: 0; transform: translate(-50%, -50%) rotate(15deg);">G</div>
+<div class="letter-node" style="top: 15%; left: 15%; transform: translate(-50%, -50%) rotate(15deg);">H</div>
+</div>
+<div class="mt-12 flex items-center gap-4 animate-bounce">
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</section>
+<section class="px-6 pt-12">
+<div class="flex items-end justify-between mb-10">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="h-1 w-8 bg-primary rounded-full"></span>
+<span class="text-primary font-bold tracking-widest uppercase text-xs">Discovery Stream</span>
+</div>
+<h3 class="text-5xl font-black headline text-on-surface">Letter A</h3>
+</div>
+<div class="text-right">
+<span class="text-3xl font-black text-primary/20">248</span>
+<span class="block text-[10px] font-bold text-outline uppercase">Words Found</span>
+</div>
+</div>
+<div class="word-grid">
+<div class="group relative bg-white rounded-[2.5rem] overflow-hidden shadow-xl shadow-primary/5 border border-surface-container-high transition-transform hover:-translate-y-2">
+<div class="aspect-[4/5] w-full relative">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="Breathtaking wide shot of the Zagros mountains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfMEMOnalbSgYio9pA-eRJnkTbv45OqjhjfW--aofxgc0ehsJgFFExNiOPL54KUterKAAEvcpt3Hqp4XOpI26QaPflFe0Ul9QEdi3T5_cpD0MyBLf-MFh6wXcoqNskRKWIQi3f9Rnh8169Xwt526QM_6HazULpWVbA4jJf4-MopcK0d6dppnPIYpxjn-vA3WGDM_5DzA4QeyX4TPo3NfoeNwYAI6_3y9tTEKk5OmFchcWucvB9SyFtt60BUdtfqGfa5rG2tgiqp_Mn"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-8">
+<div class="flex items-center justify-between mb-4">
+<button class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 hover:bg-white hover:text-primary transition-all">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</button>
+<span class="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/20">Noun</span>
+</div>
+<h4 class="text-white text-5xl font-black mb-2 headline">Adventure</h4>
+<div class="flex items-center gap-4">
+<span class="text-white/60 text-sm italic">/ədˈventʃər/</span>
+<div class="h-px flex-1 bg-white/20"></div>
+</div>
+<p class="text-primary-container text-4xl font-bold mt-4 text-right" dir="rtl">سەرکێشی</p>
+</div>
+</div>
+</div>
+<div class="p-8 bg-surface-container-low rounded-[2.5rem] border border-white flex flex-col justify-between min-h-[300px] transition-all hover:bg-white hover:shadow-2xl hover:shadow-primary/10">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-xs font-bold text-outline uppercase tracking-widest block mb-2">Noun</span>
+<h4 class="text-4xl font-black text-on-surface headline">Apple</h4>
+<span class="text-sm italic text-outline">/ˈapl/</span>
+</div>
+<button class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined">volume_up</span>
+</button>
+</div>
+<div class="mt-8">
+<p class="text-sm text-on-surface-variant leading-relaxed max-w-[80%]">A round fruit with red, yellow, or green skin and firm white flesh.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<span class="text-[10px] font-black text-primary/40 uppercase">Sorani</span>
+<p class="text-5xl font-black text-primary" dir="rtl">سێو</p>
+</div>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[2.5rem] border border-outline-variant/10 flex flex-col justify-between min-h-[300px] transition-all hover:border-primary/20">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-xs font-bold text-outline uppercase tracking-widest block mb-2">Preposition</span>
+<h4 class="text-4xl font-black text-on-surface headline">About</h4>
+<span class="text-sm italic text-outline">/əˈbaʊt/</span>
+</div>
+<button class="w-14 h-14 rounded-full bg-white border border-primary/20 text-primary flex items-center justify-center transition-colors hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined">volume_up</span>
+</button>
+</div>
+<div class="mt-8">
+<p class="text-sm text-on-surface-variant leading-relaxed">Concerning or relating to a particular subject or person.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<span class="text-[10px] font-black text-primary/40 uppercase">Sorani</span>
+<p class="text-5xl font-black text-primary" dir="rtl">دەربارەی</p>
+</div>
+</div>
+<div class="p-8 bg-secondary-container/10 rounded-[2.5rem] border border-secondary-container/20 flex flex-col justify-between min-h-[300px]">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Verb</span>
+<h4 class="text-4xl font-black text-on-surface headline">Accept</h4>
+<span class="text-sm italic text-outline">/əˈksept/</span>
+</div>
+<button class="w-14 h-14 rounded-full bg-secondary text-white flex items-center justify-center shadow-lg shadow-secondary/30">
+<span class="material-symbols-outlined">volume_up</span>
+</button>
+</div>
+<div class="mt-8">
+<p class="text-sm text-on-surface-variant leading-relaxed">Consent to receive a thing offered.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<span class="text-[10px] font-black text-secondary/40 uppercase">Sorani</span>
+<p class="text-5xl font-black text-secondary" dir="rtl">وەرگرتن</p>
+</div>
+</div>
+</div>
+<div class="mt-16 flex flex-col items-center">
+<button class="px-10 py-5 bg-on-surface text-white rounded-full font-black headline text-sm tracking-widest hover:scale-105 transition-transform flex items-center gap-3">
+                LOAD MORE WORDS
+                <span class="material-symbols-outlined">auto_awesome</span>
+</button>
+<p class="mt-4 text-xs font-bold text-outline">Showing 4 of 248 items</p>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+<div class="flex items-center gap-2 bg-white/60 backdrop-blur-3xl p-2 rounded-full shadow-2xl border border-white">
+<div class="p-4 rounded-full text-outline hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">search</span>
+</div>
+<div class="p-4 rounded-full bg-primary text-white shadow-xl shadow-primary/30 flex items-center gap-2 pr-6">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-bold text-xs uppercase tracking-widest">Browse</span>
+</div>
+<div class="p-4 rounded-full text-outline hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">bookmark_heart</span>
+</div>
+<div class="p-4 rounded-full text-outline hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+</div>
+</nav>
+
+</body></html>
