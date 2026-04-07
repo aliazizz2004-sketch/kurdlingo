@@ -307,11 +307,11 @@ const TypingRush = () => {
                 {showMobileWarning && (
                     <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
                         <div style={{ background: '#1e293b', padding: '24px', borderRadius: '16px', border: '1px solid #334155', textAlign: 'center', maxWidth: '320px', direction: isKu ? 'rtl' : 'ltr' }}>
-                            <h3 style={{ margin: '0 0 12px', fontSize: '1.2rem', color: '#2563eb' }}>{isKu ? 'ئاگاداری' : 'Notice'}</h3>
+                            <h3 style={{ margin: '0 0 12px', fontSize: '1.2rem', color: '#ff9600' }}>{isKu ? 'ئاگاداری' : 'Notice'}</h3>
                             <p style={{ margin: '0 0 20px', fontSize: '0.95rem', color: '#e2e8f0', lineHeight: 1.5 }}>
                                 {isKu ? 'بۆ باشترین ئەزموون و تایپکردن، تکایە کۆمپیوتەر بەکاربهێنە بۆ ئەم یارییە.' : 'For the best typing experience, please use a computer for this game.'}
                             </p>
-                            <button onClick={() => setShowMobileWarning(false)} style={{ background: 'linear-gradient(135deg, #2563eb, #1d4ed8)', border: 'none', padding: '10px 20px', borderRadius: '8px', color: 'white', fontWeight: 'bold', width: '100%', cursor: 'pointer' }}>
+                            <button onClick={() => setShowMobileWarning(false)} style={{ background: 'linear-gradient(135deg, #ff9600, #cc7800)', border: 'none', padding: '10px 20px', borderRadius: '8px', color: 'white', fontWeight: 'bold', width: '100%', cursor: 'pointer' }}>
                                 {isKu ? 'تێگەیشتم' : 'Got it'}
                             </button>
                         </div>

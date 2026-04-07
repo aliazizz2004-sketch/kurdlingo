@@ -17,14 +17,14 @@ const GuidebookHub = () => {
     // Helper map to assign the exact bright sleek colors used in your project theme
     const getUnitColors = (unitId: string) => {
         const colors: Record<string, { color: string; dark: string }> = {
-            'unit-1': { color: '#2563eb', dark: '#FF6A00' }, // Full Orange
-            'unit-2': { color: '#1cb0f6', dark: '#0c8fd6' }, // Blue
+            'unit-1': { color: '#1a73e8', dark: '#1557b0' }, // Blue (first stage)
+            'unit-2': { color: '#ff9600', dark: '#cc7800' }, // Orange (second stage)
             'unit-3': { color: '#ff4b4b', dark: '#d33131' }, // Red
             'unit-4': { color: '#ce82ff', dark: '#a560ff' }, // Purple
             'unit-5': { color: '#f59e0b', dark: '#b45309' }, // Gold
             'unit-6': { color: '#2dd4bf', dark: '#0f766e' }  // Teal
         };
-        return colors[unitId] || { color: '#2563eb', dark: '#FF6A00' };
+        return colors[unitId] || { color: '#1a73e8', dark: '#1557b0' };
     };
 
     const getUnitEmoji = (unitId: string) => {
@@ -43,7 +43,7 @@ const GuidebookHub = () => {
         <div className="guidebook-hub">
             <div className="hub-header">
                 <div className="hub-icon-wrapper">
-                    <BookOpen size={40} color="#FF6A00" />
+                    <BookOpen size={40} color="#1a73e8" />
                 </div>
                 <h1>ڕێبەری وانەکان</h1>
                 <p>پێداچوونەوە بە وشەکان، ڕێزمان، و ئەو تێبینیانەی کە لە هەر بەشێکدا هەیە بۆ بەهێزکردنی فێربوونەکەت.</p>

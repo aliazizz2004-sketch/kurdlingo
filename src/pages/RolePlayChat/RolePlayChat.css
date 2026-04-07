@@ -110,12 +110,12 @@
 
 .difficulty-indicator.beginner {
     background: #e8fff0;
-    color: #2563eb;
+    color: #ff9600;
 }
 
 .difficulty-indicator.intermediate {
     background: #2d2214;
-    color: #2563eb;
+    color: #ff9600;
 }
 
 .difficulty-indicator.advanced {
@@ -217,7 +217,7 @@
     align-items: center;
     gap: 4px;
     font-weight: 800;
-    color: #2563eb;
+    color: #ff9600;
     margin-bottom: 4px;
 }
 

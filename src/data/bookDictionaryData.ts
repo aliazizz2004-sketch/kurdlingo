@@ -45,16 +45,16 @@ export const bookDictionaryData: DictionaryCategory[] = [
         id: 'greetings',
         name: { english: 'Greetings & Introductions', kurdish: 'سڵاو و ناساندن' },
         icon: 'Hand',
-        color: '#2563eb',
-        gradient: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+        color: '#ff9600',
+        gradient: 'linear-gradient(135deg, #ff9600 0%, #cc7800 100%)',
         entries: greetingsEntries
     },
     {
         id: 'food',
         name: { english: 'Food & Dining', kurdish: 'خواردن و خواردنگە' },
         icon: 'UtensilsCrossed',
-        color: '#2563eb',
-        gradient: 'linear-gradient(135deg, #2563eb 0%, #e08600 100%)',
+        color: '#ff9600',
+        gradient: 'linear-gradient(135deg, #ff9600 0%, #e08600 100%)',
         entries: foodEntries
     },
     {

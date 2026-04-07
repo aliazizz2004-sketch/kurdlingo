@@ -5,13 +5,13 @@
 
   /* --- BRAND PALETTE (Vibrant & Rich) --- */
 
-  /* Primary Orange (Brand Theme) */
-  --color-primary: #2563eb;
-  --color-primary-light: #60a5fa;
+  /* Primary Blue (Brand Theme) */
+  --color-primary: #1a73e8;
+  --color-primary-light: #4d9ff0;
   /* Fallback */
-  --color-primary-dark: #1d4ed8;
-  --color-primary-shadow: #1e3a8a;
-  --grad-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --color-primary-dark: #1557b0;
+  --color-primary-shadow: #1557b0;
+  --grad-primary: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
   /* Richer Gradient */
 
   /* Secondary Red (Error/Alert) */
@@ -41,15 +41,28 @@
   --grad-gold: linear-gradient(135deg, #ffc800 0%, #e5a500 100%);
 
   /* --- NEUTRALS & SURFACES --- */
-  --color-background: #131f24;
-  --color-surface: #202f36;
-  /* Visible gray background, white cards -> Darker panels */
-  --color-surface-dim: #18282e;
-  /* Locked/Disabled states */
-  --color-border: #37464f;
-  --color-border-hover: #4b5e68;
+  --color-background: #f7f7f7;
+  --color-surface: #ffffff;
+  --color-surface-dim: #e5e5e5;
+  --color-border: #e5e5e5;
+  --color-border-hover: #d0d0d0;
 
   /* --- TYPOGRAPHY --- */
+  --color-text-main: #4b4b4b;
+  --color-text-secondary: #afafaf;
+  --color-text-light: #777777;
+  --color-text-inverse: #ffffff;
+
+  /* --- THEME TOGGLE OVERRIDES --- */
+}
+
+.dark-theme, html[data-theme="dark"] {
+  --color-background: #131f24;
+  --color-surface: #202f36;
+  --color-surface-dim: #18282e;
+  --color-border: #37464f;
+  --color-border-hover: #4b5e68;
+  
   --color-text-main: #ffffff;
   --color-text-secondary: #afafaf;
   --color-text-light: #777777;

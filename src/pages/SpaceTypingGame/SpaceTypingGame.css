@@ -170,7 +170,7 @@
     font-weight: 900;
     letter-spacing: -1.5px;
     margin: 0 0 0.3rem;
-    background: linear-gradient(135deg, #2563eb, #ffc800, #ffeda6);
+    background: linear-gradient(135deg, #ff9600, #ffc800, #ffeda6);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -270,7 +270,7 @@
 .stg-level-node.current {
     width: 90px;
     height: 90px;
-    background: linear-gradient(135deg, #2563eb, #ffc800);
+    background: linear-gradient(135deg, #ff9600, #ffc800);
     border: none;
     box-shadow: 0 0 0 8px rgba(255, 150, 0, 0.2), 0 0 40px rgba(255, 150, 0, 0.4);
     color: white;
@@ -452,7 +452,7 @@
 
 .stg-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ffc800, #2563eb);
+    background: linear-gradient(90deg, #ffc800, #ff9600);
     border-radius: 3px;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 8px rgba(255, 150, 0, 0.4);
@@ -574,7 +574,7 @@
 }
 
 .stg-typed {
-    color: #2563eb;
+    color: #ff9600;
     text-shadow: 0 0 8px rgba(255, 150, 0, 0.4);
 }
 
@@ -665,7 +665,7 @@
     box-shadow:
         0 0 5px 2px #ffffff,
         0 0 10px 4px #ffc800,
-        0 0 20px 8px #2563eb;
+        0 0 20px 8px #ff9600;
     animation: stg-projectile 0.3s linear forwards;
     will-change: transform, opacity;
 }
@@ -807,7 +807,7 @@
 }
 
 .stg-results-title.victory {
-    background: linear-gradient(135deg, #2563eb, #ffc800);
+    background: linear-gradient(135deg, #ff9600, #ffc800);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -836,7 +836,7 @@
 }
 
 .stg-rstat svg {
-    color: #2563eb;
+    color: #ff9600;
 }
 
 .stg-rstat-val {
@@ -890,7 +890,7 @@
 }
 
 .stg-btn-primary {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    background: linear-gradient(135deg, #ff9600, #cc7800);
     color: white;
     box-shadow: 0 4px 0 #995a00;
 }

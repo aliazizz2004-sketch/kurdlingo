@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     MagnifyingGlass, ArrowLeft, BookmarkSimple, SpeakerHigh, X,
-    List, GridFour, Info, MapPin, Lightbulb
+    List, GridFour, Info, MapPin, Lightbulb, Sun, Moon
 } from '@phosphor-icons/react';
 import useTextToSpeech from '../../hooks/useTextToSpeech';
 import { bookDictionaryData } from '../../data/bookDictionaryData';
@@ -136,6 +136,7 @@ const BookDictionary: React.FC = () => {
     const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
     const [playingWordId, setPlayingWordId] = useState<string | null>(null);
     const [activeWord, setActiveWord] = useState<MappedWord | null>(null);
+    const [isLightMode, setIsLightMode] = useState(false);
 
     const allWords: MappedWord[] = useMemo(() =>
         bookDictionaryData.flatMap(cat =>
@@ -184,7 +185,7 @@ const BookDictionary: React.FC = () => {
     const closeDetail = () => setActiveWord(null);
 
     return (
-        <div className="lexicon-root">
+        <div className={`lexicon-root${isLightMode ? ' light-mode' : ''}`}>
             {/* ── HEADER ── */}
             <header className="lexicon-header">
                 <div className="lex-header-left">
@@ -193,19 +194,30 @@ const BookDictionary: React.FC = () => {
                     </button>
                     <h1 className="lex-title">فەرهەنگ</h1>
                 </div>
-                <div className="lex-view-toggle">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {/* Theme toggle */}
                     <button
-                        className={`lex-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                        onClick={() => setViewMode('grid')}
+                        className="lex-theme-btn"
+                        onClick={() => setIsLightMode(p => !p)}
+                        title={isLightMode ? 'دوو بکەوە' : 'ڕووناک بکەوە'}
                     >
-                        <GridFour size={20} weight={viewMode === 'grid' ? 'fill' : 'regular'} />
+                        {isLightMode ? <Moon size={18} weight="bold" /> : <Sun size={18} weight="bold" />}
                     </button>
-                    <button
-                        className={`lex-toggle-btn ${viewMode === 'table' ? 'active' : ''}`}
-                        onClick={() => setViewMode('table')}
-                    >
-                        <List size={20} weight={viewMode === 'table' ? 'fill' : 'regular'} />
-                    </button>
+                    {/* View mode */}
+                    <div className="lex-view-toggle">
+                        <button
+                            className={`lex-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                            onClick={() => setViewMode('grid')}
+                        >
+                            <GridFour size={20} weight={viewMode === 'grid' ? 'fill' : 'regular'} />
+                        </button>
+                        <button
+                            className={`lex-toggle-btn ${viewMode === 'table' ? 'active' : ''}`}
+                            onClick={() => setViewMode('table')}
+                        >
+                            <List size={20} weight={viewMode === 'table' ? 'fill' : 'regular'} />
+                        </button>
+                    </div>
                 </div>
             </header>
 

@@ -117,7 +117,7 @@ const Lesson = () => {
 
     const [lesson, setLesson] = useState(null);
     const [currentUnitId, setCurrentUnitId] = useState('unit-1');
-    const [unitColor, setUnitColor] = useState({ primary: '#2563eb', dark: '#1d4ed8', light: '#fff3e0' }); // Default Orange
+    const [unitColor, setUnitColor] = useState({ primary: '#ff9600', dark: '#cc7800', light: '#fff3e0' }); // Default Orange
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
     const [lives, setLives] = useState(5);
     const [progress, setProgress] = useState(0);
@@ -190,8 +190,8 @@ const Lesson = () => {
                 setUnitColor({ primary: '#3b82f6', dark: '#1e40af', light: '#1e293b' });
             } else {
                 const colors = [
-                    { primary: '#2563eb', dark: '#1d4ed8', light: '#262319' }, // Unit 1: Orange
-                    { primary: '#3b82f6', dark: '#2563eb', light: '#1e2f3b' }, // Unit 2: Blue
+                    { primary: '#ff9600', dark: '#cc7800', light: '#262319' }, // Unit 1: Orange
+                    { primary: '#3b82f6', dark: '#ff9600', light: '#1e2f3b' }, // Unit 2: Blue
                     { primary: '#ef4444', dark: '#dc2626', light: '#3d1a1a' }, // Unit 3: Red
                     { primary: '#a855f7', dark: '#9333ea', light: '#271933' }  // Unit 4: Purple
                 ];
@@ -347,7 +347,7 @@ const Lesson = () => {
                     aria-valuemax={100}
                     aria-label={`Lesson progress: ${Math.round(progress)}%`}
                 >
-                    <div className="progress-bar-fill" style={{ width: `${progress}%`, background: `linear-gradient(90deg, var(--unit-color-light, #60a5fa), var(--unit-color), var(--unit-color-dark))` }}></div>
+                    <div className="progress-bar-fill" style={{ width: `${progress}%`, background: `linear-gradient(90deg, var(--unit-color-light, #ffb44d), var(--unit-color), var(--unit-color-dark))` }}></div>
                 </div>
                 <div className="lives-counter" aria-label={`${lives} lives remaining`}>
                     <Heart fill="#ff4b4b" color="#ff4b4b" size={24} aria-hidden="true" />

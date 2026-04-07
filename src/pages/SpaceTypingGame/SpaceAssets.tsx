@@ -96,8 +96,8 @@ export const PlanetEarthSvg = ({ className = "" }: { className?: string }) => (
     <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <radialGradient id="earthOcean" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(35 35) scale(60)">
-                <stop stopColor="#60a5fa" />
-                <stop offset="1" stopColor="#1e3a8a" />
+                <stop stopColor="#ffb44d" />
+                <stop offset="1" stopColor="#cc7800" />
             </radialGradient>
             <filter id="atmosphereGlow">
                 <feGaussianBlur stdDeviation="3" result="glow" />

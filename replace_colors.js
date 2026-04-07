@@ -4,12 +4,12 @@ import path from 'path';
 const directory = './src';
 
 const replacements = {
-  '#ff9600': '#2563eb', // primary
-  '#FF9600': '#2563eb',
-  '#ffb44d': '#60a5fa', // light
-  '#FFB44D': '#60a5fa',
-  '#cc7800': '#1d4ed8', // dark
-  '#CC7800': '#1d4ed8'
+  '#2563eb': '#ff9600', // primary
+  '#60a5fa': '#ffb44d', // light
+  '#1d4ed8': '#cc7800', // dark
+  'rgba(37, 99, 235, 0.15)': 'rgba(255, 150, 0, 0.15)',
+  'rgba(37, 99, 235, 0.10)': 'rgba(255, 150, 0, 0.10)',
+  '#1e3a8a': '#cc7800'  // darker shadow (from index.css change)
 };
 
 function processDirectory(dir) {
@@ -41,4 +41,4 @@ function processDirectory(dir) {
 }
 
 processDirectory(directory);
-console.log('Color replacement complete.');
+console.log('Color reversion complete.');

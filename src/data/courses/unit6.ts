@@ -33,14 +33,14 @@ export const unit6: Unit = {
                     data: {
                         english: [
                             { word: "I love reading", label: "وەڵام (A)", color: "#1cb0f6" },
-                            { word: "because", label: "هۆکار (R)", color: "#2563eb" },
+                            { word: "because", label: "هۆکار (R)", color: "#ff9600" },
                             { word: "it helps me relax.", label: "زانیاری", color: "#ce82ff" },
                             { word: "For instance,", label: "نموونە (E)", color: "#ff4b4b" },
                             { word: "I read every night.", label: "زانیاری", color: "#2dd4bf" }
                         ],
                         kurdish: [
                             { word: "حەزم لە خوێندنەوەیە", label: "وەڵام", color: "#1cb0f6" },
-                            { word: "لەبەرئەوەی", label: "هۆکار", color: "#2563eb" },
+                            { word: "لەبەرئەوەی", label: "هۆکار", color: "#ff9600" },
                             { word: "یارمەتیم دەدات ئارام ببمەوە.", label: "زانیاری", color: "#ce82ff" },
                             { word: "بۆ نموونە،", label: "نموونە", color: "#ff4b4b" },
                             { word: "هەموو شەوێک دەخوێنمەوە.", label: "زانیاری", color: "#2dd4bf" }

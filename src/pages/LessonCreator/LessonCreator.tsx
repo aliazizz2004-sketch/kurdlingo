@@ -9,7 +9,7 @@ const gameTypes = [
     icon: '🎯',
     name: 'Multiple Choice',
     description: 'Classic quiz with 4 options',
-    color: '#2563eb',
+    color: '#ff9600',
     preview: '❓ → A B C D'
   },
   {
@@ -25,7 +25,7 @@ const gameTypes = [
     icon: '🧩',
     name: 'Sentence Builder',
     description: 'Arrange words in order',
-    color: '#2563eb',
+    color: '#ff9600',
     preview: '📝 → 🔤🔤🔤'
   },
   {

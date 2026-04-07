@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Flame, Zap, Plus, Settings, Type, BookOpen, User, Edit2, LogOut } from 'lucide-react';
+import { Flame, Zap, Plus, Settings, Type, BookOpen, User, Edit2, LogOut, Sun, Moon } from 'lucide-react';
 import Button from '../../components/Button/Button';
 import { kurdishFonts, useLanguage } from '../../context/LanguageContext';
 import { getUserStats } from '../../utils/progressManager';
@@ -8,10 +8,12 @@ import { supabase } from '../../lib/supabase';
 import { useUser, SignedIn, SignedOut } from '../../context/AuthContext';
 import { openProfileModal } from '../../components/ProfileSetupModal';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
 import './Profile.css';
 
 const Profile = () => {
     const { t, kurdishFont, setKurdishFont } = useLanguage();
+    const { theme, toggleTheme, isDark } = useTheme();
     const [stats, setStats] = useState(getUserStats());
     const { user, isLoaded } = useUser();
     const [dbProfile, setDbProfile] = useState<any>(null);
@@ -70,7 +72,7 @@ const Profile = () => {
                             <h1 className="profile-name">{displayName}</h1>
                             {user?.email && <p className="profile-email">{user.email}</p>}
                             <div className="profile-badges">
-                                <span className="stat-pill"><Flame size={16} color="#2563eb" fill="#2563eb" /> {stats.streak} {t('dayStreak')}</span>
+                                <span className="stat-pill"><Flame size={16} color="#ff9600" fill="#ff9600" /> {stats.streak} {t('dayStreak')}</span>
                                 <span className="stat-pill"><Zap size={16} color="#ffc800" fill="#ffc800" /> {dbProfile?.xp || stats.totalXp} XP</span>
                             </div>
                         </div>
@@ -85,7 +87,7 @@ const Profile = () => {
                         <h2 className="section-title">{t('statistics')}</h2>
                         <div className="bento-stats-grid">
                             <div className="bento-card streak">
-                                <div className="bento-icon-wrapper"><Flame size={36} color="#2563eb" /></div>
+                                <div className="bento-icon-wrapper"><Flame size={36} color="#ff9600" /></div>
                                 <div className="bento-info">
                                     <h3 className="bento-value">{stats.streak}</h3>
                                     <p className="bento-label">{t('dayStreak')}</p>
@@ -129,6 +131,20 @@ const Profile = () => {
                                     </option>
                                 ))}
                             </select>
+                        </div>
+                    </section>
+
+                    <section className="profile-section">
+                        <h2 className="section-title">
+                            {isDark ? <Moon size={24} style={{ marginInlineEnd: '8px' }} /> : <Sun size={24} style={{ marginInlineEnd: '8px' }} />}
+                            دۆخی ڕووناکی (Theme)
+                        </h2>
+                        <div className="font-selector-container">
+                            <p className="font-selector-description">دۆخی تاریک یان ڕووناک هەڵبژێرە بەپێی ئارەزووی خۆت.</p>
+                            <Button variant="secondary" fullWidth size="lg" onClick={toggleTheme}>
+                                {isDark ? <Sun size={20} style={{ marginRight: '8px' }} /> : <Moon size={20} style={{ marginRight: '8px' }} />}
+                                {isDark ? 'دۆخی ڕووناکی' : 'دۆخی تاریکی'}
+                            </Button>
                         </div>
                     </section>
 

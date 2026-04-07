@@ -437,7 +437,7 @@ const Admin = () => {
             <div className="admin-header">
                 <h1>🎮 پانێلی بەڕێوەبردن</h1>
                 <div className="admin-actions">
-                    <button onClick={handleQuickCreateGame} className="btn-add" style={{ background: '#2563eb' }}>
+                    <button onClick={handleQuickCreateGame} className="btn-add" style={{ background: '#ff9600' }}>
                         ➕ یاری نوێ دروست بکە
                     </button>
                     <button onClick={exportData} className="btn-export">
@@ -664,7 +664,7 @@ const Admin = () => {
                         <h2>➕ یاری نوێ دروست بکە</h2>
 
                         {/* Unit/Lesson Selection */}
-                        <div style={{ display: 'flex', gap: '20px', marginBottom: '24px', padding: '16px', background: '#fff8eb', borderRadius: '12px', border: '2px solid #2563eb' }}>
+                        <div style={{ display: 'flex', gap: '20px', marginBottom: '24px', padding: '16px', background: '#fff8eb', borderRadius: '12px', border: '2px solid #ff9600' }}>
                             <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
                                 <label style={{ fontWeight: 700, color: '#15803d' }}>📚 یەکە هەڵبژێرە</label>
                                 <select
@@ -673,7 +673,7 @@ const Admin = () => {
                                         setQuickCreateUnit(e.target.value);
                                         setQuickCreateLesson(''); // Reset lesson when unit changes
                                     }}
-                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '2px solid #2563eb', fontSize: '16px' }}
+                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '2px solid #ff9600', fontSize: '16px' }}
                                 >
                                     <option value="">-- یەکە هەڵبژێرە --</option>
                                     {units.map(u => (
@@ -687,7 +687,7 @@ const Admin = () => {
                                 <select
                                     value={quickCreateLesson}
                                     onChange={(e) => setQuickCreateLesson(e.target.value)}
-                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '2px solid #2563eb', fontSize: '16px' }}
+                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '2px solid #ff9600', fontSize: '16px' }}
                                     disabled={!quickCreateUnit}
                                 >
                                     <option value="">-- وانە هەڵبژێرە --</option>

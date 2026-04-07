@@ -73,7 +73,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
                                     <HugeiconsIcon
                                         icon={item.icon}
                                         size={22}
-                                        color={isActive ? '#e07600' : '#6b7280'}
+                                        color={isActive ? '#1a73e8' : '#6b7280'}
                                         strokeWidth={isActive ? 2 : 1.75}
                                     />
                                 </div>

@@ -20,7 +20,7 @@
     width: 48px;
     height: 48px;
     border: 5px solid #e5e5e5;
-    border-bottom-color: #2563eb;
+    border-bottom-color: #1a73e8;
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
@@ -34,12 +34,12 @@
 
 /* Auth Cards */
 .signed-out-card {
-    background: #ffffff;
-    border: 3px solid #e5e5e5;
+    background: var(--color-surface);
+    border: 3px solid var(--color-border);
     border-radius: 20px;
     padding: 40px;
     text-align: center;
-    box-shadow: 0 8px 0 #d0d0d0;
+    box-shadow: 0 8px 0 var(--color-surface-dim);
     margin-top: 40px;
 }
 
@@ -60,19 +60,19 @@
    HERO / HEADER
    ============================================ */
 .profile-hero {
-    background: #ffffff;
+    background: var(--color-surface);
     border-radius: 0 0 24px 24px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 8px 0 #e5e5e5;
-    border: 3px solid #e5e5e5;
+    box-shadow: 0 8px 0 var(--color-surface-dim);
+    border: 3px solid var(--color-border);
     border-top: none;
     margin-bottom: 32px;
 }
 
 .profile-cover {
     height: 140px;
-    background: linear-gradient(135deg, #2563eb 0%, #ff6a00 100%);
+    background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
     position: relative;
 }
 
@@ -135,14 +135,14 @@
 .profile-name {
     font-size: 28px;
     font-weight: 800;
-    color: #4b4b4b;
+    color: var(--color-text-main);
     margin: 0 0 4px 0;
     letter-spacing: -0.02em;
 }
 
 .profile-email {
     font-size: 16px;
-    color: #afafaf;
+    color: var(--color-text-secondary);
     font-weight: 600;
     margin: 0 0 12px 0;
 }
@@ -156,20 +156,20 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #fff8eb;
-    border: 2px solid #ffe0a0;
+    background: rgba(26,115,232,0.10);
+    border: 2px solid rgba(26,115,232,0.30);
     padding: 6px 14px;
     border-radius: 100px;
     font-weight: 700;
     font-size: 14px;
-    color: #e58700;
+    color: #4d9ff0;
 }
 
 .edit-profile-action {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #2563eb;
+    background: #1a73e8;
     color: white;
     border: none;
     border-radius: 16px;
@@ -177,7 +177,7 @@
     font-size: 16px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 0 #1d4ed8;
+    box-shadow: 0 4px 0 #1557b0;
     transition: all 0.15s ease;
     align-self: center;
     margin-top: 12px;
@@ -186,14 +186,14 @@
 }
 
 .edit-profile-action:hover {
-    background: #60a5fa;
+    background: #4d9ff0;
     transform: translateY(-2px);
-    box-shadow: 0 6px 0 #1d4ed8;
+    box-shadow: 0 6px 0 #1557b0;
 }
 
 .edit-profile-action:active {
     transform: translateY(4px);
-    box-shadow: 0 0px 0 #1d4ed8;
+    box-shadow: 0 0px 0 #1557b0;
 }
 
 /* ============================================
@@ -209,7 +209,7 @@
 .section-title {
     font-size: 22px;
     font-weight: 800;
-    color: #4b4b4b;
+    color: var(--color-text-main);
     margin: 0 0 20px 0;
     display: flex;
     align-items: center;
@@ -222,8 +222,8 @@
 }
 
 .bento-card {
-    background: #ffffff;
-    border: 3px solid #e5e5e5;
+    background: var(--color-surface);
+    border: 3px solid var(--color-border);
     border-radius: 20px;
     padding: 24px;
     display: flex;
@@ -231,17 +231,17 @@
     align-items: center;
     text-align: center;
     gap: 12px;
-    box-shadow: 0 4px 0 #d0d0d0;
+    box-shadow: 0 4px 0 var(--color-surface-dim);
     transition: all 0.2s ease;
 }
 
 .bento-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 0 #d0d0d0;
+    box-shadow: 0 8px 0 var(--color-surface-dim);
 }
 
-.bento-card.streak { border-color: #ffd8a0; }
-.bento-card.streak:hover { border-color: #60a5fa; box-shadow: 0 8px 0 #2563eb; }
+.bento-card.streak { border-color: rgba(26,115,232,0.25); }
+.bento-card.streak:hover { border-color: #4d9ff0; box-shadow: 0 8px 0 #1557b0; }
 .bento-card.xp { border-color: #ffe87a; }
 .bento-card.xp:hover { border-color: #ffc800; box-shadow: 0 8px 0 #e6b400; }
 .bento-card.lessons { border-color: #a0eaff; }
@@ -250,7 +250,7 @@
 .bento-icon-wrapper {
     width: 64px;
     height: 64px;
-    background: #f7f7f7;
+    background: var(--color-background);
     border-radius: 16px;
     display: flex;
     justify-content: center;
@@ -260,13 +260,13 @@
 .bento-value {
     font-size: 28px;
     font-weight: 800;
-    color: #4b4b4b;
+    color: var(--color-text-main);
     margin: 0;
 }
 
 .bento-label {
     font-size: 15px;
-    color: #afafaf;
+    color: var(--color-text-secondary);
     font-weight: 700;
     margin: 0;
 }
@@ -275,29 +275,29 @@
    FONT SELECTOR
    ============================================ */
 .font-selector-container {
-    background: #ffffff;
-    border: 3px solid #e5e5e5;
+    background: var(--color-surface);
+    border: 3px solid var(--color-border);
     border-radius: 20px;
     padding: 24px;
-    box-shadow: 0 4px 0 #d0d0d0;
+    box-shadow: 0 4px 0 var(--color-surface-dim);
 }
 
 .font-selector-description {
-    color: #afafaf;
+    color: var(--color-text-secondary);
     font-size: 15px;
     font-weight: 600;
     margin: 0 0 16px 0;
 }
 
 .font-preview {
-    background: #f7f7f7;
-    border: 2px solid #e5e5e5;
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 20px;
     text-align: center;
     font-size: 22px;
-    color: #4b4b4b;
+    color: var(--color-text-main);
     direction: rtl;
     line-height: 1.6;
 }
@@ -307,9 +307,9 @@
     padding: 16px;
     font-size: 16px;
     font-weight: 700;
-    color: #4b4b4b;
-    background: #ffffff;
-    border: 3px solid #e5e5e5;
+    color: var(--color-text-main);
+    background: var(--color-surface);
+    border: 3px solid var(--color-border);
     border-radius: 16px;
     cursor: pointer;
     appearance: none;
@@ -319,7 +319,7 @@
     background-position: right 16px center;
     padding-right: 48px;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 0 #e5e5e5;
+    box-shadow: 0 2px 0 var(--color-border);
 }
 
 .font-selector:hover, .font-selector:focus {

@@ -50,10 +50,10 @@ const BottomNav = () => {
                                         <HugeiconsIcon
                                             icon={item.icon}
                                             size={26}
-                                            color={isActive ? '#e07600' : '#6b7280'}
+                                            color={isActive ? '#1a73e8' : '#6b7280'}
                                             strokeWidth={isActive ? 2 : 1.75}
                                         />
-                                        <span style={{ color: isActive ? '#e07600' : '#4b4b4b', fontSize: '13px', fontWeight: 600, textAlign: 'center' }}>
+                                        <span style={{ color: isActive ? '#1a73e8' : '#4b4b4b', fontSize: '13px', fontWeight: 600, textAlign: 'center' }}>
                                             {item.label}
                                         </span>
                                     </>
@@ -71,8 +71,8 @@ const BottomNav = () => {
                         {({ isActive }) => (
                             <>
                                 {isActive && <motion.div layoutId="bottom-nav-pill" className="bottom-nav-active-pill" initial={false} transition={springTransition} />}
-                                <HugeiconsIcon icon={Book04Icon} size={26} color={isActive ? '#e07600' : '#9ca3af'} strokeWidth={isActive ? 2 : 1.75} />
-                                <span className="nav-label" style={{ color: isActive ? '#e07600' : '#9ca3af' }}>{t('dictionary')}</span>
+                                <HugeiconsIcon icon={Book04Icon} size={26} color={isActive ? '#1a73e8' : '#9ca3af'} strokeWidth={isActive ? 2 : 1.75} />
+                                <span className="nav-label" style={{ color: isActive ? '#1a73e8' : '#9ca3af' }}>{t('dictionary')}</span>
                             </>
                         )}
                     </NavLink>
@@ -81,8 +81,8 @@ const BottomNav = () => {
                         {({ isActive }) => (
                             <>
                                 {isActive && <motion.div layoutId="bottom-nav-pill" className="bottom-nav-active-pill" initial={false} transition={springTransition} />}
-                                <HugeiconsIcon icon={MessageMultiple02Icon} size={26} color={isActive ? '#e07600' : '#9ca3af'} strokeWidth={isActive ? 2 : 1.75} />
-                                <span className="nav-label" style={{ color: isActive ? '#e07600' : '#9ca3af' }}>{t('roleplay') || 'ڕۆڵگێڕان'}</span>
+                                <HugeiconsIcon icon={MessageMultiple02Icon} size={26} color={isActive ? '#1a73e8' : '#9ca3af'} strokeWidth={isActive ? 2 : 1.75} />
+                                <span className="nav-label" style={{ color: isActive ? '#1a73e8' : '#9ca3af' }}>{t('roleplay') || 'ڕۆڵگێڕان'}</span>
                             </>
                         )}
                     </NavLink>
@@ -103,8 +103,8 @@ const BottomNav = () => {
                         {({ isActive }) => (
                             <>
                                 {isActive && <motion.div layoutId="bottom-nav-pill" className="bottom-nav-active-pill" initial={false} transition={springTransition} />}
-                                <HugeiconsIcon icon={UserCircle02Icon} size={26} color={isActive ? '#e07600' : '#9ca3af'} strokeWidth={isActive ? 2 : 1.75} />
-                                <span className="nav-label" style={{ color: isActive ? '#e07600' : '#9ca3af' }}>{t('profile')}</span>
+                                <HugeiconsIcon icon={UserCircle02Icon} size={26} color={isActive ? '#1a73e8' : '#9ca3af'} strokeWidth={isActive ? 2 : 1.75} />
+                                <span className="nav-label" style={{ color: isActive ? '#1a73e8' : '#9ca3af' }}>{t('profile')}</span>
                             </>
                         )}
                     </NavLink>
@@ -114,8 +114,8 @@ const BottomNav = () => {
                         onClick={() => setShowMore(!showMore)}
                         style={{ background: 'none', border: 'none', outline: 'none', cursor: 'pointer', padding: '8px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}
                     >
-                        <HugeiconsIcon icon={Menu01Icon} size={26} color={showMore ? '#e07600' : '#9ca3af'} strokeWidth={showMore ? 2 : 1.75} />
-                        <span className="nav-label" style={{ color: showMore ? '#e07600' : '#9ca3af' }}>زیاتر</span>
+                        <HugeiconsIcon icon={Menu01Icon} size={26} color={showMore ? '#1a73e8' : '#9ca3af'} strokeWidth={showMore ? 2 : 1.75} />
+                        <span className="nav-label" style={{ color: showMore ? '#1a73e8' : '#9ca3af' }}>زیاتر</span>
                     </button>
                 </div>
             </nav>

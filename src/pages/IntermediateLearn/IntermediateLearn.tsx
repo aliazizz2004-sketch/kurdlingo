@@ -19,7 +19,7 @@ import { Unit } from '../../types';
 
 // Dark premium blue theme for intermediate units
 const UNIT_THEMES = [
-    { gradient: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)', color: '#3b82f6', shadow: '#1e3a8a' },
+    { gradient: 'linear-gradient(135deg, #1e40af 0%, #cc7800 100%)', color: '#3b82f6', shadow: '#cc7800' },
     { gradient: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)', color: '#8b5cf6', shadow: '#5b21b6' },
     { gradient: 'linear-gradient(135deg, #0891b2 0%, #0e7490 100%)', color: '#06b6d4', shadow: '#155e75' },
     { gradient: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 100%)', color: '#a855f7', shadow: '#6b21a8' },
@@ -277,7 +277,7 @@ const IntermediateLearn: React.FC = () => {
                             width: '48px',
                             height: '48px',
                             borderRadius: '12px',
-                            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                            background: 'linear-gradient(135deg, #ff9600 0%, #cc7800 100%)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'
