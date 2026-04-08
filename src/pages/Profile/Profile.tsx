@@ -13,7 +13,7 @@ import './Profile.css';
 
 const Profile = () => {
     const { t, kurdishFont, setKurdishFont } = useLanguage();
-    const { theme, toggleTheme, isDark } = useTheme();
+    const { toggleTheme, isDark } = useTheme();
     const [stats, setStats] = useState(getUserStats());
     const { user, isLoaded } = useUser();
     const [dbProfile, setDbProfile] = useState<any>(null);
