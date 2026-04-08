@@ -514,7 +514,7 @@
     margin: 0 auto;
     background: var(--lex-drawer-bg);
     border-radius: 32px 32px 0 0;
-    padding: 12px 24px 40px;
+    padding: 12px 24px 85px;
     max-height: 88vh;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -523,6 +523,7 @@
     flex-direction: column;
     gap: 0;
     border-top: 1px solid var(--lex-border);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .drawer-handle {
@@ -562,20 +563,23 @@
 
 .drawer-en {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 38px;
+    font-size: clamp(24px, 5.5vw, 36px);
     font-weight: 800;
     color: var(--lex-text);
-    margin: 0 0 8px;
-    line-height: 1.15;
+    margin: 0 0 10px;
+    line-height: 1.25;
     direction: ltr;
+    word-break: break-word;
 }
 .drawer-ku {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 26px;
+    font-size: clamp(20px, 4.5vw, 26px);
     font-weight: 700;
     color: var(--lex-blue);
-    margin: 0 0 24px;
+    margin: 0 0 28px;
     direction: rtl;
+    line-height: 1.4;
+    word-break: break-word;
 }
 
 /* Drawer action buttons */
@@ -680,7 +684,6 @@
     .lexicon-main { padding: 18px 14px 80px; }
     .lex-card-en { font-size: 24px; }
     .lex-card-ku { font-size: 24px; }
-    .drawer-en { font-size: 28px; }
     .lex-table-header, .lex-table-row {
         grid-template-columns: 44px 1fr 1fr 40px;
         padding: 12px 10px;
