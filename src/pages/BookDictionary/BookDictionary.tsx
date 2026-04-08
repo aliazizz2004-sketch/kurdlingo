@@ -178,7 +178,21 @@ const BookDictionary: React.FC = () => {
     const handlePlay = useCallback((word: string, id: string, e?: React.MouseEvent) => {
         if (e) e.stopPropagation();
         setPlayingWordId(id);
-        speak(word, () => setPlayingWordId(null));
+
+        const audio = new Audio(`/audio/dictionary/${id}.wav`);
+        
+        audio.onended = () => setPlayingWordId(null);
+        
+        audio.onerror = () => {
+            // Native audio hasn't been generated yet or failed.
+            console.error("Native audio not available for this word yet.");
+            setPlayingWordId(null);
+        };
+        
+        audio.play().catch(err => {
+            console.warn("Failed to play native audio:", err);
+            setPlayingWordId(null);
+        });
     }, [speak]);
 
     const openDetail = (w: MappedWord) => setActiveWord(w);

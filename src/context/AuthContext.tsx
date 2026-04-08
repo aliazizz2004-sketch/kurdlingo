@@ -9,6 +9,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
+        // Handle OAuth callback: supabase-js v2 auto-detects the hash tokens
+        // when getSession() is called, so no extra handling needed.
         const getSession = async () => {
             const { data } = await supabase.auth.getSession();
             setUser(data.session?.user || null);
@@ -18,9 +20,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user || null);
+            if (!isLoaded) setIsLoaded(true);
         });
 
         return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
