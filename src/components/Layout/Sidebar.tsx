@@ -12,11 +12,9 @@ import {
     UserCircle02Icon,
     MoreHorizontalIcon,
     ArrowLeft01Icon,
-    Login01Icon,
 } from '@hugeicons/core-free-icons';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { SignedOut } from '../../context/AuthContext';
 import './Layout.css';
 
 interface SidebarProps {
@@ -90,16 +88,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
                         {!isCollapsed && <span className="nav-label-hi" style={{ marginLeft: 8 }}>{t('profile')}</span>}
                     </div>
 
-                    <SignedOut>
-                        <div className="nav-item" onClick={() => navigate('/login')} style={{ cursor: 'pointer' }}>
-                            <div className="nav-icon-hi">
-                                <HugeiconsIcon icon={Login01Icon} size={22} color="#6b7280" strokeWidth={1.75} />
-                            </div>
-                            {!isCollapsed && (
-                                <span className="nav-label-hi">وەک میوان</span>
-                            )}
-                        </div>
-                    </SignedOut>
+
 
                     <button
                         className="nav-item more-btn"
