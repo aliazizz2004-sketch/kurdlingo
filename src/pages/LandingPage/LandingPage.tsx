@@ -48,12 +48,12 @@ export default function SplashScreen() {
         if (currentSlide < slides.length - 1) {
             setCurrentSlide(curr => curr + 1);
         } else {
-            navigate('/login');
+            navigate('/learn');
         }
     };
 
     const handleSkip = () => {
-        navigate('/login');
+        navigate('/learn');
     };
 
     if (!isLoaded || user) return null;

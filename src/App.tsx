@@ -33,7 +33,8 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
+        <Route path="/" element={<Layout><Learn /></Layout>} />
+        <Route path="/welcome" element={<PageTransition><LandingPage /></PageTransition>} />
 
         {/* Main App Routes with Sidebar Layout - Layout already has PageTransition for его children */}
         <Route path="/learn" element={<Layout><Learn /></Layout>} />

@@ -12,11 +12,9 @@ import {
     UserCircle02Icon,
     MoreHorizontalIcon,
     ArrowLeft01Icon,
-    Login01Icon,
 } from '@hugeicons/core-free-icons';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { SignedIn, SignedOut } from '../../context/AuthContext';
 import './Layout.css';
 
 interface SidebarProps {
@@ -84,24 +82,13 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
                 ))}
 
                 <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '8px', paddingBottom: '16px' }}>
-                    <SignedIn>
-                        <div className="nav-item" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
-                            <div className="nav-icon-hi">
-                                <HugeiconsIcon icon={UserCircle02Icon} size={22} color="#6b7280" strokeWidth={1.75} />
-                            </div>
-                            {!isCollapsed && <span className="nav-label-hi" style={{ marginLeft: 8 }}>{t('profile')}</span>}
+                    <div className="nav-item" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
+                        <div className="nav-icon-hi">
+                            <HugeiconsIcon icon={UserCircle02Icon} size={22} color="#6b7280" strokeWidth={1.75} />
                         </div>
-                    </SignedIn>
-                    <SignedOut>
-                        <div className="nav-item" onClick={() => navigate('/login')} style={{ cursor: 'pointer' }}>
-                            <div className="nav-icon-hi">
-                                <HugeiconsIcon icon={Login01Icon} size={22} color="#6b7280" strokeWidth={1.75} />
-                            </div>
-                            {!isCollapsed && (
-                                <span className="nav-label-hi">وەک میوان</span>
-                            )}
-                        </div>
-                    </SignedOut>
+                        {!isCollapsed && <span className="nav-label-hi" style={{ marginLeft: 8 }}>{t('profile')}</span>}
+                    </div>
+
                     <button
                         className="nav-item more-btn"
                         onClick={toggleSidebar}
