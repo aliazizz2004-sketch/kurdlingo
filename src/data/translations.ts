@@ -250,7 +250,7 @@ export const translations = {
         typeMessage: "نامەیەک بنووسە...",
 
         // Space Typing Game
-        spaceGame: "تایپی ئەفیرانەوەیی",
+        spaceGame: "یاری بۆشایی ئاسمان",
         selectLevel: "ئاستێک هەڵبژێرە و دەست بە یاری بکە!",
         gameOver: "یاری کۆتایی هات!",
         victory: "سەرکەوتوو بوویت!",

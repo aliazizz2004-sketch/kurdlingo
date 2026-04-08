@@ -241,7 +241,7 @@ const TypingRush = () => {
             if (e.key === 'Escape') { setScreen('menu'); return; }
             if (e.key.length !== 1) return;
             e.preventDefault();
-            processChar(e.key);
+            processChar(e.key.toLowerCase());
         };
 
         window.addEventListener('keydown', handler);
@@ -473,6 +473,7 @@ const TypingRush = () => {
                             cls += errors.has(i) ? ' typed error' : ' typed correct';
                         } else if (i === charIndex) {
                             cls += ' current';
+                            if (errors.has(i)) cls += ' tr-error-active';
                         } else {
                             cls += ' pending';
                         }
@@ -500,11 +501,11 @@ const TypingRush = () => {
 
             {/* Mobile tap prompt */}
             {isMobile && screen === 'playing' && !keyboardOpen && (
-                <div className="tr-mobile-tap-hint" onClick={() => { 
+                <div className="tr-mobile-tap-hint" onClick={() => {
                     if (inputRef.current) {
                         inputRef.current.value = ' ';
-                        inputRef.current.focus(); 
-                        inputRef.current.click(); 
+                        inputRef.current.focus();
+                        inputRef.current.click();
                     }
                 }}>
                     {isKu ? 'لێرە دابگرە بۆ تایپکردن' : 'Tap here to type'}

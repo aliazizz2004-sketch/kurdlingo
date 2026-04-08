@@ -366,7 +366,7 @@ const Learn: React.FC = () => {
                             <Rocket size={28} weight="fill" color="#1a73e8" />
                         </div>
                         <div>
-                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>🚀 {t('spaceGame') || 'تایپی ئەفیرانەوەیی'}</h3>
+                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>🚀 {t('spaceGame') || 'یاری بۆشایی ئاسمان'}</h3>
                             <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
                                 {t('practice') || 'ڕاهێنان'} 🌟
                             </p>
@@ -409,7 +409,7 @@ const Learn: React.FC = () => {
                             <Lightning size={28} weight="fill" color="#a855f7" />
                         </div>
                         <div>
-                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>ڕاکردنی تایپکردن</h3>
+                            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>پێشبڕکێی خێرایی</h3>
                             <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
                                 تاقیکردنەوەی خێرایی
                             </p>

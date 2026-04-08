@@ -268,11 +268,11 @@
 
 /* Current (Active) State */
 .stg-level-node.current {
-    width: 90px;
-    height: 90px;
+    width: 75px;
+    height: 75px;
     background: linear-gradient(135deg, #ff9600, #ffc800);
     border: none;
-    box-shadow: 0 0 0 8px rgba(255, 150, 0, 0.2), 0 0 40px rgba(255, 150, 0, 0.4);
+    box-shadow: 0 0 0 6px rgba(255, 150, 0, 0.2), 0 0 30px rgba(255, 150, 0, 0.4);
     color: white;
     animation: stg-pulse-ring 2s infinite;
     z-index: 10;

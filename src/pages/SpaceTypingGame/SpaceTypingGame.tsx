@@ -452,16 +452,16 @@ const SpaceTypingGame = () => {
     const handleMobileInput = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         const input = e.currentTarget;
         const val = input.value;
-        
+
         // Extract what was actually typed (ignoring our leading dummy space if it exists)
         const typed = val.replace(/^ /, '');
-        
+
         if (typed.length > 0) {
             for (let i = 0; i < typed.length; i++) {
                 processInput(typed[i].toLowerCase());
             }
         }
-        
+
         // Keep a dummy space to prevent aggressive auto-capitalize and autocorrect on mobile
         input.value = ' ';
     }, [processInput]);
@@ -533,10 +533,8 @@ const SpaceTypingGame = () => {
                         {gameLevels.map((level, i) => {
                             const hs = highScores[level.id];
                             const isCompleted = !!hs;
-                            const isLocked = false; // i > 0 && !highScores[gameLevels[i - 1].id];
-                            // If it's not locked and not completed, it's the current "next" level.
-                            // If all previous are completed, this is the frontier.
-                            const isCurrent = !isLocked && !isCompleted;
+                            const isLocked = false;
+                            const isCurrent = !isCompleted && (i === 0 || !!highScores[gameLevels[i - 1].id]);
 
                             return (
                                 <div key={level.id} className="stg-path-node-wrapper"
@@ -742,11 +740,11 @@ const SpaceTypingGame = () => {
 
             {/* Mobile tap prompt */}
             {isMobile && gameState === 'playing' && !keyboardOpen && (
-                <div className="stg-mobile-tap-hint" onClick={() => { 
+                <div className="stg-mobile-tap-hint" onClick={() => {
                     if (inputRef.current) {
                         inputRef.current.value = ' ';
-                        inputRef.current.focus(); 
-                        inputRef.current.click(); 
+                        inputRef.current.focus();
+                        inputRef.current.click();
                     }
                 }}>
                     {isKu ? 'لێرە دابگرە بۆ تایپکردن' : 'Tap here to type'}
