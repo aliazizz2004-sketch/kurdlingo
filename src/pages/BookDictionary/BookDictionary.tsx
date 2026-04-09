@@ -179,30 +179,21 @@ const BookDictionary: React.FC = () => {
         if (e) e.stopPropagation();
         setPlayingWordId(id);
 
-        const fallbackToMp3 = () => {
-            const mp3Audio = new Audio(`/audio/dictionary/${id}.mp3`);
-            mp3Audio.onended = () => setPlayingWordId(null);
-            
-            mp3Audio.onerror = () => {
-                console.warn(`Native mp3 audio not available for ${id}. Falling back to browser TTS.`);
-                speak(word); // ensure browser reads out the phrase
-                setPlayingWordId(null);
-            };
-            
-            mp3Audio.play().catch(err => {
-                console.warn(`Failed to play ${id}.mp3 native audio. Falling back to browser TTS.`, err);
-                speak(word);
-                setPlayingWordId(null);
-            });
+        const audio = new Audio(`/audio/dictionary/${id}.wav`);
+        
+        audio.onended = () => setPlayingWordId(null);
+        
+        audio.onerror = () => {
+            console.error("Native audio not available. Falling back to browser TTS.");
+            speak(word); // ensure browser reads out the phrase
+            setPlayingWordId(null);
         };
-
-        const wavAudio = new Audio(`/audio/dictionary/${id}.wav`);
         
-        wavAudio.onended = () => setPlayingWordId(null);
-        
-        wavAudio.onerror = fallbackToMp3;
-        
-        wavAudio.play().catch(fallbackToMp3);
+        audio.play().catch(err => {
+            console.warn("Failed to play native audio. Falling back to browser TTS.", err);
+            speak(word);
+            setPlayingWordId(null);
+        });
     }, [speak]);
 
     const openDetail = (w: MappedWord) => setActiveWord(w);
