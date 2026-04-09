@@ -48,13 +48,14 @@ const Login: React.FC = () => {
         setGoogleLoading(true);
         setError('');
 
+        const redirectUrl = import.meta.env.DEV 
+            ? 'http://localhost:5173/auth/callback' 
+            : 'https://dolingo.vercel.app/auth/callback';
+
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                // redirectTo must point to our /auth/callback route on the CURRENT origin
-                // On vercel.app → https://dolingo.vercel.app/auth/callback
-                // On localhost  → http://localhost:5173/auth/callback
-                redirectTo: `${window.location.origin}/auth/callback`,
+                redirectTo: redirectUrl,
                 queryParams: {
                     access_type: 'offline',
                     prompt: 'select_account',
