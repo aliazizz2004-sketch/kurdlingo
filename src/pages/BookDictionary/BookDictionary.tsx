@@ -184,13 +184,14 @@ const BookDictionary: React.FC = () => {
         audio.onended = () => setPlayingWordId(null);
         
         audio.onerror = () => {
-            // Native audio hasn't been generated yet or failed.
-            console.error("Native audio not available for this word yet.");
+            console.error("Native audio not available. Falling back to browser TTS.");
+            speak(word); // ensure browser reads out the phrase
             setPlayingWordId(null);
         };
         
         audio.play().catch(err => {
-            console.warn("Failed to play native audio:", err);
+            console.warn("Failed to play native audio. Falling back to browser TTS.", err);
+            speak(word);
             setPlayingWordId(null);
         });
     }, [speak]);
